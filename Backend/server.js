@@ -1,4 +1,5 @@
 const app = require("./app");
+require("dotenv").config();
 const connectDatabase = require("./db/Database");
 
 // Handling uncaught exception

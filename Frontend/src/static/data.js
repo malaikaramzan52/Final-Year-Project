@@ -191,389 +191,314 @@ export const brandingData = [
 export const categoriesData = [
   {
     id: 1,
-    title: "Computers and Laptops",
-    subTitle: "",
+    title: "Fiction",
+    subTitle: "Novels, Stories & Literature",
     image_Url:
-      "https://cdn.shopify.com/s/files/1/1706/9177/products/NEWAppleMacbookProwithM1ProChip14InchLaptop2021ModelMKGQ3LL_A_16GB_1TBSSD_custommacbd.jpg?v=1659592838",
+      "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 2,
-    title: "cosmetics and body care",
-    subTitle: "",
+    title: "Non-Fiction",
+    subTitle: "Biographies, Memoirs & Essays",
     image_Url:
-      "https://indian-retailer.s3.ap-south-1.amazonaws.com/s3fs-public/2021-07/kosme1.png",
+      "https://images.unsplash.com/photo-1581091870623-5f67f134b26f?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 3,
-    title: "Accesories",
-    subTitle: "",
+    title: "Academic & Textbooks",
+    subTitle: "School, College & University Books",
     image_Url:
-      "https://img.freepik.com/free-vector/ordering-goods-online-internet-store-online-shopping-niche-e-commerce-website-mother-buying-babies-clothes-footwear-toys-infant-accessories_335657-2345.jpg?w=2000",
+      "https://images.unsplash.com/photo-1581092915363-6f956e9d1b1f?auto=format&fit=crop&w=500&q=60",
   },
+  // {
+  //   id: 4,
+  //   title: "Children's Books",
+  //   subTitle: "Stories, Learning & Picture Books",
+  //   image_Url:
+  //     "https://images.unsplash.com/photo-1583319206783-3f5e7d13c7b7?auto=format&fit=crop&w=500&q=60",
+  // },
   {
     id: 4,
-    title: "Cloths",
-    subTitle: "",
+    title: "Comics & Graphic Novels",
+    subTitle: "Manga, Superheroes & Illustrated Stories",
     image_Url:
-      "https://www.shift4shop.com/2015/images/industries/clothing/clothing-apparel.png",
+      "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 5,
-    title: "Shoes",
-    subTitle: "",
+    title: "Science & Technology",
+    subTitle: "Popular Science, Engineering & Computers",
     image_Url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvBQPQMVNRd6TtDkGs2dCri0Y-rxKkFOiEWw&usqp=CAU",
+      "https://images.unsplash.com/photo-1581090700227-ffb8a6b47fae?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 6,
-    title: "Gifts",
-    subTitle: "",
+    title: "History & Politics",
+    subTitle: "World History, Biographies & Political Books",
     image_Url:
-      "https://securecdn.pymnts.com/wp-content/uploads/2014/11/Gifts-Photo-700x489.jpg",
+      "https://images.unsplash.com/photo-1519331379826-4d50e0050d5f?auto=format&fit=crop&w=500&q=60",
   },
+  // {
+  //   id: 8,
+  //   title: "Self-Help & Personal Development",
+  //   subTitle: "Motivation, Mindfulness & Skills",
+  //   image_Url:
+  //     "https://images.unsplash.com/photo-1588776814546-4f15e1f6c0e4?auto=format&fit=crop&w=500&q=60",
+  // },
   {
     id: 7,
-    title: "Pet Care",
-    subTitle: "",
-    image_Url: "https://cdn.openpr.com/T/c/Tc15444071_g.jpg",
+    title: "Arts & Photography",
+    subTitle: "Art Books, Photography & Design",
+    image_Url:
+      "https://images.unsplash.com/photo-1517511620798-cec17d428bc0?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 8,
-    title: "Mobile and Tablets",
-    subTitle: "",
-    image_Url:
-      "https://st-troy.mncdn.com/mnresize/1500/1500/Content/media/ProductImg/original/mpwp3tua-apple-iphone-14-256gb-mavi-mpwp3tua-637986832343472449.jpg",
-  },
-  {
-    id: 9,
-    title: "Music and Gaming",
-    subTitle: "",
-    image_Url:
-      "https://static.vecteezy.com/system/resources/previews/011/996/555/original/3d-black-headphone-illustration-ecommerce-icon-png.png",
-  },
-  {
-    id: 10,
     title: "Others",
-    subTitle: "",
+    subTitle: "Miscellaneous & Rare Books",
     image_Url:
-      "https://searchspring.com/wp-content/uploads/2022/10/Hero-Image-Platform-Others-2.png",
+      "https://images.unsplash.com/photo-1573164574390-df7a0e4f4f13?auto=format&fit=crop&w=500&q=60",
   },
 ];
+
 
 // product Data
 export const productData = [
   {
     id: 1,
-    category: "Computers and Laptops",
-    name: "MacBook pro M2 chipset 256gb ssd 8gb ram space-gray color with apple 1 year warranty",
+    category: "Fiction",
+    name: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "A classic novel set in the 1920s, exploring themes of wealth, love, and the American Dream. Perfect for literature enthusiasts and collectors of vintage books.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
-      },
-      {
-        public_id: "test",
-        url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
-      },
+      { public_id: "gatsby1", url: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" },
+      { public_id: "gatsby2", url: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" },
     ],
     shop: {
-      name: "Apple inc.",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Classic Books Store",
+      shop_avatar: { public_id: "classic1", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
+      ratings: 4.5,
     },
-    price: 1099,
-    discount_price: 1049,
-    rating: 4,
-    total_sell: 35,
-    stock: 10,
+    price: 15,
+    discount_price: 12,
+    rating: 5,
+    total_sell: 120,
+    stock: 20,
   },
   {
     id: 2,
-    category: "Mobile and Tablets",
-    name: "Iphone 14 pro max 256 gb ssd and 8 gb ram silver colour",
+    category: "Science & Technology",
+    name: "A Brief History of Time",
+    author: "Stephen Hawking",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "Stephen Hawking explains complex scientific concepts in a simple way, exploring the nature of space, time, and the universe. A must-read for science enthusiasts.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
-      },
-      {
-        public_id: "test",
-        url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
-      },
+      { public_id: "time1", url: "https://images-na.ssl-images-amazon.com/images/I/41X1o+e9g4L._SX331_BO1,204,203,200_.jpg" },
     ],
     shop: {
-      name: "Amazon Ltd",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Science Book Mart",
+      shop_avatar: { public_id: "science1", url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Science_book_logo.png" },
+      ratings: 4.7,
     },
-    discount_price: 1099,
-    rating: 5,
-    total_sell: 80,
-    stock: 10,
-    category: "Mobile & Tablets",
+    price: 18,
+    discount_price: 15,
+    rating: 4.8,
+    total_sell: 95,
+    stock: 15,
   },
   {
-    id: 1,
-    category: "Computers and Laptop",
-    name: "MacBook pro M2 chipset 256gb ssd 8gb ram space gray color with apple 1 year warranty",
+    id: 3,
+    category: "Self-Help",
+    name: "The 7 Habits of Highly Effective People",
+    author: "Stephen R. Covey",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "A guide to personal and professional effectiveness, offering practical advice to improve habits, productivity, and overall life satisfaction.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
-      },
-      {
-        public_id: "test",
-        url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
-      },
+      { public_id: "habits1", url: "https://images-na.ssl-images-amazon.com/images/I/51J0s7A2htL._SX327_BO1,204,203,200_.jpg" },
     ],
     shop: {
-      name: "Apple inc.",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Motivation Books Hub",
+      shop_avatar: { public_id: "motivation1", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
+      ratings: 4.3,
     },
-    price: 1099,
-    discount_price: 1049,
-    rating: 4,
-    total_sell: 75,
+    price: 20,
+    discount_price: 16,
+    rating: 4.5,
+    total_sell: 60,
     stock: 10,
-    category: "Computers & Laptop",
   },
   {
     id: 4,
-    category: "Others",
-    name: "New Fashionable Watch for men 2023 with multiple colors",
+    category: "Children",
+    name: "Harry Potter and the Sorcerer's Stone",
+    author: "J.K. Rowling",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "The first book in the Harry Potter series, perfect for young readers and collectors. Experience the magic of Hogwarts and the adventures of Harry and friends.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://i0.wp.com/eccocibd.com/wp-content/uploads/2022/01/1802NL02_1.png?fit=550%2C550&ssl=1",
-      },
-      {
-        public_id: "test",
-        url: "https://i0.wp.com/eccocibd.com/wp-content/uploads/2022/01/1802NL02_1.png?fit=550%2C550&ssl=1",
-      },
+      { public_id: "hp1", url: "https://images-na.ssl-images-amazon.com/images/I/51UoqRAxwEL._SX331_BO1,204,203,200_.jpg" },
     ],
     shop: {
-      name: "Shahriar Watch House",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
-      category: "Others",
+      name: "Kids Book World",
+      shop_avatar: { public_id: "kids1", url: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Kids_book_logo.png" },
+      ratings: 4.9,
     },
-    price: 100,
-    discount_price: 79,
-    rating: 4,
-    total_sell: 12,
-    stock: 10,
+    price: 12,
+    discount_price: 10,
+    rating: 5,
+    total_sell: 150,
+    stock: 30,
   },
   {
     id: 5,
-    category: "Shoes",
-    name: "New Trend shoes for gents with all sizes",
+    category: "History",
+    name: "Sapiens: A Brief History of Humankind",
+    author: "Yuval Noah Harari",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "An exploration of human history from the Stone Age to the modern era, examining how biology, culture, and society shaped humanity.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://mirzacdns3.s3.ap-south-1.amazonaws.com/cache/catalog/RLV0015/2-800x800.jpg",
-      },
-      {
-        public_id: "test",
-        url: "https://mirzacdns3.s3.ap-south-1.amazonaws.com/cache/catalog/RLV0015/2-800x800.jpg",
-      },
+      { public_id: "sapiens1", url: "https://images-na.ssl-images-amazon.com/images/I/713jIoMO3UL.jpg" },
     ],
     shop: {
-      name: "Alisha Shoes Mart",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "World History Books",
+      shop_avatar: { public_id: "history1", url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png" },
+      ratings: 4.6,
     },
-    price: 120,
-    discount_price: 89,
-    rating: 5,
-    total_sell: 49,
-    stock: 10,
-    category: "Shoes",
+    price: 22,
+    discount_price: 18,
+    rating: 4.7,
+    total_sell: 75,
+    stock: 12,
   },
   {
-    id: 1,
-    name: "Gaming Headphone Asus with mutiple color and free delivery",
+    id: 6,
+    category: "Fiction",
+    name: "To Kill a Mockingbird",
+    author: "Harper Lee",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "A classic novel that explores racial injustice and moral growth in the American South. Loved by readers of all ages and a staple in literature collections.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://www.startech.com.bd/image/cache/catalog/headphone/havit/h763d/h763d-02-500x500.jpg",
-      },
-      {
-        public_id: "test",
-        url: "https://eratablet.com/wp-content/uploads/2022/08/H51ba6537405f4948972e293927673546u.jpg",
-      },
+      { public_id: "mockingbird1", url: "https://images-na.ssl-images-amazon.com/images/I/81OdwZ9Z4-L.jpg" },
     ],
     shop: {
-      name: "Asus Ltd",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Classic Books Store",
+      shop_avatar: { public_id: "classic2", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
+      ratings: 4.8,
     },
-    price: 300,
-    discount_price: 239,
-    rating: 4.5,
-    reviews: [
-      {
-        user: {
-          // user object will be here
-        },
-        comment: "IT's so cool!",
-        rating: 5,
-      },
-    ],
-    total_sell: 20,
-    stock: 10,
-    category: "Music and Gaming",
+    price: 14,
+    discount_price: 11,
+    rating: 4.9,
+    total_sell: 130,
+    stock: 25,
   },
   {
-    id: 4,
-    name: "New Fashionable Watch for men 2023 with multiple colors",
+    id: 7,
+    category: "Fiction",
+    name: "Goodbye, Mr. Chips",
+    author: "James Hilton",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "A heartwarming story about the life of a beloved schoolteacher, Mr. Chipping, and his experiences at Brookfield School. Perfect for fans of classic English literature.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://i0.wp.com/eccocibd.com/wp-content/uploads/2022/01/1802NL02_1.png?fit=550%2C550&ssl=1",
-      },
-      {
-        public_id: "test",
-        url: "https://i0.wp.com/eccocibd.com/wp-content/uploads/2022/01/1802NL02_1.png?fit=550%2C550&ssl=1",
-      },
+      { public_id: "mrchips1", url: "https://images-na.ssl-images-amazon.com/images/I/81Cz9GJz3rL.jpg" },
     ],
     shop: {
-      name: "Shahriar Watch House",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Classic Literature Store",
+      shop_avatar: { public_id: "classic3", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
+      ratings: 4.6,
     },
-    price: 100,
-    discount_price: 79,
-    rating: 4,
-    total_sell: 62,
+    price: 16,
+    discount_price: 13,
+    rating: 4.7,
+    total_sell: 60,
+    stock: 15,
+  },
+  {
+    id: 8,
+    category: "Academic",
+    name: "Introduction to Algorithms",
+    author: "Thomas H. Cormen",
+    description:
+      "One of the most comprehensive books on algorithms. Essential for computer science students and professionals seeking in-depth understanding of algorithm design and analysis.",
+    image_Url: [
+      { public_id: "algo1", url: "https://images-na.ssl-images-amazon.com/images/I/41HhU5kK-fL._SX396_BO1,204,203,200_.jpg" },
+    ],
+    shop: {
+      name: "Academic Books Hub",
+      shop_avatar: { public_id: "academic1", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
+      ratings: 4.8,
+    },
+    price: 35,
+    discount_price: 30,
+    rating: 4.9,
+    total_sell: 40,
     stock: 10,
   },
   {
-    id: 1,
-    name: "Gaming Headphone Asus with mutiple color and free delivery",
+    id: 9,
+    category: "Academic",
+    name: "Physics for Scientists and Engineers",
+    author: "Raymond A. Serway",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "A comprehensive textbook covering classical and modern physics. Widely used in colleges for undergraduate physics courses, perfect for students and educators.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://www.startech.com.bd/image/cache/catalog/headphone/havit/h763d/h763d-02-500x500.jpg",
-      },
-      {
-        public_id: "test",
-        url: "https://eratablet.com/wp-content/uploads/2022/08/H51ba6537405f4948972e293927673546u.jpg",
-      },
+      { public_id: "physics1", url: "https://images-na.ssl-images-amazon.com/images/I/51mSPC+iRML._SX396_BO1,204,203,200_.jpg" },
     ],
     shop: {
-      name: "Asus Ltd",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Academic Books Hub",
+      shop_avatar: { public_id: "academic2", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
+      ratings: 4.7,
     },
-    price: 300,
-    discount_price: 239,
-    rating: 4.5,
-    reviews: [
-      {
-        user: {
-          // user object will be here
-        },
-        comment: "IT's so cool!",
-        rating: 5,
-      },
-    ],
-    total_sell: 20,
-    stock: 10,
+    price: 28,
+    discount_price: 25,
+    rating: 4.6,
+    total_sell: 35,
+    stock: 12,
   },
   {
-    id: 2,
-    category: "Mobile and Tablets",
-    name: "Iphone 14 pro max 256 gb ssd and 8 gb ram silver colour",
+    id: 10,
+    category: "Self-Help",
+    name: "Atomic Habits",
+    author: "James Clear",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "A practical guide to forming good habits, breaking bad ones, and mastering small behaviors that lead to remarkable results over time.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
-      },
-      {
-        public_id: "test",
-        url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
-      },
+      { public_id: "atomic1", url: "https://images-na.ssl-images-amazon.com/images/I/51-nXsSRfZL._SX329_BO1,204,203,200_.jpg" },
     ],
     shop: {
-      name: "Amazon Ltd",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Motivation Books Hub",
+      shop_avatar: { public_id: "motivation2", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
+      ratings: 4.9,
     },
-    discount_price: 1099,
-    rating: 5,
-    total_sell: 20,
-    stock: 10,
+    price: 22,
+    discount_price: 18,
+    rating: 4.8,
+    total_sell: 75,
+    stock: 20,
   },
   {
-    id: 1,
-    category: "Music and Gaming",
-    name: "Gaming Headphone Asus with mutiple color and free delivery",
+    id: 11,
+    category: "Fiction",
+    name: "Pride and Prejudice",
+    author: "Jane Austen",
     description:
-      "Product details are a crucial part of any eCommerce website or online marketplace. These details help the potential customers to make an informed decision about the product they are interested in buying. A well-written product description can also be a powerful marketing tool that can help to increase sales.Product details typically include information about the product's features, specifications, dimensions, weight, materials, and other relevant information that can help customers to understand the product better. The product details section should also include high-quality images and videos of the product, as well as customer reviews and ratings.",
+      "A timeless romance and social commentary novel, following the lives of Elizabeth Bennet and Mr. Darcy in 19th-century England. A classic for every literature lover.",
     image_Url: [
-      {
-        public_id: "test",
-        url: "https://www.startech.com.bd/image/cache/catalog/headphone/havit/h763d/h763d-02-500x500.jpg",
-      },
-      {
-        public_id: "test",
-        url: "https://eratablet.com/wp-content/uploads/2022/08/H51ba6537405f4948972e293927673546u.jpg",
-      },
+      { public_id: "pride1", url: "https://images-na.ssl-images-amazon.com/images/I/91HHqVTAJQL.jpg" },
     ],
     shop: {
-      name: "Asus Ltd",
-      shop_avatar: {
-        public_id: "test",
-        url: "https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png",
-      },
-      ratings: 4.2,
+      name: "Classic Literature Store",
+      shop_avatar: { public_id: "classic4", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
+      ratings: 4.8,
     },
+    price: 14,
+    discount_price: 11,
+    rating: 4.9,
+    total_sell: 90,
+    stock: 18,
+
+   
+
+
     price: 300,
     discount_price: 239,
     rating: 4.5,
