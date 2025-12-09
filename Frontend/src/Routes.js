@@ -9,6 +9,6 @@ export{
     LoginPage,
     SignupPage,
     ActivationPage,
-    HomePage
+    HomePage,
 
 };

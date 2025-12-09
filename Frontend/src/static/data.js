@@ -194,72 +194,52 @@ export const categoriesData = [
     title: "Fiction",
     subTitle: "Novels, Stories & Literature",
     image_Url:
-      "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 2,
     title: "Non-Fiction",
     subTitle: "Biographies, Memoirs & Essays",
     image_Url:
-      "https://images.unsplash.com/photo-1581091870623-5f67f134b26f?auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 3,
     title: "Academic & Textbooks",
     subTitle: "School, College & University Books",
     image_Url:
-      "https://images.unsplash.com/photo-1581092915363-6f956e9d1b1f?auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=500&q=60",
   },
-  // {
-  //   id: 4,
-  //   title: "Children's Books",
-  //   subTitle: "Stories, Learning & Picture Books",
-  //   image_Url:
-  //     "https://images.unsplash.com/photo-1583319206783-3f5e7d13c7b7?auto=format&fit=crop&w=500&q=60",
-  // },
   {
     id: 4,
-    title: "Comics & Graphic Novels",
+    title: "Novels",
     subTitle: "Manga, Superheroes & Illustrated Stories",
     image_Url:
-      "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1535905748047-14b2415c67fc?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 5,
     title: "Science & Technology",
     subTitle: "Popular Science, Engineering & Computers",
     image_Url:
-      "https://images.unsplash.com/photo-1581090700227-ffb8a6b47fae?auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1581091012184-5c8af7a43c73?auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 6,
     title: "History & Politics",
     subTitle: "World History, Biographies & Political Books",
     image_Url:
-      "https://images.unsplash.com/photo-1519331379826-4d50e0050d5f?auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60",
   },
-  // {
-  //   id: 8,
-  //   title: "Self-Help & Personal Development",
-  //   subTitle: "Motivation, Mindfulness & Skills",
-  //   image_Url:
-  //     "https://images.unsplash.com/photo-1588776814546-4f15e1f6c0e4?auto=format&fit=crop&w=500&q=60",
-  // },
   {
     id: 7,
     title: "Arts & Photography",
     subTitle: "Art Books, Photography & Design",
     image_Url:
-      "https://images.unsplash.com/photo-1517511620798-cec17d428bc0?auto=format&fit=crop&w=500&q=60",
-  },
-  {
-    id: 8,
-    title: "Others",
-    subTitle: "Miscellaneous & Rare Books",
-    image_Url:
-      "https://images.unsplash.com/photo-1573164574390-df7a0e4f4f13?auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1473186578172-c141e6798cf4?auto=format&fit=crop&w=500&q=60",
   },
 ];
+
 
 
 // product Data
@@ -498,23 +478,8 @@ export const productData = [
 
    
 
-
-    price: 300,
-    discount_price: 239,
-    rating: 4.5,
-    reviews: [
-      {
-        user: {
-          // user object will be here
-        },
-        comment: "IT's so cool!",
-        rating: 5,
-      },
-    ],
-    total_sell: 20,
-    stock: 10,
   },
-];
+]
 
 export const footerProductLinks = [
   {

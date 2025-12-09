@@ -96,7 +96,7 @@ const Header = ({ activeHeading }) => {
 
           {/* Become Seller Button */}
           <div className={`${styles.button} ml-4`}>
-            <Link to="/seller">
+            <Link to="/login">
               <h1 className="text-[#fff] flex items-center">
                 Become Seller
                 <IoIosArrowForward className="ml-1" />
