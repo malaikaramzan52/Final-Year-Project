@@ -1,117 +1,120 @@
-const express = require("express");
-const path = require("path");
-const router = express.Router();
 const User = require("../model/user");
-const ErrorHandler = require("../utils/ErrorHandler");
-const { upload } = require("../multer");
-const fs = require("fs");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const catchAsyncError = require("../middleware/catchAsyncErrors");
+const ErrorHandler = require("../utils/ErrorHandler");
 const sendMail = require("../utils/sendMail");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 
-// ======================================
-// Create new user (Send Activation Email)
-// ======================================
-router.post("/create-user", upload.single("file"), async (req, res, next) => {
+exports.createUser = async (req, res, next) => {
   try {
+    console.log("REQ.BODY:", req.body);
+    console.log("REQ.FILE:", req.file);
+
     const { name, email, password } = req.body;
+    const avatar = req.file ? req.file.filename : null;
 
+    // Validate required fields
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
+    }
     // Check if user already exists
-    const userEmail = await User.findOne({ email });
-    if (userEmail) {
-      // Delete uploaded file if exists
-      if (req.file) {
-        const filePath = path.join("uploads", req.file.filename);
-        fs.unlink(filePath, (err) => {
-          if (err) console.error("Error deleting file:", err);
-        });
-      }
-      return next(new ErrorHandler("User already exists", 400));
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email already registered" });
     }
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // File handling
-    let fileUrl = null;
-    if (req.file) {
-      fileUrl = `/uploads/${req.file.filename}`; // URL to access uploaded file
-    }
-
-    // Prepare user data for activation token
-    const user = { name, email, password, avatar: fileUrl };
+    // Save user
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      avatar,
+    });
+    await user.save();
 
     const activationToken = createActivationToken(user);
+
+
     const activationUrl = `http://localhost:3000/activation/${activationToken}`;
 
     try {
-      await sendMail({
+       await sendMail({
         email: user.email,
         subject: "Activate your account",
-        message: `Hello ${user.name}, please click the link to activate your account: ${activationUrl}`,
-      });
-
-      res.status(201).json({
+        message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
+       });
+       res.status(201).json({
         success: true,
-        message: `Please check your email: ${user.email} to activate your account!`,
-      });
-    } catch (err) {
-      return next(new ErrorHandler("Email could not be sent", 500));
+        message: `please check your email:- ${user.email} to activate your account!`,
+        user
+       });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500))
     }
-  } catch (error) {
-    next(error);
-  }
-});
 
-// ======================================
-// Create Activation Token
-// ======================================
-const createActivationToken = (user) => {
-  return jwt.sign(user, process.env.ACTIVATION_SECRET, { expiresIn: "5m" });
+  
+  } catch (error) {
+    console.error("Signup Error:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
 };
 
-// ======================================
-// Activate user and save to DB
-// ======================================
-router.post(
-  "/activation",
-  catchAsyncError(async (req, res, next) => {
-    try {
-     const { activationToken } = useParams();
+// create activation token
+const createActivationToken = (user) => {
+return jwt.sign(
+  {
+    name: user.name,
+    email: user.email,
+    password: user.password,
+    avatar: user.avatar,
+   }, 
+  process.env.ACTIVATION_SECRET, {
+    expiresIn: "1h",
+  });
+};
 
-      const newUser = jwt.verify(
-        activation_token,
-        process.env.ACTIVATION_SECRET
-      );
+// activate user
 
-      if (!newUser) {
-        return next(new ErrorHandler("Invalid activation token", 400));
-      }
+exports.activateUser = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { activation_token } = req.body;
 
-      const { name, email, password, avatar } = newUser;
-
-      // Check if user already exists
-      let user = await User.findOne({ email });
-      if (user) {
-        return next(new ErrorHandler("User already exists", 400));
-      }
-
-      // Create user in DB (THIS WAS MISSING IN YOUR CODE)
-      user = await User.create({
-        name,
-        email,
-        password,
-        avatar: avatar || null,
-      });
-
-      console.log("User saved successfully:", user);
-
-      // Send JWT token
-      sendToken(user, 201, res);
-    } catch (error) {
-      console.error("Activation error:", error);
-      return next(new ErrorHandler("Token expired or invalid", 400));
+    if (!activation_token) {
+      return next(new ErrorHandler("No token provided", 400));
     }
-  })
-);
 
+    const decoded = jwt.verify(
+      activation_token,
+      process.env.ACTIVATION_SECRET
+    );
 
-module.exports = router;
+    const { name, email, password, avatar } = decoded;
+
+    let user = await User.findOne({ email });
+
+    if (user) {
+      return next(new ErrorHandler("User already exists", 400));
+    }
+
+    user = await User.create({
+      name,
+      email,
+      password,
+      avatar,
+    });
+
+    sendToken(user, 201, res);
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return next(new ErrorHandler("Your token is expired", 400));
+    }
+    return next(new ErrorHandler(error.message, 500));
+  }
+});

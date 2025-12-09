@@ -8,6 +8,7 @@ import ActivationPage from "./pages/ActivationPage";
 import HomePage from "./pages/HomePage";
 import BestDeals from './components/Root/BestDeals/BestDeals';
 import BecomeSeller from "./components/BecomeSeller/BecomeSeller";
+import BrowseBooks from "./components/BrowseBooks/BrowseBooks";
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
         />
         <Route path="/products" element={<BestDeals />} />
         <Route path="/become-seller" element={<BecomeSeller />} />
+        <Route path="/browse" element={<BrowseBooks />} />
 
       </Routes>
     </BrowserRouter>

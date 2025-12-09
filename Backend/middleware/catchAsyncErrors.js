@@ -1,3 +1,4 @@
-module.exports = (theFunc) => (req, res, next) => {
-  Promise.resolve(theFunc(req, res, next)).catch(next);
+// middleware/catchAsyncErrors.js
+module.exports = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
 };

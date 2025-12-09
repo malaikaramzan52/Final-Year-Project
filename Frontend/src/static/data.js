@@ -10,7 +10,7 @@ export const navItems = [
   // },
   {
     title: " Browse Books",
-    url: "/books",
+    url: "/browse",
   },
   // {
   //   title: "Events",
@@ -246,40 +246,35 @@ export const categoriesData = [
 // product Data
 // product Data (cleaned: duplicate ids & categories removed)
 export const productData = [
-  {
-    id: 1,
-    category: "Fiction",
-    name: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    description:
-      "A classic novel of the Jazz Age that explores themes of wealth, love, and the American Dream. A timeless piece of American literature.",
-    image_Url: [
-      {
-        public_id: "gatsby1",
-        url: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg"
-      }
-    ],
-    exchangeable: true,
-    shop: {
-      name: "Classic Books Store",
-      shop_avatar: {
-        public_id: "classic1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png"
-      },
-      ratings: 4.5
+ {
+  id: 1,
+  category: "Classic Fiction",
+  name: "Mr. Chips",
+  author: "James Hilton",
+  description:
+    "Mr. Chips — a timeless tale of a gentle, old schoolmaster whose life touches generations of students. A warm, nostalgic story about love, duty, loss and the passing of time through decades at an English boys’ school.",
+  image_Url: [
+    {
+      public_id: "mrchips1",
+      url:"https://readstore.pk/cdn/shop/products/03786.jpg?v=1669721739"
+    }
+  ],
+  exchangeable: false,
+  shop: {
+    name: "Classic Books Store",
+    shop_avatar: {
+      public_id: "classic1",
+      
     },
-    price: 15.0,
-    discount_price: 12.0,
-    rating: 5.0,
-    total_sell: 120,
-    stock: 20
+    ratings: 4.5
   },
-
+  price: 150.0
+},
   {
     id: 2,
-    category: "Science & Technology",
-    name: "A Brief History of Time",
-    author: "Stephen Hawking",
+    category: "Fiction/Science/Academic & Technology",
+    name: "Thomas Calculus",
+    author: "Thomas Jr., George",
     description:
       "Stephen Hawking’s masterpiece — a groundbreaking exploration of cosmology, black holes, and the nature of the universe written for general readers. A must‑read for science enthusiasts. " +
       "Introduces complex concepts like the Big Bang, space-time, and black holes in accessible language. " +
@@ -289,7 +284,7 @@ export const productData = [
     image_Url: [
       {
         public_id: "time1",
-        url: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60"
+        url: "https://pictures.abebooks.com/isbn/9780321884053-us.jpg"
 
       }
     ],
@@ -302,28 +297,27 @@ export const productData = [
       },
       ratings: 4.7
     },
-    price: 18.0,
-    discount_price: 15.0,
-    rating: 4.8,
-    total_sell: 95,
-    stock: 15
+    price: 270.0,
+    // discount_price: 15.0,
+    // rating: 4.8,
+    // total_sell: 95,
+    // stock: 15
   },
 
   {
     id: 3,
-    category: "Self-Help",
-    name: "The 7 Habits of Highly Effective People",
-    author: "Stephen R. Covey",
+    category: "Academic / Self-Help",
+    name: "Essentials of Computer Science",
+    author: "Paul D.Crutcher",
     description:
-      "A self‑help and personal development classic that offers practical guidance on improving habits, productivity, and overall life effectiveness. Widely used by professionals and individuals seeking long‑term personal growth.",
+     "Understand essential computer science concepts and skills. This book focuses on the foundational and fundamental concepts upon which expertise in specific areas can be developed, including computer architecture, programming language, algorithm and data structure, operating systems, computer networks, distributed systems, security, and more.",
     image_Url: [
       {
         public_id: "habits1",
-        url:"https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=500&q=60"
-
+        url:"https://sajhakitab.com/wp-content/uploads/2024/07/20240712_160007-rotated.jpg"
       }
     ],
-    exchangeable: true,
+    exchangeable: false,
     shop: {
       name: "Motivation Books Hub",
       shop_avatar: {
@@ -332,26 +326,26 @@ export const productData = [
       },
       ratings: 4.3
     },
-    price: 20.0,
-    discount_price: 16.0,
-    rating: 4.5,
-    total_sell: 60,
-    stock: 10
+    price: 190.0,
+    // discount_price: 16.0,
+    // rating: 4.5,
+    // total_sell: 60,
+    // stock: 10
   },
 
   {
     id: 4,
-    category: "Fantasy / Children",
-    name: "Harry Potter and the Sorcerer’s Stone",
-    author: "J.K. Rowling",
+    category: "Non-Fiction/Fantasy",
+    name: "The Power of Now",
+    author: "Eckhart Tolle",
    
 
     description:
-      "The first book in the best‑selling Harry Potter series — introduces Hogwarts, magic, and the world of witches and wizards. A beloved fantasy novel for children and adults alike.",
+      "A spiritual guide to living in the present moment and achieving enlightenment. Tolle explores the concept of mindfulness and how to transcend the ego to find inner peace and happiness.",
     image_Url: [
       {
         public_id: "hp1",
-        url: "https://images-na.ssl-images-amazon.com/images/I/51UoqRAxwEL._SX331_BO1,204,203,200_.jpg"
+        url: "https://scontent.fmux3-1.fna.fbcdn.net/v/t39.30808-6/487211243_1077372484411348_2504158300022221970_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE9DaW18VOUdpTqYItezl6_iimlO1uQyvaKKaU7W5DK9p8HALeWcZTO5EYmBCboJozuuO6yf6R-35lIe7pwE5_r&_nc_ohc=fsz4l87XoRsQ7kNvwGOg7kT&_nc_oc=AdnZwQQGzVtKWTE0AT4mjLubsapl3wN7VM0PXyDX6GlXrnlqIM1v3-mJurHDuIF3WLk&_nc_zt=23&_nc_ht=scontent.fmux3-1.fna&_nc_gid=IB7IzryF0lpXMrkAKjymZw&oh=00_Afl4AC6NP0Ev4wHhxfx-tn15q8i1AUS2S47CWlCeA9sYow&oe=693DFEC0"
       }
     ],
     exchangeable: true,
@@ -363,24 +357,52 @@ export const productData = [
       },
       ratings: 4.9
     },
-    price: 12.0,
-    discount_price: 10.0,
-    rating: 5.0,
-    total_sell: 150,
-    stock: 30
+    price: 200.0,
+    // discount_price: 10.0,
+    // rating: 5.0,
+    // total_sell: 150,
+    // stock: 30
   },
 
   {
     id: 5,
-    category: "History / Non‑Fiction",
-    name: "Sapiens: A Brief History of Humankind",
-    author: "Yuval Noah Harari",
+    category: "Law",
+    name: "Islamic jurisprudence",
+    author: "Mohsin Arif",
     description:
-      "An enthralling and wide‑ranging history of humankind — tracing the journey from early foragers to modern global civilization. A thought‑provoking read combining science, history, and social commentary.",
+      "The comprehensive book on Islamic Jurisprudence was written from examination point of view. The students can use book for preparing top level assignments and also for securing top positions in the exams. It covers all the topics of Islamic Jurisprudence in a very simple and easy to understand language.",
     image_Url: [
       {
         public_id: "sapiens1",
-        url: "https://images-na.ssl-images-amazon.com/images/I/713jIoMO3UL.jpg"
+        url: "https://www.kitabain.com/images/book/1716078531_1_IMG-20240515-WA0016.jpg"
+      }
+    ],
+    exchangeable: false,
+    shop: {
+      name: "World History Books",
+      shop_avatar: {
+        public_id: "history1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+      },
+      ratings: 4.6
+    },
+    price: 800.0,
+    // discount_price: 18.0,
+    // rating: 4.7,
+    // total_sell: 75,
+    // stock: 12
+  },
+  {
+    id: 6,
+    category: "Academic/Fiction",
+    name: "Fundamentals of Database Systems",
+    author: "Elmasri Ramez",
+    description:
+      "A comprehensive guide to database systems, covering fundamental concepts, design, and implementation. This book is essential for students and professionals looking to deepen their understanding of database management.",
+    image_Url: [
+      {
+        public_id: "sapiens1",
+        url: "https://m.media-amazon.com/images/I/61ZT1jt+QoL._SY385_.jpg"
       }
     ],
     exchangeable: true,
@@ -392,12 +414,68 @@ export const productData = [
       },
       ratings: 4.6
     },
-    price: 22.0,
-    discount_price: 18.0,
-    rating: 4.7,
-    total_sell: 75,
-    stock: 12
-  }
+    price: 550.0,
+    // discount_price: 18.0,
+    // rating: 4.7,
+    // total_sell: 75,
+    // stock: 12
+  },
+  {
+    id: 7,
+    category: "Fiction/Academic & Textbook",
+    name: "Business Economics",
+    author: "CA jasmeet",
+    description:
+      "The comprehensive book on Islamic Jurisprudence was written from examination point of view. The students can use book for preparing top level assignments and also for securing top positions in the exams. It covers all the topics of Islamic Jurisprudence in a very simple and easy to understand language.",
+    image_Url: [
+      {
+        public_id: "sapiens1",
+        url: "https://storage.googleapis.com/book-brary.appspot.com/images/1756293411191-1-image_picker_E9C40251-07B1-44BD-A7A9-0B667EADB76E-1166-00000041E62410CE.jpg?GoogleAccessId=firebase-adminsdk-5krrf%40book-brary.iam.gserviceaccount.com&Expires=1765497600&Signature=J8h3N8JkXFNzl0fjqiaDnG7495BAq0M07WAWl%2FivzL9VpHE3YywBHyEBBxAv8JoQCeQTxSjPrLomjuREgS8DJ5r0S8A%2FQcdmFhfB7V%2B8t%2BaIBmCvKAOk4u79MMRHjl2k1l0mGB4my6c9CuP3rU0H6WbO53rLlYD5v4R33MWHkoLCMwfHyYY8B323PSlsnYxiu3SSf0sBGcbR9snppRHXLhcFx6aW%2B4HYX4RnBUDIVo%2BBgvXBQ1lntsY%2Fso9yj77pH8pN4C%2FW5yjj%2FogWgnOBC%2FETxc7IaBVtqQBEnz4gOVshnmP1mKep37mXbee8tJtpD%2BxZ5inpQa51Y5AL%2FqaXAw%3D%3D"
+      }
+    ],
+    exchangeable: true,
+    shop: {
+      name: "World History Books",
+      shop_avatar: {
+        public_id: "history1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+      },
+      ratings: 4.6
+    },
+    price: 400.0,
+    // discount_price: 18.0,
+    // rating: 4.7,
+    // total_sell: 75,
+    // stock: 12
+  },
+  {
+    id: 8,
+    category: "History/Non-Fiction",
+    name: "Sharah Qalyat-e-Iqbal شرح کلیات اقبال",
+    author: "PROF. HAMEEDULLAH SHAH HASHMI",
+    description:
+      "The comprehensive book on Islamic Jurisprudence was written from examination point of view. The students can use book for preparing top level assignments and also for securing top positions in the exams. It covers all the topics of Islamic Jurisprudence in a very simple and easy to understand language.",
+    image_Url: [
+      {
+        public_id: "sapiens1",
+        url: "https://progressivebooks.com.pk/wp-content/uploads/2022/06/140.jpg"
+      }
+    ],
+    exchangeable: true,
+    shop: {
+      name: "World History Books",
+      shop_avatar: {
+        public_id: "history1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+      },
+      ratings: 4.6
+    },
+    price: 370.0,
+    // discount_price: 18.0,
+    // rating: 4.7,
+    // total_sell: 75,
+    // stock: 12
+  },
 ];
 
 export const footerProductLinks = [

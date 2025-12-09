@@ -3,6 +3,7 @@ import Header from "../components/Layout/Header"
 import Hero from "../components/Root/Hero/hero"
 import Categories from "../components/Root/Categories/categories";
 import BestDeals from "../components/Root/BestDeals/BestDeals";
+import Footer from "../components/Layout/Footer";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
     <Hero/>
     <Categories/>
     <BestDeals/>
+    <Footer />
     </div>
   )
 }
