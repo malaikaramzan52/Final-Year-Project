@@ -63,7 +63,7 @@ const Header = ({ activeHeading }) => {
           <div className="flex-1 mx-4 relative">
             <input
               type="text"
-              placeholder="Search for product..."
+              placeholder="Search for book..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-3 border-[#3957db] border-[2px] rounded-md"

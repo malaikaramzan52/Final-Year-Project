@@ -6,6 +6,9 @@ import LoginPage from "./pages/LoginPage.jsx"; // ✅ FIXED
 import SignupPage from "./pages/SignupPage.jsx";
 import ActivationPage from "./pages/ActivationPage";
 import HomePage from "./pages/HomePage";
+import BestDeals from './components/Root/BestDeals/BestDeals';
+import BecomeSeller from "./components/BecomeSeller/BecomeSeller";
+
 
 const App = () => {
   return (
@@ -18,6 +21,9 @@ const App = () => {
           path="/activation/:activationToken"
           element={<ActivationPage />}
         />
+        <Route path="/products" element={<BestDeals />} />
+        <Route path="/become-seller" element={<BecomeSeller />} />
+
       </Routes>
     </BrowserRouter>
   );

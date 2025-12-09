@@ -4,21 +4,21 @@ export const navItems = [
     title: "Home",
     url: "/",
   },
+  // {
+  //   title: "Best Selling",
+  //   url: "/best-selling",
+  // },
   {
-    title: "Best Selling",
-    url: "/best-selling",
+    title: " Browse Books",
+    url: "/books",
   },
+  // {
+  //   title: "Events",
+  //   url: "/events",
+  // },
   {
-    title: "Products",
-    url: "/products",
-  },
-  {
-    title: "Events",
-    url: "/events",
-  },
-  {
-    title: "FAQ",
-    url: "/faq",
+    title: "About Us",
+    url: "/about",
   },
 ];
 
@@ -215,14 +215,15 @@ export const categoriesData = [
     title: "Novels",
     subTitle: "Manga, Superheroes & Illustrated Stories",
     image_Url:
-      "https://images.unsplash.com/photo-1535905748047-14b2415c67fc?auto=format&fit=crop&w=500&q=60",
+  "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60"
+
   },
   {
     id: 5,
     title: "Science & Technology",
     subTitle: "Popular Science, Engineering & Computers",
     image_Url:
-      "https://images.unsplash.com/photo-1581091012184-5c8af7a43c73?auto=format&fit=crop&w=500&q=60",
+  "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=60"
   },
   {
     id: 6,
@@ -243,6 +244,7 @@ export const categoriesData = [
 
 
 // product Data
+// product Data (cleaned: duplicate ids & categories removed)
 export const productData = [
   {
     id: 1,
@@ -250,236 +252,153 @@ export const productData = [
     name: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
     description:
-      "A classic novel set in the 1920s, exploring themes of wealth, love, and the American Dream. Perfect for literature enthusiasts and collectors of vintage books.",
+      "A classic novel of the Jazz Age that explores themes of wealth, love, and the American Dream. A timeless piece of American literature.",
     image_Url: [
-      { public_id: "gatsby1", url: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" },
-      { public_id: "gatsby2", url: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" },
+      {
+        public_id: "gatsby1",
+        url: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg"
+      }
     ],
+    exchangeable: true,
     shop: {
       name: "Classic Books Store",
-      shop_avatar: { public_id: "classic1", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
-      ratings: 4.5,
+      shop_avatar: {
+        public_id: "classic1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png"
+      },
+      ratings: 4.5
     },
-    price: 15,
-    discount_price: 12,
-    rating: 5,
+    price: 15.0,
+    discount_price: 12.0,
+    rating: 5.0,
     total_sell: 120,
-    stock: 20,
+    stock: 20
   },
+
   {
     id: 2,
     category: "Science & Technology",
     name: "A Brief History of Time",
     author: "Stephen Hawking",
     description:
-      "Stephen Hawking explains complex scientific concepts in a simple way, exploring the nature of space, time, and the universe. A must-read for science enthusiasts.",
+      "Stephen Hawking’s masterpiece — a groundbreaking exploration of cosmology, black holes, and the nature of the universe written for general readers. A must‑read for science enthusiasts. " +
+      "Introduces complex concepts like the Big Bang, space-time, and black holes in accessible language. " +
+      "This edition is widely acclaimed and remains one of the best popular‑science books ever published. " +
+      "A Brief History of Time first published in 1988. " +
+      ":contentReference[oaicite:0]{index=0}",
     image_Url: [
-      { public_id: "time1", url: "https://images-na.ssl-images-amazon.com/images/I/41X1o+e9g4L._SX331_BO1,204,203,200_.jpg" },
+      {
+        public_id: "time1",
+        url: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60"
+
+      }
     ],
+    exchangeable: true,
     shop: {
       name: "Science Book Mart",
-      shop_avatar: { public_id: "science1", url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Science_book_logo.png" },
-      ratings: 4.7,
+      shop_avatar: {
+        public_id: "science1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Science_book_logo.png"
+      },
+      ratings: 4.7
     },
-    price: 18,
-    discount_price: 15,
+    price: 18.0,
+    discount_price: 15.0,
     rating: 4.8,
     total_sell: 95,
-    stock: 15,
+    stock: 15
   },
+
   {
     id: 3,
     category: "Self-Help",
     name: "The 7 Habits of Highly Effective People",
     author: "Stephen R. Covey",
     description:
-      "A guide to personal and professional effectiveness, offering practical advice to improve habits, productivity, and overall life satisfaction.",
+      "A self‑help and personal development classic that offers practical guidance on improving habits, productivity, and overall life effectiveness. Widely used by professionals and individuals seeking long‑term personal growth.",
     image_Url: [
-      { public_id: "habits1", url: "https://images-na.ssl-images-amazon.com/images/I/51J0s7A2htL._SX327_BO1,204,203,200_.jpg" },
+      {
+        public_id: "habits1",
+        url:"https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=500&q=60"
+
+      }
     ],
+    exchangeable: true,
     shop: {
       name: "Motivation Books Hub",
-      shop_avatar: { public_id: "motivation1", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
-      ratings: 4.3,
+      shop_avatar: {
+        public_id: "motivation1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png"
+      },
+      ratings: 4.3
     },
-    price: 20,
-    discount_price: 16,
+    price: 20.0,
+    discount_price: 16.0,
     rating: 4.5,
     total_sell: 60,
-    stock: 10,
+    stock: 10
   },
+
   {
     id: 4,
-    category: "Children",
-    name: "Harry Potter and the Sorcerer's Stone",
+    category: "Fantasy / Children",
+    name: "Harry Potter and the Sorcerer’s Stone",
     author: "J.K. Rowling",
+   
+
     description:
-      "The first book in the Harry Potter series, perfect for young readers and collectors. Experience the magic of Hogwarts and the adventures of Harry and friends.",
+      "The first book in the best‑selling Harry Potter series — introduces Hogwarts, magic, and the world of witches and wizards. A beloved fantasy novel for children and adults alike.",
     image_Url: [
-      { public_id: "hp1", url: "https://images-na.ssl-images-amazon.com/images/I/51UoqRAxwEL._SX331_BO1,204,203,200_.jpg" },
+      {
+        public_id: "hp1",
+        url: "https://images-na.ssl-images-amazon.com/images/I/51UoqRAxwEL._SX331_BO1,204,203,200_.jpg"
+      }
     ],
+    exchangeable: true,
     shop: {
       name: "Kids Book World",
-      shop_avatar: { public_id: "kids1", url: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Kids_book_logo.png" },
-      ratings: 4.9,
+      shop_avatar: {
+        public_id: "kids1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Kids_book_logo.png"
+      },
+      ratings: 4.9
     },
-    price: 12,
-    discount_price: 10,
-    rating: 5,
+    price: 12.0,
+    discount_price: 10.0,
+    rating: 5.0,
     total_sell: 150,
-    stock: 30,
+    stock: 30
   },
+
   {
     id: 5,
-    category: "History",
+    category: "History / Non‑Fiction",
     name: "Sapiens: A Brief History of Humankind",
     author: "Yuval Noah Harari",
     description:
-      "An exploration of human history from the Stone Age to the modern era, examining how biology, culture, and society shaped humanity.",
+      "An enthralling and wide‑ranging history of humankind — tracing the journey from early foragers to modern global civilization. A thought‑provoking read combining science, history, and social commentary.",
     image_Url: [
-      { public_id: "sapiens1", url: "https://images-na.ssl-images-amazon.com/images/I/713jIoMO3UL.jpg" },
+      {
+        public_id: "sapiens1",
+        url: "https://images-na.ssl-images-amazon.com/images/I/713jIoMO3UL.jpg"
+      }
     ],
+    exchangeable: true,
     shop: {
       name: "World History Books",
-      shop_avatar: { public_id: "history1", url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png" },
-      ratings: 4.6,
+      shop_avatar: {
+        public_id: "history1",
+        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+      },
+      ratings: 4.6
     },
-    price: 22,
-    discount_price: 18,
+    price: 22.0,
+    discount_price: 18.0,
     rating: 4.7,
     total_sell: 75,
-    stock: 12,
-  },
-  {
-    id: 6,
-    category: "Fiction",
-    name: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    description:
-      "A classic novel that explores racial injustice and moral growth in the American South. Loved by readers of all ages and a staple in literature collections.",
-    image_Url: [
-      { public_id: "mockingbird1", url: "https://images-na.ssl-images-amazon.com/images/I/81OdwZ9Z4-L.jpg" },
-    ],
-    shop: {
-      name: "Classic Books Store",
-      shop_avatar: { public_id: "classic2", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
-      ratings: 4.8,
-    },
-    price: 14,
-    discount_price: 11,
-    rating: 4.9,
-    total_sell: 130,
-    stock: 25,
-  },
-  {
-    id: 7,
-    category: "Fiction",
-    name: "Goodbye, Mr. Chips",
-    author: "James Hilton",
-    description:
-      "A heartwarming story about the life of a beloved schoolteacher, Mr. Chipping, and his experiences at Brookfield School. Perfect for fans of classic English literature.",
-    image_Url: [
-      { public_id: "mrchips1", url: "https://images-na.ssl-images-amazon.com/images/I/81Cz9GJz3rL.jpg" },
-    ],
-    shop: {
-      name: "Classic Literature Store",
-      shop_avatar: { public_id: "classic3", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
-      ratings: 4.6,
-    },
-    price: 16,
-    discount_price: 13,
-    rating: 4.7,
-    total_sell: 60,
-    stock: 15,
-  },
-  {
-    id: 8,
-    category: "Academic",
-    name: "Introduction to Algorithms",
-    author: "Thomas H. Cormen",
-    description:
-      "One of the most comprehensive books on algorithms. Essential for computer science students and professionals seeking in-depth understanding of algorithm design and analysis.",
-    image_Url: [
-      { public_id: "algo1", url: "https://images-na.ssl-images-amazon.com/images/I/41HhU5kK-fL._SX396_BO1,204,203,200_.jpg" },
-    ],
-    shop: {
-      name: "Academic Books Hub",
-      shop_avatar: { public_id: "academic1", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
-      ratings: 4.8,
-    },
-    price: 35,
-    discount_price: 30,
-    rating: 4.9,
-    total_sell: 40,
-    stock: 10,
-  },
-  {
-    id: 9,
-    category: "Academic",
-    name: "Physics for Scientists and Engineers",
-    author: "Raymond A. Serway",
-    description:
-      "A comprehensive textbook covering classical and modern physics. Widely used in colleges for undergraduate physics courses, perfect for students and educators.",
-    image_Url: [
-      { public_id: "physics1", url: "https://images-na.ssl-images-amazon.com/images/I/51mSPC+iRML._SX396_BO1,204,203,200_.jpg" },
-    ],
-    shop: {
-      name: "Academic Books Hub",
-      shop_avatar: { public_id: "academic2", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
-      ratings: 4.7,
-    },
-    price: 28,
-    discount_price: 25,
-    rating: 4.6,
-    total_sell: 35,
-    stock: 12,
-  },
-  {
-    id: 10,
-    category: "Self-Help",
-    name: "Atomic Habits",
-    author: "James Clear",
-    description:
-      "A practical guide to forming good habits, breaking bad ones, and mastering small behaviors that lead to remarkable results over time.",
-    image_Url: [
-      { public_id: "atomic1", url: "https://images-na.ssl-images-amazon.com/images/I/51-nXsSRfZL._SX329_BO1,204,203,200_.jpg" },
-    ],
-    shop: {
-      name: "Motivation Books Hub",
-      shop_avatar: { public_id: "motivation2", url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png" },
-      ratings: 4.9,
-    },
-    price: 22,
-    discount_price: 18,
-    rating: 4.8,
-    total_sell: 75,
-    stock: 20,
-  },
-  {
-    id: 11,
-    category: "Fiction",
-    name: "Pride and Prejudice",
-    author: "Jane Austen",
-    description:
-      "A timeless romance and social commentary novel, following the lives of Elizabeth Bennet and Mr. Darcy in 19th-century England. A classic for every literature lover.",
-    image_Url: [
-      { public_id: "pride1", url: "https://images-na.ssl-images-amazon.com/images/I/91HHqVTAJQL.jpg" },
-    ],
-    shop: {
-      name: "Classic Literature Store",
-      shop_avatar: { public_id: "classic4", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Old_books_logo.png" },
-      ratings: 4.8,
-    },
-    price: 14,
-    discount_price: 11,
-    rating: 4.9,
-    total_sell: 90,
-    stock: 18,
-
-   
-
-  },
-]
+    stock: 12
+  }
+];
 
 export const footerProductLinks = [
   {

@@ -29,10 +29,10 @@ const hero = () => {
           <br></br>give your books a second life, and explore a world of stories waiting to be discovered all in one trusted marketplace.{" "}
           <br /> Save money, reduce waste, and keep your bookshelf ever-growing with treasures from the past."
         </p>
-        <Link to="/products" className="inline-block">
+        <Link to="/become-seller" className="inline-block">
           <div className={`${styles.button} mt-5`}>
             <span className="text-[#fff] font-[Poppins] text-[18px]">
-              Shop Now
+              Upload Book
             </span>
           </div>
         </Link>
