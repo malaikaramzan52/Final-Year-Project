@@ -1,35 +1,54 @@
-const app = require("./app");
-require("dotenv").config();
-const connectDatabase = require("./db/Database");
+require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const path = require("path");
+const dotenv = require("dotenv");
+const connectDatabase = require("./db/Database"); // Database connection function
 
-// Handling uncaught exception
-process.on("uncaughtException", (err) => {
-  console.log(`Error: ${err.message}`);
-  console.log("Shutting down the server due to uncaught exception");
-  process.exit(1);
-});
+// -------------------------
+// 1. LOAD ENVIRONMENT VARIABLES
+// -------------------------
+// Ensure .env file is loaded correctly from the root directory
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-// Import config only in development mode
-if (process.env.NODE_ENV !== "PRODUCTION") {
-  require("dotenv").config({
-    path: "./config/.env",  // <-- FIXED PATH
-  });
-}
+// -------------------------
+// 2. CONNECT TO DATABASE
+// -------------------------
+connectDatabase(); // If connection fails, server will throw an error
 
-// Connect Database
-connectDatabase();
+// -------------------------
+// 3. INITIALIZE EXPRESS APP
+// -------------------------
+const app = express();
 
-// Create Server
-const server = app.listen(process.env.PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.PORT}`);
-});
+// -------------------------
+// 4. MIDDLEWARE
+// -------------------------
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Unhandled Promise Rejection
-process.on("unhandledRejection", (err) => {
-  console.log(`Error: ${err.message}`);
-  console.log("Shutting down the server due to unhandled promise rejection");
+// -------------------------
+// 5. ROUTES
+// -------------------------
+const userRouter = require(path.join(__dirname, "router", "user"));
+app.use("/api/users", userRouter);
 
-  server.close(() => {
-    process.exit(1);
-  });
+// Serve uploaded files
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Test route
+app.get("/", (req, res) => res.send("Server running..."));
+
+const userRoutes = require("./router/user");
+app.use("/api/users", userRoutes);
+
+
+// -------------------------
+// 6. START SERVER
+// -------------------------
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });

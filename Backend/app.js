@@ -1,34 +1,28 @@
-require("dotenv").config();
-const express  = require("express");
-const ErrorHandler = require("./middleware/error");
-const app = express();
+const express = require("express");
+const path = require("path");
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
 const cors = require("cors");
+const errorMiddleware = require("./utils/errorMiddleware");
+const userRoutes = require("./router/user");
 
+const app = express();
 
+// MIDDLEWARES
 app.use(express.json());
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(cors());
-app.use("/",express.static("uploads"));
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(cookieParser());
 
-
-
-//config
-
-if(process.env.NODE_ENV !== "PRODUCTION"){
-    require("dotenv").config({
-        path:"Backend/config/.env"
-    })
+// LOAD ENV
+if (process.env.NODE_ENV !== "PRODUCTION") {
+    require("dotenv").config({ path: path.join(__dirname, "config/.env") });
 }
 
-//import routes
-const user = require("./controller/user");
+// ROUTES
+app.use("/api/users", userRoutes);
 
-app.use("/api/v2/user",user);
+// ERROR HANDLING
+app.use(errorMiddleware);
 
-
-//It's for ErrorHandling
-app.use(ErrorHandler);
-module.exports=app;
+module.exports = app;
