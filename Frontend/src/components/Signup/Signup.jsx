@@ -1,10 +1,10 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../styles/styles";
-import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
+import oldBooks from "../../Assets/Logo/old.jpg";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -14,179 +14,148 @@ const Signup = () => {
   const [avatar, setAvatar] = useState(null);
 
   const handleFileInputChange = (e) => {
-    const file = e.target.files[0];
-    setAvatar(file);
+    setAvatar(e.target.files[0]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      alert("Form Submitted!");
 
-    console.log("FORM SUBMITTED");
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Avatar:", avatar);
-
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-
-    const newForm = new FormData();
-    newForm.append("file", avatar);
-    newForm.append("name", name);
-    newForm.append("email", email);
-    newForm.append("password", password);
+    const formData = new FormData();
+    formData.append("file", avatar);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
 
     axios
-      .post(`${server}/user/create-user`, newForm, config)
-      .then((res) => {
-        alert(res.message);
-      })
-      .catch((err) => {
-        console.log("Server error:", err);
-      });
+      .post(`${server}/user/create-user`, formData)
+      .then(() => alert("User registered successfully"))
+      .catch((err) => console.log(err));
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Register as a new user
-        </h2>
-      </div>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+      {/* Card */}
+      <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        {/* Left Image Section */}
+        <div className="hidden md:block relative w-full h-full max-h-screen">
+          <img
+            src={oldBooks}
+            alt="Old Books"
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
+
+
+        {/* Right Form Section */}
+        <div className="p-8 sm:p-10">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            Register as a new user
+          </h2>
+
           <form className="space-y-6" onSubmit={handleSubmit}>
 
             {/* Full Name */}
             <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Full Name
               </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  name="name"
-                  autoComplete="name"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-              </div>
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
             </div>
 
             {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email Address
               </label>
-              <div className="mt-1">
-                <input
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-              </div>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
             </div>
 
             {/* Password */}
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
-              <div className="mt-1 relative">
+              <div className="relative">
                 <input
                   type={visible ? "text" : "password"}
-                  name="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-
                 {visible ? (
                   <AiOutlineEye
-                    className="absolute right-2 top-2 cursor-pointer"
-                    size={25}
+                    className="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+                    size={22}
                     onClick={() => setVisible(false)}
                   />
                 ) : (
                   <AiOutlineEyeInvisible
-                    className="absolute right-2 top-2 cursor-pointer"
-                    size={25}
+                    className="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+                    size={22}
                     onClick={() => setVisible(true)}
                   />
                 )}
               </div>
             </div>
 
-            {/* Upload Image */}
+            {/* Avatar Upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Upload Avatar
               </label>
-
-              <div className="mt-2 flex items-center">
-                <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
+              <div className="flex items-center gap-4">
+                <div className="h-10 w-10 rounded-full overflow-hidden border">
                   {avatar ? (
                     <img
                       src={URL.createObjectURL(avatar)}
                       alt="avatar"
-                      className="h-full w-full object-cover rounded-full"
+                      className="h-full w-full object-cover"
                     />
                   ) : (
-                    <RxAvatar className="h-8 w-8" />
+                    <RxAvatar className="h-full w-full text-gray-400" />
                   )}
-                </span>
-
-                <label
-                  htmlFor="file-input"
-                  className="ml-5 px-4 py-2 border rounded-md text-sm bg-white cursor-pointer"
-                >
-                  Upload a file
+                </div>
+                <label className="cursor-pointer px-4 py-2 border rounded-md text-sm">
+                  Upload file
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    onChange={handleFileInputChange}
+                    className="hidden"
+                  />
                 </label>
-
-                <input
-                  type="file"
-                  id="file-input"
-                  accept=".jpg,.jpeg,.png"
-                  className="sr-only"
-                  onChange={handleFileInputChange}
-                />
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div>
-              <button
-                type="submit"
-                className="group relative w-full h-[40px] flex justify-center py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700"
-              >
-                Submit
-              </button>
-            </div>
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full py-2.5 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition"
+            >
+              Submit
+            </button>
 
             {/* Login Link */}
-            <div className={`${styles.noramlFlex} w-full`}>
-              <h4>Already have an account?</h4>
-              <Link to="/login" className="text-blue-600 pl-2">
+            <p className="text-sm text-center text-gray-700">
+              Already have an account?
+              <Link to="/login" className="text-blue-600 ml-1">
                 Sign In
               </Link>
-            </div>
+            </p>
 
           </form>
         </div>

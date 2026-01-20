@@ -1,15 +1,24 @@
 {
   "name": "fyp",
   "version": "1.0.0",
-  "main": "backend/server.js",
+  "description": "",
+  "homepage": "https://github.com/malaikaramzan52/Final-Year-Project#readme",
+  "bugs": {
+    "url": "https://github.com/malaikaramzan52/Final-Year-Project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malaikaramzan52/Final-Year-Project.git"
+  },
+  "license": "ISC",
+  "author": "Malaika Ramzan",
+  "type": "commonjs",
+  "main": "Backend/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon backend/server.js",
-    "start": "node backend/server.js"
+    "dev": "nodemon Backend/server.js",
+    "start": "node Backend/server.js"
   },
-  "author": "Malaika Ramzan",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "axios": "^1.13.2",
     "bcrypt": "^6.0.0",
@@ -23,5 +32,6 @@
     "multer": "^2.0.2",
     "nodemailer": "^7.0.11",
     "nodemon": "^3.1.11"
-  }
+  },
+  "devDependencies": {}
 }

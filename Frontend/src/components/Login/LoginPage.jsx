@@ -1,119 +1,109 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../styles/styles";
-import { Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import oldBooks from "../../Assets/Logo/old-books.jpg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Login to your account
-        </h2>
-      </div>
 
-      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form class="space-y-6">
-            {/* Email Address */}
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+      {/* Card */}
+      <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
+        {/* Left Image Section */}
+        <div className="hidden md:block relative">
+          {/* Replace src with your own image */}
+          <img
+            src={oldBooks}
+            alt="Books"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Right Form Section */}
+        <div className="p-8 sm:p-10">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            Login to your account
+          </h2>
+
+          <form className="space-y-6">
+            {/* Email */}
             <div>
-              <label
-                htmlForm="email"
-                class="block text-sm font-medium text-gray-700 "
-              >
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email address
               </label>
-              <div class="mt-1">
-                <input
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
             </div>
+
             {/* Password */}
             <div>
-              <label
-                htmlForm="password"
-                class="block text-sm font-medium text-gray-700 "
-              >
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
-              <div class="mt-1 relative">
+              <div className="relative">
                 <input
                   type={visible ? "text" : "password"}
-                  name="password"
-                  autoComplete="current-password"
-                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-                {/* Visiblity */}
                 {visible ? (
                   <AiOutlineEye
-                    className="absolute right-2 top-2 cursor-pointer"
-                    size={25}
+                    className="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+                    size={22}
                     onClick={() => setVisible(false)}
                   />
                 ) : (
                   <AiOutlineEyeInvisible
-                    className="absolute right-2 top-2 cursor-pointer"
-                    size={25}
+                    className="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+                    size={22}
                     onClick={() => setVisible(true)}
                   />
                 )}
               </div>
             </div>
-            {/* Remember Me & Forget Password */}
-            <div className={`${styles.noramlFlex} justify-between`}>
-              <div className={`${styles.noramlFlex}`}>
+
+            {/* Remember + Forgot */}
+            <div className="flex items-center justify-between">
+              <label className="flex items-center text-sm text-gray-700">
                 <input
                   type="checkbox"
-                  name="remember-me"
-                  id="remember-me"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded"
                 />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-              <div className="text-sm">
-                <a
-                  href=".forgot-password"
-                  className="font-medium text-blue-600 hover:text-blue-500"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-            {/* Submit Button */}
-            <div>
-              <button
-                type="submit"
-                className=' className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"'
+                <span className="ml-2">Remember me</span>
+              </label>
+              <Link
+                to="/forgot-password"
+                className="text-sm text-blue-600 hover:underline"
               >
-                Submit
-              </button>
-            </div>
-            {/* For Signup */}
-            <div className={`${styles.noramlFlex} w-full`}>
-              <h4>Not have any account?</h4>
-              <Link to="/sign-up" className="text-blue-600 pl-2">
-                Sign Up
+                Forgot your password?
               </Link>
             </div>
+
+            {/* Button */}
+            <button
+              type="submit"
+              className="w-full py-2.5 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition"
+            >
+              Submit
+            </button>
+
+            {/* Signup */}
+            <p className="text-sm text-center text-gray-700">
+              Not have any account?
+              <Link to="/sign-up" className="text-blue-600 ml-1">
+                Sign Up
+              </Link>
+            </p>
           </form>
         </div>
       </div>
