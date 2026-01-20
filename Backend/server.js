@@ -1,40 +1,38 @@
-const app = require("./app");
-const connectDatabase = require("./db/Database");
+// server.js
 
-// Handling uncaught exceptions
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config({ path: "./config/.env" });
+
+const app = express();
+
+// ================== DATABASE CONNECTION ==================
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("MongoDB Connected Successfully");
+    } catch (error) {
+        console.error("MongoDB Connection Failed:", error.message);
+        process.exit(1);
+    }
+};
+
+connectDatabase();
+
+// ================== SERVER ==================
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+
+// ================== ERROR HANDLING ==================
 process.on("uncaughtException", (err) => {
-    console.log(`Error: ${err.message}`);
-    console.log(`Shutting down the server due to uncaught exception`);
+    console.error("Uncaught Exception:", err.message);
     process.exit(1);
 });
 
-// Load .env from config folder
-if (process.env.NODE_ENV !== "PRODUCTION") {
-    const result = require("dotenv").config({ path: "./config/.env" });
-    if (result.error) {
-        console.error("Failed to load .env file:", result.error);
-        process.exit(1);
-    } else {
-        console.log(".env loaded successfully");
-        console.log("PORT from env:", process.env.PORT);
-    }
-}
-//connect db
-connectDatabase();
-// Use fallback port just in case
-const PORT = process.env.PORT;
-
-// Start server
-const server = app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-// Handle unhandled promise rejections
 process.on("unhandledRejection", (err) => {
-    console.log(`Error: ${err.message}`);
-    console.log(`Shutting down the server due to unhandled promise rejection`);
-
-    server.close(() => {
-        process.exit(1);
-    });
+    console.error("Unhandled Rejection:", err.message);
+    process.exit(1);
 });
