@@ -13,41 +13,58 @@ const Signup = () => {
   const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
 
+  // Handle file input
   const handleFileInputChange = (e) => {
-    setAvatar(e.target.files[0]);
+    const file = e.target.files[0];
+    setAvatar(file);
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!avatar) {
+      alert("Please upload an avatar");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("file", avatar);
+    formData.append("avatar", avatar); // MUST MATCH multer
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
 
-    axios
-      .post(`${server}/user/create-user`, formData)
-      .then(() => alert("User registered successfully"))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.post(
+        `${server}/api/v2/user/create-user`,
+        formData
+      );
+
+      console.log("SUCCESS:", res.data);
+      alert("User registered successfully!");
+    } catch (error) {
+      console.log(
+        "ERROR:",
+        error.response?.data || error.message
+      );
+      alert("Signup failed. Check console.");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      {/* Card */}
       <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-        {/* Left Image Section */}
-        <div className="hidden md:block relative w-full h-full max-h-screen">
+        {/* Left Image */}
+        <div className="hidden md:block">
           <img
             src={oldBooks}
             alt="Old Books"
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover"
           />
         </div>
 
-
-        {/* Right Form Section */}
+        {/* Right Form */}
         <div className="p-8 sm:p-10">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">
             Register as a new user
@@ -55,7 +72,7 @@ const Signup = () => {
 
           <form className="space-y-6" onSubmit={handleSubmit}>
 
-            {/* Full Name */}
+            {/* Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Full Name
@@ -65,7 +82,7 @@ const Signup = () => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -79,7 +96,7 @@ const Signup = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -94,17 +111,17 @@ const Signup = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                 />
                 {visible ? (
                   <AiOutlineEye
-                    className="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+                    className="absolute right-3 top-2.5 cursor-pointer"
                     size={22}
                     onClick={() => setVisible(false)}
                   />
                 ) : (
                   <AiOutlineEyeInvisible
-                    className="absolute right-3 top-2.5 cursor-pointer text-gray-600"
+                    className="absolute right-3 top-2.5 cursor-pointer"
                     size={22}
                     onClick={() => setVisible(true)}
                   />
@@ -129,6 +146,7 @@ const Signup = () => {
                     <RxAvatar className="h-full w-full text-gray-400" />
                   )}
                 </div>
+
                 <label className="cursor-pointer px-4 py-2 border rounded-md text-sm">
                   Upload file
                   <input
@@ -149,7 +167,7 @@ const Signup = () => {
               Submit
             </button>
 
-            {/* Login Link */}
+            {/* Login */}
             <p className="text-sm text-center text-gray-700">
               Already have an account?
               <Link to="/login" className="text-blue-600 ml-1">

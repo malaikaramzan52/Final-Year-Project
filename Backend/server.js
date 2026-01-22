@@ -1,26 +1,14 @@
-// server.js
-
-const express = require("express");
+const app = require("./app"); // IMPORT app.js
 const mongoose = require("mongoose");
 require("dotenv").config({ path: "./config/.env" });
 
-const app = express();
+const connectDatabase = require("./db/Database");
 
-// ================== DATABASE CONNECTION ==================
-const connectDatabase = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log("MongoDB Connected Successfully");
-    } catch (error) {
-        console.error("MongoDB Connection Failed:", error.message);
-        process.exit(1);
-    }
-};
-
+// ================== DATABASE ==================
 connectDatabase();
 
 // ================== SERVER ==================
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
