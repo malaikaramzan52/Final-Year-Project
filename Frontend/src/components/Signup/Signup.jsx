@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
 import oldBooks from "../../Assets/Logo/old.jpg";
+
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const navigate = useNavigate();
 
   // Handle file input
   const handleFileInputChange = (e) => {
@@ -40,8 +42,9 @@ const Signup = () => {
         formData
       );
 
-      console.log("SUCCESS:", res.data);
-      alert("User registered successfully!");
+   if(res.data.success === true){
+    navigate("/");
+   }
     } catch (error) {
       console.log(
         "ERROR:",
