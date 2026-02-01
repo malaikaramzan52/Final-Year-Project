@@ -1,14 +1,16 @@
 const express = require("express");
-const path = require("path");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
+
 const { upload } = require("../multer");
 const User = require("../model/user");
 const ErrorHandler = require("../utils/ErrorHandler");
-const jwt= require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 
-// CREATE USER
+/* =========================================================
+   CREATE USER  (SEND EMAIL – DO NOT SAVE IN DB)
+========================================================= */
 router.post(
   "/create-user",
   upload.single("avatar"),
@@ -16,67 +18,98 @@ router.post(
     try {
       const { name, email, password } = req.body;
 
-      // CHECK USER EXISTS
-      const userEmail = await User.findOne({ email });
-      if (userEmail) {
-  if (req.file && req.file.path) {
-    fs.unlink(req.file.path, (err) => {
-      if (err) {
-        console.error("File delete error:", err.message);
+      // Check if user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        if (req.file?.path) fs.unlinkSync(req.file.path);
+        return next(new ErrorHandler("User already exists", 400));
       }
-    });
-  }
-
-  return next(new ErrorHandler("User already exists", 400));
-}
-
 
       if (!req.file) {
         return next(new ErrorHandler("Avatar is required", 400));
       }
 
-      const fileUrl = `/uploads/${req.file.filename}`;
+      const avatar = `/uploads/${req.file.filename}`;
 
-      const user = {
+      // Create activation token (contains user data)
+      const activationToken = createActivationToken({
         name,
         email,
         password,
-        avatar: fileUrl,
-      };
-       //create newuser
-      const newUser = await User.create(user);
-      const activationToken = createActivationToken(user);
-      const activationUrl = `http://localhost:3000/activation/${activationToken}`;
-      //this try catck block is to send an email
-      try{
-      await sendMail ({
-        email:user.email,
-        subject:"Activate your account",
-        message:`Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`
+        avatar,
       });
+
+      const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+
+      // Send activation email
+      await sendMail({
+        email,
+        subject: "Activate your account",
+        message: `Hello ${name},\n\nPlease click the link below to activate your account:\n${activationUrl}`,
+      });
+
       res.status(201).json({
-        success:true,
-        message:`please check your email:- ${user.email} to activate your account`
-      })
-          }
-      catch(err){
-       return next(new ErrorHandler(err.message),500);
-      }
+        success: true,
+        message: `Please check your email: ${email} to activate your account`,
+      });
 
     } catch (error) {
-      return next(new ErrorHandler(error.message),400);
+      return next(new ErrorHandler(error.message, 400));
     }
   }
 );
 
-//create Activation Token
-const createActivationToken = (user)=>{
-  return jwt.sign(user,process.env.ACTIVATION_SECRET,{
-  expiresIn:"5m",
-  })
-}
+/* =========================================================
+   ACTIVATE USER  (SAVE TO DB AFTER EMAIL VERIFY)
+========================================================= */
+router.post("/activation/:token", async (req, res, next) => {
+  try {
+    const { token } = req.params;
 
-//activate user 
+    // Verify token
+    const decoded = jwt.verify(token, process.env.ACTIVATION_SECRET);
 
+    const { name, email, password, avatar } = decoded.user;
+
+    // Check again if user already activated
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return next(new ErrorHandler("Account already activated", 400));
+    }
+
+    // Save user to DB
+    const user = await User.create({
+      name,
+      email,
+      password,
+      avatar,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Account activated successfully",
+      user,
+    });
+
+  } catch (error) {
+    return next(
+      new ErrorHandler("Activation link is expired or invalid", 400)
+    );
+  }
+});
+
+/* =========================================================
+   CREATE ACTIVATION TOKEN
+========================================================= */
+const createActivationToken = (user) => {
+  return jwt.sign(
+    { user },
+    process.env.ACTIVATION_SECRET,
+    {
+      expiresIn: "24h",
+    }
+  );
+};
 
 module.exports = router;
+// Allah

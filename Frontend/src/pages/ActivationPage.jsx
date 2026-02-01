@@ -14,7 +14,7 @@ const ActivationPage = () => {
                 try {
                     const res = await axios.post(
                         `${server}/user/activation`,
-                        { activation_token: activationToken } // ✔ correct key
+                        { activation_token: activationToken } 
                     );
                     console.log(res.data.message);
                 } catch (err) {

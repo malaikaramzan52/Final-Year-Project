@@ -264,7 +264,7 @@ export const productData = [
     name: "Classic Books Store",
     shop_avatar: {
       public_id: "classic1",
-      
+      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
     },
     ratings: 4.5
   },
@@ -276,11 +276,10 @@ export const productData = [
     name: "Thomas Calculus",
     author: "Thomas Jr., George",
     description:
-      "Stephen Hawking’s masterpiece — a groundbreaking exploration of cosmology, black holes, and the nature of the universe written for general readers. A must‑read for science enthusiasts. " +
+      "Stephen Hawking’s masterpiece a groundbreaking exploration of cosmology, black holes, and the nature of the universe written for general readers. A must‑read for science enthusiasts. " +
       "Introduces complex concepts like the Big Bang, space-time, and black holes in accessible language. " +
       "This edition is widely acclaimed and remains one of the best popular‑science books ever published. " +
-      "A Brief History of Time first published in 1988. " +
-      ":contentReference[oaicite:0]{index=0}",
+      "A Brief History of Time first published in 1988. ",
     image_Url: [
       {
         public_id: "time1",
@@ -293,7 +292,7 @@ export const productData = [
       name: "Science Book Mart",
       shop_avatar: {
         public_id: "science1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Science_book_logo.png"
+       url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
       },
       ratings: 4.7
     },
@@ -322,7 +321,7 @@ export const productData = [
       name: "Motivation Books Hub",
       shop_avatar: {
         public_id: "motivation1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Book_logo_icon.png"
+       url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
       },
       ratings: 4.3
     },
@@ -345,7 +344,7 @@ export const productData = [
     image_Url: [
       {
         public_id: "hp1",
-        url: "https://scontent.fmux3-1.fna.fbcdn.net/v/t39.30808-6/487211243_1077372484411348_2504158300022221970_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE9DaW18VOUdpTqYItezl6_iimlO1uQyvaKKaU7W5DK9p8HALeWcZTO5EYmBCboJozuuO6yf6R-35lIe7pwE5_r&_nc_ohc=fsz4l87XoRsQ7kNvwGOg7kT&_nc_oc=AdnZwQQGzVtKWTE0AT4mjLubsapl3wN7VM0PXyDX6GlXrnlqIM1v3-mJurHDuIF3WLk&_nc_zt=23&_nc_ht=scontent.fmux3-1.fna&_nc_gid=IB7IzryF0lpXMrkAKjymZw&oh=00_Afl4AC6NP0Ev4wHhxfx-tn15q8i1AUS2S47CWlCeA9sYow&oe=693DFEC0"
+        url: "https://pictures.abebooks.com/isbn/9780968236406-us.jpg"
       }
     ],
     exchangeable: true,
@@ -353,7 +352,7 @@ export const productData = [
       name: "Kids Book World",
       shop_avatar: {
         public_id: "kids1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Kids_book_logo.png"
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
       },
       ratings: 4.9
     },
@@ -382,7 +381,7 @@ export const productData = [
       name: "World History Books",
       shop_avatar: {
         public_id: "history1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
       },
       ratings: 4.6
     },
@@ -410,7 +409,7 @@ export const productData = [
       name: "World History Books",
       shop_avatar: {
         public_id: "history1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
       },
       ratings: 4.6
     },
@@ -430,7 +429,7 @@ export const productData = [
     image_Url: [
       {
         public_id: "sapiens1",
-        url: "https://storage.googleapis.com/book-brary.appspot.com/images/1756293411191-1-image_picker_E9C40251-07B1-44BD-A7A9-0B667EADB76E-1166-00000041E62410CE.jpg?GoogleAccessId=firebase-adminsdk-5krrf%40book-brary.iam.gserviceaccount.com&Expires=1765497600&Signature=J8h3N8JkXFNzl0fjqiaDnG7495BAq0M07WAWl%2FivzL9VpHE3YywBHyEBBxAv8JoQCeQTxSjPrLomjuREgS8DJ5r0S8A%2FQcdmFhfB7V%2B8t%2BaIBmCvKAOk4u79MMRHjl2k1l0mGB4my6c9CuP3rU0H6WbO53rLlYD5v4R33MWHkoLCMwfHyYY8B323PSlsnYxiu3SSf0sBGcbR9snppRHXLhcFx6aW%2B4HYX4RnBUDIVo%2BBgvXBQ1lntsY%2Fso9yj77pH8pN4C%2FW5yjj%2FogWgnOBC%2FETxc7IaBVtqQBEnz4gOVshnmP1mKep37mXbee8tJtpD%2BxZ5inpQa51Y5AL%2FqaXAw%3D%3D"
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMJBtQnpI1g9YvrfEtLO6IZh2xs9rQxeZmDg&s"
       }
     ],
     exchangeable: true,
@@ -438,7 +437,7 @@ export const productData = [
       name: "World History Books",
       shop_avatar: {
         public_id: "history1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
       },
       ratings: 4.6
     },
@@ -466,7 +465,7 @@ export const productData = [
       name: "World History Books",
       shop_avatar: {
         public_id: "history1",
-        url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/History_book_logo.png"
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6IugSOE4YFNfRKis-N_gkVzo3ai0E2GgLfQ&s"
       },
       ratings: 4.6
     },
