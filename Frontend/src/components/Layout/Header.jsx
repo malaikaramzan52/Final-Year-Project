@@ -5,6 +5,8 @@ import { productData, categoriesData } from "../../static/data";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import RebookLogo from "../../Assets/Logo/Rebok_logo.png";
+import { useWishlist } from "../../context/WishlistContext";
+import { useCart } from "../../context/CartContext.jsx";
 import {
   AiOutlineSearch,
   AiOutlineHeart,
@@ -19,6 +21,8 @@ const Header = ({ activeHeading }) => {
   const [searchData, setSearchData] = useState([]);
   const [active, setActive] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const { wishlist } = useWishlist();
+  const { cart } = useCart();
 
   // Handle search input change
   const handleSearchChange = (e) => {
@@ -144,19 +148,27 @@ const Header = ({ activeHeading }) => {
           {/* Right Icons */}
           <div className="flex items-center space-x-4">
             {/* Wishlist Icon */}
-            <div className="relative">
-              <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
-              <span className="absolute -top-1 -right-1 rounded-full bg-[#3bc177] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
-                {/* {wishlist && wishlist.length} */}
-              </span>
-            </div>
+            <Link to="/wishlist">
+              <div className="relative cursor-pointer">
+                <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
+
+                <span className="absolute -top-1 -right-1 rounded-full bg-[#3bc177] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
+                  {wishlist && wishlist.length}
+                </span>
+              </div>
+            </Link>
+
             {/* Add to cart */}
+
             <div className="relative">
-              <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)" />
-              <span className="absolute -top-1 -right-1 rounded-full bg-[#3bc177] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
-                {/* {cart && cart.length} */}
-              </span>
+              <Link to="/cart">
+                <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)" />
+                <span className="absolute -top-1 -right-1 rounded-full bg-[#3bc177] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
+                  {cart?.length || 0}
+                </span>
+              </Link>
             </div>
+
             {/* Profile */}
             <div className="relative">
               <Link to="/login">
@@ -164,6 +176,7 @@ const Header = ({ activeHeading }) => {
               </Link>
             </div>
           </div>
+          {/* wishlist popup */}
         </div>
       </div>
     </>
