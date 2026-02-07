@@ -9,6 +9,10 @@ import HomePage from "./pages/HomePage";
 import BestDeals from './components/Root/BestDeals/BestDeals';
 import BecomeSeller from "./components/BecomeSeller/BecomeSeller";
 import BrowseBooks from "./components/BrowseBooks/BrowseBooks";
+import WishlistPage from "./pages/WishlistPage";
+import CartPage from "./pages/CartPage";
+
+
 
 
 const App = () => {
@@ -25,10 +29,12 @@ const App = () => {
         <Route path="/products" element={<BestDeals />} />
         <Route path="/become-seller" element={<BecomeSeller />} />
         <Route path="/browse" element={<BrowseBooks />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
+        <Route path="/cart" element={<CartPage />} />
+</Routes>
+</BrowserRouter>
 
-      </Routes>
-    </BrowserRouter>
-  );
+        );
 };
 
-export default App;
+        export default App;
