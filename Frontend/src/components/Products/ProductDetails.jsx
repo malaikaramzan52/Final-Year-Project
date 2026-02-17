@@ -7,16 +7,17 @@ import {
   AiOutlineShoppingCart,
   AiOutlineMessage
 } from "react-icons/ai";
-import { productData } from "../../static/data"
+import { productData } from "../../static/data";
+import { Link } from "react-router-dom";
 
 const ProductDetails = ({ book }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
-  
+
   const handleMessageSubmit = () => {
-    navigate("/messages"); 
+    navigate("/messages");
   }
 
   return (
@@ -140,11 +141,125 @@ const ProductDetails = ({ book }) => {
                 </div>
               </div>
             </div>
+            <ProductDetailsInfo book={book} />
           </div>
-    
+
         ) : null
       }
     </div >
+
+
+  )
+}
+const ProductDetailsInfo = ({ book }) => {
+  const [active, setActive] = useState(1);
+  return (
+    <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
+      <div className="w-full flex justify-between border-b pt-10 pb-2">
+        {/* Book Details */}
+        <div className="relative">
+          <h5
+            className={
+              "text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+            }
+            onClick={() => setActive(1)}
+          >
+            Book Details
+          </h5>
+          {active === 1 ? (
+            <div className={`${styles.active_indicator}`} />
+          ) : null}
+        </div>
+        {/* Book Reviews */}
+        <div className="relative">
+          <h5
+            className={
+              "text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+            }
+            onClick={() => setActive(2)}
+          >
+            Book Reviews
+          </h5>
+          {active === 2 ? (
+            <div className={`${styles.active_indicator}`} />
+          ) : null}
+        </div>
+        {/* Seller Information */}
+        <div className="relative">
+          <h5
+            className={
+              "text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+            }
+            onClick={() => setActive(3)}
+          >
+            Seller Information
+          </h5>
+          {active === 3 ? (
+            <div className={`${styles.active_indicator}`} />
+          ) : null}
+        </div>
+      </div>
+      {active === 1 ? (
+        <>
+          <p className="py-2 text-[18px] leading-8 pb-10 whitespace-pre-line  ">
+            {book.description}
+          </p>
+        </>
+      ) : null}
+      {active === 2 ? (
+        <>
+          <div className="w-full justify-center min-h-[40vh]  items-center py-3 ">
+            <p>No Review Yet!</p>
+          </div>
+        </>
+      ) : null}
+
+      {active === 3 && (
+       <div className="w-full flex items-center justify-between p-5">
+  {/* Left side: Avatar + Shop Name */}
+  <div className="flex items-start gap-3">
+  {/* Avatar */}
+  <img
+    src={book?.shop?.shop_avatar?.url}
+    alt="Shop Avatar"
+    className="w-[80px] h-[80px] rounded-full object-cover mt-1 mb-1"
+  />
+
+  {/* Shop name + description */}
+  <div>
+    <h3 className={styles.shop_name} >
+      {book?.shop?.name}
+    </h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br/>
+       In quis mollitia architecto accusamus optio beatae minima. <br/>
+      Odit dolore inventore delectus?</p>
+  </div>
+</div>
+
+
+  {/* Right side: Joined Date */}
+  <div className="text-right">
+    <h5 className="font-[600]">
+      Joined on: <span className="font-[500]">24 March, 2023</span>
+    </h5>
+    <h5 className="font-[600] pt-3">
+      Total Books: <span className="font-[500]">1,223</span>
+    </h5>
+     <h5 className="font-[600] pt-3">
+      Total Reviews: <span className="font-[500]">324</span>
+    </h5>
+    <Link to="/">
+    <div className={`${styles.button} rounded-[4px] h-[39.5px] mt-3 ml-14`}>
+       <h4 className="text-white">Visit Profile</h4>
+    </div>
+    </Link>
+  </div>
+</div>
+
+
+      )}
+
+    </div>
 
   )
 }
