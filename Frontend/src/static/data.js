@@ -252,7 +252,7 @@ export const productData = [
   name: "Mr. Chips",
   author: "James Hilton",
   description:
-    "Mr. Chips — a timeless tale of a gentle, old schoolmaster whose life touches generations of students. A warm, nostalgic story about love, duty, loss and the passing of time through decades at an English boys’ school.",
+    "Mr. Chips a timeless tale of a gentle, old schoolmaster whose life touches generations of students. A warm, nostalgic story about love, duty, loss and the passing of time through decades at an English boys’ school.",
   image_Url: [
     {
       public_id: "mrchips1",

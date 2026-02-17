@@ -11,6 +11,7 @@ import BecomeSeller from "./components/BecomeSeller/BecomeSeller";
 import BrowseBooks from "./components/BrowseBooks/BrowseBooks";
 import WishlistPage from "./pages/WishlistPage";
 import CartPage from "./pages/CartPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage.jsx";
 
 
 
@@ -31,6 +32,9 @@ const App = () => {
         <Route path="/browse" element={<BrowseBooks />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
+        <Route path="/ProductDetailsPage" element={<ProductDetailsPage />} />
+
 </Routes>
 </BrowserRouter>
 

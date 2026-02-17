@@ -6,6 +6,7 @@ import {
   AiFillStar,
   AiOutlineEye
 } from "react-icons/ai";
+import { Link } from "react-router-dom"
 import styles from "../../../styles/styles.js";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx";
 import { useWishlist } from "../../../context/WishlistContext";
@@ -82,11 +83,13 @@ const ProductCard = ({ book }) => {
       </div>
 
       {/* Book Image */}
-      <img
-        src={book?.image_Url?.[0]?.url || "https://via.placeholder.com/150"}
-        alt={book?.name || "Book"}
-        className="w-full h-48 object-contain"
-      />
+      <Link to={`/product/${book.id}`}>
+        <img
+          src={book?.image_Url?.[0]?.url || "https://via.placeholder.com/150"}
+          alt={book?.name || "Book"}
+          className="w-full h-48 object-contain"
+        />
+      </Link>
 
       {/* Book Info */}
       <div>
@@ -107,10 +110,19 @@ const ProductCard = ({ book }) => {
           </p>
 
           {book.exchangeable && (
-            <span className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded">
-              Exchangeable
-            </span>
-          )}
+                        <button
+                          type="button"
+                          className="px-4 py-2 font-semibold
+               bg-blue-100 text-blue-700 rounded
+               hover:bg-blue-200 transition duration-300"
+                          onClick={() => {
+                            // your action here (optional)
+                            console.log("Exchange policy clicked");
+                          }}
+                        >
+                          Exchangeable
+                        </button>
+                      )}
         </div>
       </div>
 

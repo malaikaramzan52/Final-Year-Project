@@ -4,6 +4,7 @@ import { FaBook } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-[#3321c8] text-white mt-20 py-6">
+
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         {/* Left: Brand */}
         <div className="flex items-center mb-4 md:mb-0">
@@ -23,6 +24,7 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} Rebook Marketplace. All rights reserved.
         </div>
       </div>
+      
     </footer>
   );
 };
