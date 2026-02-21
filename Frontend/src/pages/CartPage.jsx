@@ -1,4 +1,4 @@
-// Allah
+
 import { useCart } from "../context/CartContext";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";

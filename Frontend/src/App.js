@@ -12,6 +12,7 @@ import BrowseBooks from "./components/BrowseBooks/BrowseBooks";
 import WishlistPage from "./pages/WishlistPage";
 import CartPage from "./pages/CartPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage.jsx";
+import ProfilePage from "./pages/ProfilePage";
 
 
 
@@ -34,11 +35,12 @@ const App = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/ProductDetailsPage" element={<ProductDetailsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
 
-</Routes>
-</BrowserRouter>
+      </Routes>
+    </BrowserRouter>
 
-        );
+  );
 };
 
-        export default App;
+export default App;

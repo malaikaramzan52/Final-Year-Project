@@ -171,7 +171,7 @@ const Header = ({ activeHeading }) => {
 
             {/* Profile */}
             <div className="relative">
-              <Link to="/login">
+              <Link to="/profile">
                 <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
               </Link>
             </div>
