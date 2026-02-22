@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
 import oldBooks from "../../Assets/Logo/old.jpg";
-
+// import { server } from "../../server";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -43,14 +44,16 @@ const Signup = () => {
       );
 
    if(res.data.success === true){
-    navigate("/");
+    toast.success(res.data.message);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setAvatar();
+
    }
     } catch (error) {
-      console.log(
-        "ERROR:",
-        error.response?.data || error.message
-      );
-      alert("Signup failed. Check console.");
+      toast.error(error.response.data.message);
+    
     }
   };
 

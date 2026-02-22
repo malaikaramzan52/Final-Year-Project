@@ -3,29 +3,30 @@ import { useParams } from 'react-router-dom';
 import { server } from "../server";
 import axios from 'axios';
 
-const ActivationPage = () => {
 
-    const { activationToken } = useParams();  // ✔ MUST match route name
+
+const ActivationPage = () => {
+    const { activation_token } = useParams();
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        if (activationToken) {
+        if (activation_token) {
             const activationEmail = async () => {
                 try {
-                    const res = await axios.post(
-                        `${server}/user/activation`,
-                        { activation_token: activationToken } 
-                    );
+                    const res = await axios
+                        .post(`${server}/user/activation`, {
+                            activation_token
+                        })
                     console.log(res.data.message);
                 } catch (err) {
-                    console.log(err.response?.data?.message);
+                    console.log(err.response.data.message);
                     setError(true);
                 }
             }
             activationEmail();
         }
 
-    }, [activationToken]);
+    }, []);
 
     return (
         <div
@@ -38,7 +39,7 @@ const ActivationPage = () => {
             }}>
             {
                 error ? (
-                    <p className='text-red-800'>Your token is expired</p>
+                    <p className='text-red-800'>Your token is expired or invalid!</p>
                 ) : (
                     <p className='text-green-800'>Your Account has been created successfully!</p>
                 )
@@ -48,4 +49,4 @@ const ActivationPage = () => {
     )
 }
 
-export default ActivationPage;
+export default ActivationPage

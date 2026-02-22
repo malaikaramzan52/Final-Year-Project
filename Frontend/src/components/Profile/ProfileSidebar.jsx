@@ -1,6 +1,6 @@
 import React from 'react'
-import { AiOutlineCreditCard, AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
-import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
+import {  AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
+import {  HiOutlineShoppingBag } from "react-icons/hi";
 import { RxPerson } from 'react-icons/rx';
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -26,7 +26,7 @@ const ProfileSideBar = ({ active, setActive }) => {
                     Profile
                 </span>
             </div>
-            
+
              {/* Orders */}
             <div
                 className="flex items-center cursor-pointer w-full mb-8"

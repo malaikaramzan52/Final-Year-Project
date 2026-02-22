@@ -7,6 +7,8 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import RebookLogo from "../../Assets/Logo/Rebok_logo.png";
 import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext.jsx";
+import { useSelector } from "react-redux";
+
 import {
   AiOutlineSearch,
   AiOutlineHeart,
@@ -15,6 +17,7 @@ import {
 import { CgProfile } from "react-icons/cg";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
+import { server } from "../../server";
 
 const Header = ({ activeHeading }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +26,8 @@ const Header = ({ activeHeading }) => {
   const [dropDown, setDropDown] = useState(false);
   const { wishlist } = useWishlist();
   const { cart } = useCart();
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+
 
   // Handle search input change
   const handleSearchChange = (e) => {
@@ -172,7 +177,14 @@ const Header = ({ activeHeading }) => {
             {/* Profile */}
             <div className="relative">
               <Link to="/profile">
-                <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+
+                <img
+                  src={`${server}${user?.avatar}`}
+                  alt="Profile img"
+                  className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]"
+                />
+
+
               </Link>
             </div>
           </div>
