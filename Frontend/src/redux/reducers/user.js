@@ -7,7 +7,7 @@ export const loadUser = createAsyncThunk(
   "user/loadUser",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${server}/getuser`, { withCredentials: true });
+      const { data } = await axios.get(`${server}/api/v2/user/getuser`, { withCredentials: true });
       return data.user;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -26,6 +26,9 @@ const userSlice = createSlice({
   reducers: {
     clearErrors: (state) => {
       state.error = null;
+    },
+    updateUser: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -47,5 +50,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearErrors } = userSlice.actions;
+export const { clearErrors, updateUser } = userSlice.actions;
 export const userReducer = userSlice.reducer;

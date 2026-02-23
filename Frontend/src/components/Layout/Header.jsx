@@ -176,15 +176,16 @@ const Header = ({ activeHeading }) => {
 
             {/* Profile */}
             <div className="relative">
-              <Link to="/profile">
-
-                <img
-                  src={`${server}${user?.avatar}`}
-                  alt="Profile img"
-                  className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]"
-                />
-
-
+              <Link to={isAuthenticated ? "/profile" : "/login"}>
+                {isAuthenticated && user?.avatar ? (
+                  <img
+                    src={`http://localhost:8000${user.avatar}`}
+                    alt="Profile"
+                    className="w-[45px] h-[45px] rounded-full border-[3px] border-[#0eae88] object-cover"
+                  />
+                ) : (
+                  <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                )}
               </Link>
             </div>
           </div>
