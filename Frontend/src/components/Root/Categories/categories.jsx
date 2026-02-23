@@ -41,7 +41,7 @@ const Categories = () => {
         {/* Left Scroll Button */}
         <button
           onClick={scrollLeft}
-          className="bg-gray-200 hover:bg-gray-300 rounded p-2"
+          className="bg-[#D98C00] hover:bg-[#A86500] rounded-full p-2"
         >
           ❮
         </button>
@@ -70,7 +70,7 @@ const Categories = () => {
         {/* Right Scroll Button */}
         <button
           onClick={scrollRight}
-          className="bg-gray-200 hover:bg-gray-300 rounded p-2"
+          className="bg-[#D98C00] hover:bg-[#A86500] rounded-full p-2"
         >
           ❯
         </button>

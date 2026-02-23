@@ -30,7 +30,7 @@ const hero = () => {
           <br /> Save money, reduce waste, and keep your bookshelf ever-growing with treasures from the past."
         </p>
         <Link to="/become-seller" className="inline-block">
-          <div className={`${styles.button} mt-5`}>
+          <div className={`${styles.button}  bg-[#D98C00] mt-5`}>
             <span className="text-[#fff] font-[Poppins] text-[18px]">
               Upload Book
             </span>

@@ -75,7 +75,7 @@ const Header = ({ activeHeading }) => {
               placeholder="Search for book..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="h-[40px] w-full px-3 border-[#3957db] border-[2px] rounded-md"
+              className="h-[40px] w-full px-3  border-[#D98C00] border-[2px] rounded-md"
             />
             <AiOutlineSearch
               size={30}
@@ -104,7 +104,7 @@ const Header = ({ activeHeading }) => {
           </div>
 
           {/* Become Seller Button */}
-          <div className={`${styles.button} ml-4`}>
+          <div className={`${styles.button}  rounded-full bg-[#D98C00] ml-4`}>
             <Link to="/login">
               <h1 className="text-[#fff] flex items-center">
                 Become Seller
@@ -118,7 +118,7 @@ const Header = ({ activeHeading }) => {
       {/* Category Section */}
       <div
         className={`${active ? "shadow-sm fixed top-0 left-0 z-10" : ""
-          } transition hidden 800px:flex items-center justify-between w-full bg-[#3321c8] h-[70px] px-4 md:px-8`}
+          } transition hidden 800px:flex items-center justify-between w-full  bg-[#D98C00] h-[70px] px-4 md:px-8`}
       >
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
@@ -157,7 +157,7 @@ const Header = ({ activeHeading }) => {
               <div className="relative cursor-pointer">
                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
 
-                <span className="absolute -top-1 -right-1 rounded-full bg-[#3bc177] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
+                <span className="absolute -top-1 -right-1 rounded-full  bg-black w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
                   {wishlist && wishlist.length}
                 </span>
               </div>
@@ -168,7 +168,7 @@ const Header = ({ activeHeading }) => {
             <div className="relative">
               <Link to="/cart">
                 <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)" />
-                <span className="absolute -top-1 -right-1 rounded-full bg-[#3bc177] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
+                <span className="absolute -top-1 -right-1 rounded-full  bg-black w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
                   {cart?.length || 0}
                 </span>
               </Link>
@@ -181,7 +181,7 @@ const Header = ({ activeHeading }) => {
                 <img
                   src={`${server}${user?.avatar}`}
                   alt="Profile img"
-                  className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]"
+                  className="w-[60px] h-[60px] rounded-full border-[3px]  border-black"
                 />
 
 
