@@ -8,7 +8,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import ActivationPage from "./pages/ActivationPage";
 import HomePage from "./pages/HomePage";
-import BestDeals from './components/Root/BestDeals/BestDeals';
+import BestDeals from './components/Root/BestDeals/bestdeals';
 import BecomeSeller from "./components/BecomeSeller/BecomeSeller";
 import BrowseBooks from "./components/BrowseBooks/BrowseBooks";
 import WishlistPage from "./pages/WishlistPage";

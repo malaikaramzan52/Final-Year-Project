@@ -5,6 +5,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/postcss": "^4.1.17",
+    "axios": "^1.13.5",
     "country-state-city": "^3.2.1",
     "cra-template": "1.3.0",
     "react": "^19.2.0",

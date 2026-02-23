@@ -16,7 +16,7 @@ app.use(cors({
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // routes
 const user = require("./controller/user");
