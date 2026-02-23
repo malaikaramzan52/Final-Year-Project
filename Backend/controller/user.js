@@ -131,4 +131,62 @@ router.get("/getuser", isAuthenticated, catchAsyncErrors(async (req, res, next) 
     return next(new ErrorHandler(error.message, 500));
   }
 }));
+
+/* =========================================================
+   UPDATE AVATAR (local disk)
+========================================================= */
+router.put("/update-avatar", isAuthenticated, upload.single("avatar"), async (req, res) => {
+  if (!req.file) throw new ErrorHandler("Please provide an image file", 400);
+
+  const user = await User.findById(req.user.id);
+  if (!user) throw new ErrorHandler("User not found", 404);
+
+  // Delete old avatar file from disk
+  if (user.avatar && user.avatar.startsWith("/uploads/")) {
+    const oldPath = path.join(__dirname, "../", user.avatar);
+    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+  }
+
+  user.avatar = `/uploads/${req.file.filename}`;
+  await user.save();
+
+  res.status(200).json({ success: true, user });
+});
+
+/* =========================================================
+   DELETE AVATAR (local disk)
+========================================================= */
+router.delete("/delete-avatar", isAuthenticated, async (req, res) => {
+  const user = await User.findById(req.user.id);
+  if (!user) throw new ErrorHandler("User not found", 404);
+
+  if (user.avatar && user.avatar.startsWith("/uploads/")) {
+    const oldPath = path.join(__dirname, "../", user.avatar);
+    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+  }
+
+  user.avatar = "";
+  await user.save();
+
+  res.status(200).json({ success: true, user });
+});
+
+/* =========================================================
+   UPDATE PROFILE INFO
+========================================================= */
+router.put("/update-profile", isAuthenticated, async (req, res) => {
+  const { name, phoneNumber, address } = req.body;
+
+  const user = await User.findById(req.user.id);
+  if (!user) throw new ErrorHandler("User not found", 404);
+
+  if (name) user.name = name;
+  if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
+  if (address !== undefined) user.address = address;
+
+  await user.save();
+
+  res.status(200).json({ success: true, user });
+});
+
 module.exports = router;

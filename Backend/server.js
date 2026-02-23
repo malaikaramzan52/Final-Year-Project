@@ -1,6 +1,7 @@
+require("dotenv").config({ path: "./config/.env" });
+
 const app = require("./app"); // IMPORT app.js
 const mongoose = require("mongoose");
-require("dotenv").config({ path: "./config/.env" });
 
 const connectDatabase = require("./db/Database");
 
