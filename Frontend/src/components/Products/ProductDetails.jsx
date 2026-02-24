@@ -43,26 +43,7 @@ const ProductDetails = ({ book }) => {
                     </div>
                     <div className="flex items-center justify-between pt-5">
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center border rounded-lg overflow-hidden">
-                        <button
-                          onClick={() => count > 1 && setCount(count - 1)}
-                          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-lg font-semibold"
-                        >
-                          −
-                        </button>
 
-                        <span className="px-5 py-2 text-base font-medium">
-                          {count}
-                        </span>
-
-                        <button
-                          onClick={() => setCount(count + 1)}
-                          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-lg font-semibold"
-                        >
-                          +
-                        </button>
-                      </div>
 
                       {/* Heart Icon */}
                       <div
@@ -83,9 +64,9 @@ const ProductDetails = ({ book }) => {
                       {/* Add to Cart */}
                       <button
                         className="w-[140px] flex items-center justify-center gap-2
-               bg-black text-white py-3 rounded-lg
+               bg-[#D98C00] text-white py-3 rounded-full px-2
                text-base font-semibold
-               hover:bg-gray-900 transition duration-300"
+               hover:bg-[#A86500] transition duration-300"
                       >
                         <AiOutlineShoppingCart size={20} />
                         Add to Cart
@@ -96,7 +77,7 @@ const ProductDetails = ({ book }) => {
                         <button
                           type="button"
                           className="px-4 py-2 font-semibold
-               bg-blue-100 text-blue-700 rounded
+               bg-blue-100 text-blue-700 rounded-full
                hover:bg-blue-200 transition duration-300"
                           onClick={() => {
                             // your action here (optional)
@@ -110,21 +91,10 @@ const ProductDetails = ({ book }) => {
                     {/* Handle Message */}
                     <div className="flex items-center justify-between">
 
-                      {/* Left: Avatar + Shop Name */}
-                      <div className="flex items-center">
-                        <img
-                          src={book?.shop?.shop_avatar?.url}
-                          alt="Shop Avatar"
-                          className="w-[80px] h-[80px] rounded-full object-cover"
-                        />
-                        <h3 className={styles.shop_name}>
-                          {book?.shop?.name}
-                        </h3>
-                      </div>
 
                       {/* Right: Send Message Button */}
                       <div
-                        className={`${styles.button} bg-blue-800 rounded-[4px] h-11`}
+                        className={`${styles.button} bg-[#D98C00] hover:bg-[#A86500] rounded-[4px] h-11`}
                         onClick={handleMessageSubmit}
                       >
                         <span className="text-white flex items-center justify-center h-full px-2 text-sm">
@@ -215,46 +185,46 @@ const ProductDetailsInfo = ({ book }) => {
       ) : null}
 
       {active === 3 && (
-       <div className="w-full flex items-center justify-between p-5">
-  {/* Left side: Avatar + Shop Name */}
-  <div className="flex items-start gap-3">
-  {/* Avatar */}
-  <img
-    src={book?.shop?.shop_avatar?.url}
-    alt="Shop Avatar"
-    className="w-[80px] h-[80px] rounded-full object-cover mt-1 mb-1"
-  />
+        <div className="w-full flex items-center justify-between p-5">
+          {/* Left side: Avatar + Shop Name */}
+          <div className="flex items-start gap-3">
+            {/* Avatar */}
+            <img
+              src={book?.shop?.shop_avatar?.url}
+              alt="Shop Avatar"
+              className="w-[80px] h-[80px] rounded-full object-cover mt-1 mb-1"
+            />
 
-  {/* Shop name + description */}
-  <div>
-    <h3 className={styles.shop_name} >
-      {book?.shop?.name}
-    </h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br/>
-       In quis mollitia architecto accusamus optio beatae minima. <br/>
-      Odit dolore inventore delectus?</p>
-  </div>
-</div>
+            {/* Shop name + description */}
+            <div>
+              <h3 className={styles.shop_name} >
+                {book?.shop?.name}
+              </h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br />
+                In quis mollitia architecto accusamus optio beatae minima. <br />
+                Odit dolore inventore delectus?</p>
+            </div>
+          </div>
 
 
-  {/* Right side: Joined Date */}
-  <div className="text-right">
-    <h5 className="font-[600]">
-      Joined on: <span className="font-[500]">24 March, 2023</span>
-    </h5>
-    <h5 className="font-[600] pt-3">
-      Total Books: <span className="font-[500]">1,223</span>
-    </h5>
-     <h5 className="font-[600] pt-3">
-      Total Reviews: <span className="font-[500]">324</span>
-    </h5>
-    <Link to="/">
-    <div className={`${styles.button} rounded-[4px] h-[39.5px] mt-3 ml-14`}>
-       <h4 className="text-white">Visit Profile</h4>
-    </div>
-    </Link>
-  </div>
-</div>
+          {/* Right side: Joined Date */}
+          <div className="text-right">
+            <h5 className="font-[600]">
+              Joined on: <span className="font-[500]">24 March, 2023</span>
+            </h5>
+            <h5 className="font-[600] pt-3">
+              Total Books: <span className="font-[500]">1,223</span>
+            </h5>
+            <h5 className="font-[600] pt-3">
+              Total Reviews: <span className="font-[500]">324</span>
+            </h5>
+            <Link to="/">
+              <div className={`${styles.button} rounded-[4px] h-[39.5px] mt-3 ml-14`}>
+                <h4 className="text-white">Visit Profile</h4>
+              </div>
+            </Link>
+          </div>
+        </div>
 
 
       )}
@@ -265,4 +235,4 @@ const ProductDetailsInfo = ({ book }) => {
 }
 
 
-export default ProductDetails
+export default ProductDetails;

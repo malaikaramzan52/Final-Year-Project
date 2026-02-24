@@ -3,7 +3,7 @@ import { FaBook } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#3321c8] text-white mt-20 py-6">
+    <footer className="bg-[#D98C00] text-white mt-20 py-6">
 
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         {/* Left: Brand */}

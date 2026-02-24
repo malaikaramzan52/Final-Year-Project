@@ -31,101 +31,96 @@ const ProductDetailsCard = ({ setOpen, book }) => {
         <div className="fixed inset-0 bg-[#00000030] z-40 flex items-center justify-center">
 
             {/* Modal */}
-            <div className="w-[90%] 800px:w-[60%] max-h-[70vh] bg-white rounded-md shadow-sm relative">
+            <div className="w-[90%] 800px:w-[60%] max-h-[80vh] bg-white rounded-lg shadow-lg relative overflow-hidden">
 
                 {/* Close Button */}
                 <RxCross1
                     size={30}
-                    className="absolute right-3 top-3 z-50 cursor-pointer"
+                    className="absolute right-4 top-4 z-50 cursor-pointer hover:rotate-90 transition-transform"
                     onClick={() => setOpen(false)}
                 />
 
                 {/* Scrollable Content */}
-                <div className="overflow-y-auto max-h-[70vh] p-4">
+                <div className="overflow-y-auto max-h-[80vh]">
 
-                    <div className="block w-full 800px:flex gap-4">
+                    <div className="block w-full 800px:flex">
 
-                        {/* Left-side */}
-                        <div className="w-full 800px:w-[50%]">
+                        {/* Left-side - Image */}
+                        <div className="w-full 800px:w-[45%] bg-gray-50 p-6">
 
                             {/* Book Image */}
-                            <div className="h-[300px] flex items-center justify-center">
+                            <div className="h-[350px] flex items-center justify-center">
                                 <img
                                     src={book?.image_Url?.[0]?.url}
-                                    className="max-h-full object-contain"
+                                    className="max-h-full max-w-full object-contain"
                                     alt={book?.name}
                                 />
                             </div>
-
-                            {/* Shop Avatar */}
-                            <div className="flex items-center mt-4">
-                                <img
-                                    src={book?.shop?.shop_avatar?.url}
-                                    alt="Shop Avatar"
-                                    className="w-[80px] h-[80px] rounded-full mr-3"
-                                />
-                                <h3 className={styles.shop_name}>
-                                    {book?.shop?.name}
-                                </h3>
-                            </div>
-
-                            {/* Send Message */}
-                            <div
-                                className={`${styles.button} bg-black rounded-[4px] h-11 mt-4`}
-                                onClick={handleMessageSubmit}
-                            >
-                                <span className="text-white flex items-center justify-center h-full">
-                                    Send Message <AiOutlineMessage className="ml-2" />
-                                </span>
-                            </div>
                         </div>
 
-                        {/* Right-side */}
-                        <div className="w-full 800px:w-[50%]">
-                            <h1 className={`${styles.productTitle} text-[20px]`}>
+                        {/* Right-side - Product Details */}
+                        <div className="w-full 800px:w-[55%] p-6 flex flex-col">
+                            
+                            {/* Title */}
+                            <h1 className="text-2xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2">
                                 {book?.name}
                             </h1>
 
-                            <p className="mt-2 text-gray-600">
+                            {/* Author */}
+                            <p className="text-gray-600 text-sm mb-4">
+                                By {book?.author || "Unknown Author"}
+                            </p>
+
+                            {/* Description */}
+                            <p className="text-gray-700 text-sm mb-6 line-clamp-3">
                                 {book?.description}
                             </p>
 
                             {/* Price */}
-                            <div className="pt-3">
-                                <h4 className={`${styles.productprice} text-2xl font-bold text-green-600`}>
+                            <div className="mb-4 pb-4 border-b">
+                                <p className={`text-3xl font-bold text-[#D98C00]`}>
                                     Rs. {Number(book?.price).toLocaleString("en-PK")}
-                                </h4>
+                                </p>
                             </div>
 
-                            {/* Exchangeable + Cart + Wishlist */}
-                            <div className="flex items-center mt-6">
-                                {book.exchangeable && (
-                                    <span className="px-4 py-2 text-sm bg-blue-100 text-blue-700 rounded">
-                                        Exchangeable
+                            {/* Exchangeable Badge */}
+                            {book?.exchangeable && (
+                                <div className="mb-6">
+                                    <span className="px-4 py-2 text-sm font-semibold bg-blue-100 text-blue-700 rounded-full inline-block">
+                                         Exchangeable
                                     </span>
-                                )}
-
-                                <div className="ml-auto">
-                                    {wishlisted ? (
-                                        <AiFillHeart
-                                            size={30}
-                                            className="cursor-pointer text-red-500"
-                                            onClick={removeFromWishlistHandler}
-                                        />
-                                    ) : (
-                                        <AiOutlineHeart
-                                            size={30}
-                                            className="cursor-pointer"
-                                            onClick={addToWishlistHandler}
-                                        />
-                                    )}
                                 </div>
-                            </div>
-                            {/* Add to Cart */}
-                            <div className={`${styles.button} bg-black rounded-[4px] h-11 px-4 w-full mt-6`}>
-                                <span className="text-white flex items-center justify-center h-full">
-                                    Add to Cart <AiOutlineShoppingCart size={22} className="ml-2" />
-                                </span>
+                            )}
+
+                            {/* Buttons Section */}
+                            <div className="flex gap-3 mt-auto">
+                                
+                                {/* Add to Cart Button */}
+                                <button className="flex-1 bg-[#D98C00] text-white font-semibold py-2.5 rounded-lg hover:bg-[#A86500] active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                                    <AiOutlineShoppingCart size={22} />
+                                    Add to Cart
+                                </button>
+
+                                {/* Send Message Button */}
+                                <button
+                                    className="flex-1 bg-gray-800 text-white font-semibold py-2.5 rounded-lg hover:bg-gray-900 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                                    onClick={handleMessageSubmit}
+                                >
+                                    <AiOutlineMessage size={22} />
+                                    Message
+                                </button>
+
+                                {/* Wishlist Button */}
+                                <button
+                                    onClick={wishlisted ? removeFromWishlistHandler : addToWishlistHandler}
+                                    className="px-4 py-2.5 border-2 border-gray-300 rounded-lg hover:border-[#D98C00] transition-all flex items-center justify-center"
+                                >
+                                    {wishlisted ? (
+                                        <AiFillHeart size={24} className="text-red-500" />
+                                    ) : (
+                                        <AiOutlineHeart size={24} className="text-gray-600" />
+                                    )}
+                                </button>
                             </div>
 
                         </div>

@@ -4,9 +4,8 @@ import { RxAvatar } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
-import oldBooks from "../../Assets/Logo/old.jpg";
-// import { server } from "../../server";
 import { toast } from "react-toastify";
+import RebookLogo from "../../Assets/Logo/white.png";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -58,29 +57,64 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      
+      {/* Header */}
+      <header className="bg-[#D98C00] shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          
+          {/* Logo */}
+          <div className="flex items-center">
+            <img src={RebookLogo} alt="Book Bazaar Logo" className="h-10 w-auto mr-2" />
+          </div>
 
-        {/* Left Image */}
-        <div className="hidden md:block">
-          <img
-            src={oldBooks}
-            alt="Old Books"
-            className="w-full h-full object-cover"
-          />
+          {/* Centered Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
+            <Link 
+              to="/" 
+              className="px-4 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
+            >
+              Home
+            </Link>
+            <Link 
+              to="/browse" 
+              className="px-4 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
+            >
+              Browse Books
+            </Link>
+            <Link 
+              to="/about-us" 
+              className="px-4 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
+            >
+              About Us
+            </Link>
+          </nav>
+
+          {/* Sign In Link */}
+          <div className="flex items-center gap-4">
+            <Link 
+              to="/login" 
+              className="px-4 py-2 text-white hover:bg-orange-50 hover:text-black rounded-full font-medium transition"
+            >
+              Sign In
+            </Link>
+          </div>
         </div>
+      </header>
 
-        {/* Right Form */}
-        <div className="p-8 sm:p-10">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Register as a new user
+      {/* Signup Content */}
+      <div className="flex-1 flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 sm:p-10">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            Create Account
           </h2>
+          <p className="text-[#D98C00] mb-8">Join our community</p>
 
           <form className="space-y-6" onSubmit={handleSubmit}>
 
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name
               </label>
               <input
@@ -88,13 +122,14 @@ const Signup = () => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your full name"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D98C00] focus:border-transparent transition"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
               <input
@@ -102,13 +137,14 @@ const Signup = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                placeholder="you@example.com"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D98C00] focus:border-transparent transition"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -117,31 +153,30 @@ const Signup = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D98C00] focus:border-transparent transition"
                 />
-                {visible ? (
-                  <AiOutlineEye
-                    className="absolute right-3 top-2.5 cursor-pointer"
-                    size={22}
-                    onClick={() => setVisible(false)}
-                  />
-                ) : (
-                  <AiOutlineEyeInvisible
-                    className="absolute right-3 top-2.5 cursor-pointer"
-                    size={22}
-                    onClick={() => setVisible(true)}
-                  />
-                )}
+                <button
+                  type="button"
+                  onClick={() => setVisible(!visible)}
+                  className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+                >
+                  {visible ? (
+                    <AiOutlineEye size={22} />
+                  ) : (
+                    <AiOutlineEyeInvisible size={22} />
+                  )}
+                </button>
               </div>
             </div>
 
             {/* Avatar Upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Upload Avatar
               </label>
               <div className="flex items-center gap-4">
-                <div className="h-10 w-10 rounded-full overflow-hidden border">
+                <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-[#D98C00] flex items-center justify-center bg-gray-100">
                   {avatar ? (
                     <img
                       src={URL.createObjectURL(avatar)}
@@ -149,12 +184,12 @@ const Signup = () => {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <RxAvatar className="h-full w-full text-gray-400" />
+                    <RxAvatar className="h-8 w-8 text-gray-400" />
                   )}
                 </div>
 
-                <label className="cursor-pointer px-4 py-2 border rounded-md text-sm">
-                  Upload file
+                <label className="cursor-pointer px-4 py-2 border border-[#D98C00] rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                  Choose File
                   <input
                     type="file"
                     accept=".jpg,.jpeg,.png"
@@ -168,18 +203,28 @@ const Signup = () => {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full py-2.5 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition"
+              className="w-full py-2.5 bg-[#D98C00] text-white font-semibold rounded-lg hover:bg-[#A86500] active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
             >
-              Submit
+              Create Account
             </button>
 
-            {/* Login */}
-            <p className="text-sm text-center text-gray-700">
-              Already have an account?
-              <Link to="/login" className="text-blue-600 ml-1">
-                Sign In
-              </Link>
-            </p>
+            {/* Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-600">Already have an account?</span>
+              </div>
+            </div>
+
+            {/* Sign In Link */}
+            <Link
+              to="/login"
+              className="w-full py-2.5 border-2 border-[#D98C00] text-[#D98C00] font-semibold rounded-lg hover:bg-orange-50 transition-all duration-200 text-center block"
+            >
+              Sign In
+            </Link>
 
           </form>
         </div>

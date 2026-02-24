@@ -15,9 +15,6 @@ const WishlistPage = () => {
                         <h1 className="text-3xl font-bold text-gray-800 tracking-wide">
                             My Wishlist
                         </h1>
-                        <AiFillHeart
-                            className="text-red-500 text-3xl animate-pulse hover:scale-125 transition-transform cursor-pointer"
-                        />
                     </div>
                     <p className="text-gray-700 text-center text-sm max-w-md">
                         Here you can keep all your favorite products in one place. Add items to your wishlist and come back later to purchase them easily.
@@ -91,7 +88,7 @@ const WishlistPage = () => {
                                     <div className="flex gap-2 mt-auto">
                                         {/* Buy Now Button */}
                                         <button
-                                            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out shadow-sm hover:shadow-md"
+                                            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#D98C00] rounded-lg hover:bg-[#A86500] transition duration-300 ease-in-out shadow-sm hover:shadow-md"
                                         >
                                             Buy Now
                                         </button>
@@ -99,7 +96,7 @@ const WishlistPage = () => {
                                         {/* Remove Button (small) */}
                                         <button
                                             onClick={() => removeFromWishlist(item.id)}
-                                            className="px-3 py-2 text-xs font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition duration-300 ease-in-out shadow-sm hover:shadow-md"
+                                            className="px-3 py-2 text-xs font-medium text-white  rounded-lg bg-gray-800 hover:bg-gray-900 transition duration-300 ease-in-out shadow-sm hover:shadow-md"
                                         >
                                             Remove
                                         </button>

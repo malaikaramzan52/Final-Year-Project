@@ -71,29 +71,12 @@ const CartPage = () => {
                                         <p className="text-green-600 font-bold text-lg">
                                             Rs. {item.price}
                                         </p>
+
                                         {item.exchangeable && (
-                                            <span className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded">
+                                            <span className="relative -top-1 px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">
                                                 Exchangeable
                                             </span>
                                         )}
-                                    </div>
-                                    {/* Quantity Controls */}
-                                    <div className="flex items-center gap-3 mt-2 mb-2">
-                                        <button
-                                            onClick={() => decreaseQuantity(item.id)}
-                                            className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                                        >
-                                            −
-                                        </button>
-
-                                        <span className="font-medium">{item.quantity}</span>
-
-                                        <button
-                                            onClick={() => increaseQuantity(item.id)}
-                                            className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                                        >
-                                            +
-                                        </button>
                                     </div>
 
                                     {/* Spacer */}
@@ -101,13 +84,13 @@ const CartPage = () => {
 
                                     {/* Buttons */}
                                     <div className="flex gap-2 mt-auto">
-                                        <button className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition shadow-sm">
-                                            Buy Now 
+                                        <button className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#D98C00] rounded-lg hover:bg-[#A86500] transition shadow-sm">
+                                            Buy Now
                                         </button>
 
                                         <button
                                             onClick={() => removeFromCart(item.id)}
-                                            className="px-3 py-2 text-xs font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition shadow-sm"
+                                            className="px-3 py-2 text-xs font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 transition shadow-sm"
                                         >
                                             Remove
                                         </button>
