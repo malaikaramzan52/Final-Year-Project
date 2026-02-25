@@ -2,6 +2,10 @@
 import { useCart } from "../context/CartContext";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import RebookLogo from "../Assets/Logo/white.png";
+import { navItems } from "../static/data";
+import Footer from "../components/Layout/Footer";
 
 const CartPage = () => {
     const {
@@ -12,23 +16,69 @@ const CartPage = () => {
     } = useCart();
 
     return (
-        <div className="min-h-screen bg-[#f5f7fa] py-10">
-            <div className="max-w-7xl mx-auto px-4">
+        <div className="min-h-screen bg-[#f5f7fa]">
+            {/* Header with Logo and Navigation */}
+            <header className="bg-[#D98C00] shadow-lg sticky top-0 z-50">
+                <div className="max-w-7xl mx-auto px-4 py-2">
+                    <div className="flex items-center justify-between">
+                        {/* Logo on Left */}
+                        <Link to="/" className="flex-shrink-0 hover:opacity-80 transition-opacity duration-200">
+                            <img
+                                src={RebookLogo}
+                                alt="Rebook Logo"
+                                className="h-12 w-auto"
+                            />
+                        </Link>
 
-                {/* Page Heading */}
-                <div className="flex flex-col items-center justify-center gap-2 mb-8 p-4 bg-gray-50 rounded-lg shadow-md">
-                    <div className="flex items-center gap-3">
-                        <h1 className="text-3xl font-bold text-gray-800 tracking-wide">
-                            My Cart
-                        </h1>
-                        <AiOutlineShoppingCart className="text-green-600 text-3xl" />
+                        {/* Nav Items at Center */}
+                        <nav className="hidden md:flex items-center justify-center gap-8 flex-1">
+                            {navItems.map((item) => (
+                                <Link
+                                    key={item.id}
+                                    to={item.url}
+                                    className="
+        text-white font-medium
+        px-4
+        rounded-full
+        transition-all duration-300 ease-in-out
+        hover:bg-white
+        hover:text-black
+        hover:shadow-md
+      "
+                                >
+                                    {item.title}
+                                </Link>
+                            ))}
+                        </nav>
+
+                        {/* Placeholder for right side actions (optional) */}
+                        <div className="flex-shrink-0">
+                            <button
+                                className="
+      bg-white text-black
+      px-6 py-3
+      rounded-full
+      border-2 border-[#D98C00]
+      shadow-md
+      font-bold text-lg tracking-wide
+      flex items-center justify-center
+      transition-transform transition-shadow duration-300
+      hover:scale-105
+      hover:shadow-xl
+      active:scale-95
+    "
+                            >
+                                My Cart
+                            </button>
+                        </div>
                     </div>
-                    <p className="text-gray-700 text-center text-sm max-w-md">
-                        Review your selected items, adjust quantities, and proceed to checkout.
-                    </p>
                 </div>
+            </header>
 
-                {/* Empty Cart */}
+            {/* Main Content */}
+            <div className="min-h-screen bg-[#f5f7fa] py-10">
+                <div className="max-w-7xl mx-auto px-4">
+                    {/* Empty Cart */}
                 {cart.length === 0 ? (
                     <div className="flex flex-col items-center justify-center mt-24 text-center">
                         <div className="text-6xl mb-4">🛒</div>
@@ -101,7 +151,11 @@ const CartPage = () => {
                         ))}
                     </div>
                 )}
+                </div>
             </div>
+
+            {/* Footer */}
+            <Footer />
         </div>
     );
 };

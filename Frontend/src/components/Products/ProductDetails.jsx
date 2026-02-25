@@ -34,53 +34,56 @@ const ProductDetails = ({ book }) => {
                     className="h-[400px] w-full object-contain" />
                 </div>
                 {/* Right side  */}
-                <div className="w-full 800px:w-[50%] pt-5">
+                <div className="w-full 800px:w-[50%] pt-5 800px:pl-8">
                   <div className="w-full">
-                    <h1 className={`${styles.productTitle}`}>{book.name}</h1>
-                    <p>{book.description}</p>
-                    <div className="flex pt-3">
-                      <h4 className={`${styles.price}`}>Rs.{book.price}</h4>
-                    </div>
-                    <div className="flex items-center justify-between pt-5">
-
-
-
+                    {/* Title */}
+                    <h1 className={`${styles.productTitle} mb-4`}>{book.name}</h1>
+                    
+                    {/* Description */}
+                    <p className="text-gray-600 text-sm mb-6 leading-relaxed">{book.description}</p>
+                    
+                    {/* Price and Wishlist */}
+                    <div className="flex items-center justify-between mb-8 pb-6 border-b-2 border-gray-200">
+                      <h4 className={`${styles.price} text-3xl font-bold text-[#D98C00]`}>Rs.{book.price}</h4>
                       {/* Heart Icon */}
-                      <div
-                        className="cursor-pointer"
+                      <button
+                        className="p-3 rounded-full border-2 border-[#D98C00] hover:bg-red-50 transition duration-300 transform hover:scale-110"
                         onClick={() => setClick(!click)}
                         title="Add to wishlist"
                       >
                         {click ? (
-                          <AiFillHeart size={30} className="text-red-500" />
+                          <AiFillHeart size={28} className="text-red-500" />
                         ) : (
-                          <AiOutlineHeart size={30} className="text-gray-600 hover:text-red-500" />
+                          <AiOutlineHeart size={28} className="text-gray-600 hover:text-red-500" />
                         )}
-                      </div>
-
+                      </button>
                     </div>
-                    {/* Add to Cart Button */}
-                    <div className="pt-6 flex items-center justify-between  gap-6">
-                      {/* Add to Cart */}
+
+                    {/* Action Buttons */}
+                    <div className="space-y-4 mb-8">
+                      {/* Add to Cart Button */}
                       <button
-                        className="w-[140px] flex items-center justify-center gap-2
-               bg-[#D98C00] text-white py-3 rounded-full px-2
-               text-base font-semibold
-               hover:bg-[#A86500] transition duration-300"
+                        className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white py-4 rounded-full text-base font-bold shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95"
                       >
-                        <AiOutlineShoppingCart size={20} />
+                        <AiOutlineShoppingCart size={26} />
                         Add to Cart
                       </button>
 
-                      {/* Exchangeable Button (Only if true) */}
+                      {/* Send Message Button */}
+                      <button
+                        className="w-full flex items-center justify-center gap-3 bg-white text-[#D98C00] py-4 rounded-full text-base font-bold border-3 border-[#D98C00] shadow-md hover:shadow-xl transition duration-300 transform hover:scale-105 active:scale-95"
+                        onClick={handleMessageSubmit}
+                      >
+                        <AiOutlineMessage size={24} />
+                        Send Message
+                      </button>
+
+                      {/* Exchangeable Badge Button */}
                       {book.exchangeable && (
                         <button
                           type="button"
-                          className="px-4 py-2 font-semibold
-               bg-blue-100 text-blue-700 rounded-full
-               hover:bg-blue-200 transition duration-300"
+                          className="w-full px-6 py-4 font-bold bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white rounded-full border-2 border-[#D98C00] hover:shadow-lg transition duration-300 transform hover:scale-105 active:scale-95 shadow-md"
                           onClick={() => {
-                            // your action here (optional)
                             console.log("Exchange policy clicked");
                           }}
                         >
@@ -88,25 +91,6 @@ const ProductDetails = ({ book }) => {
                         </button>
                       )}
                     </div>
-                    {/* Handle Message */}
-                    <div className="flex items-center justify-between">
-
-
-                      {/* Right: Send Message Button */}
-                      <div
-                        className={`${styles.button} bg-[#D98C00] hover:bg-[#A86500] rounded-[4px] h-11`}
-                        onClick={handleMessageSubmit}
-                      >
-                        <span className="text-white flex items-center justify-center h-full px-2 text-sm">
-                          Send Message <AiOutlineMessage className="ml-2" size={16} />
-                        </span>
-                      </div>
-
-                    </div>
-
-
-
-
                   </div>
                 </div>
               </div>
