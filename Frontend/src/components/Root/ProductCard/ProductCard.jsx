@@ -41,104 +41,113 @@ const ProductCard = ({ book }) => {
   };
 
   return (
-    <div className="w-full bg-white shadow-md rounded-lg p-4 relative hover:shadow-lg transition flex flex-col">
+    <div className="w-full bg-white rounded-2xl hover:shadow-xl transition-shadow duration-300 flex flex-col group border border-gray-100 will-change-auto">
 
-      {/* Right Sidebar Icons */}
-      <div className="absolute top-3 right-3 flex flex-col gap-3">
+      {/* Image Section */}
+      <div className="relative bg-[#D98C00]/15 rounded-t-2xl p-4 pb-2 overflow-hidden">
 
-        {/* Wishlist */}
-        {isWishlisted ? (
-          <AiFillHeart
-            size={22}
-            className="cursor-pointer text-red-500"
-            onClick={removeFromWishlistHandler}
+        {/* Book Image */}
+        <Link to={`/product/${book.id}`}>
+          <img
+            src={book?.image_Url?.[0]?.url || "https://via.placeholder.com/150"}
+            alt={book?.name || "Book"}
+            className="w-full h-52 object-contain transition-transform duration-300 group-hover:scale-105 cursor-pointer"
           />
-        ) : (
-          <AiOutlineHeart
-            size={22}
-            className="cursor-pointer"
-            onClick={addToWishlistHandler}
-            title="Add to Wishlist"
-          />
-        )}
+        </Link>
 
-        {/* View */}
-        <AiOutlineEye
-          size={22}
-          className="cursor-pointer text-gray-700 hover:text-black"
-          onClick={() => setOpen(!open)}
-          title="Quick View"
-        />
-
-        {/* Add to Cart Icon */}
-        <AiOutlineShoppingCart
-          size={25}
-          className={`cursor-pointer hover:text-black ${isInCart ? "text-green-600" : "text-gray-700"}`}
-          onClick={addToCartHandler}
-          title="Add to cart"
-        />
-
-        {open && (
-          <ProductDetailsCard setOpen={setOpen} book={book} />
+        {/* Exchangeable Tag */}
+        {book.exchangeable && (
+          <span className="absolute bottom-3 left-3 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-green-500 text-white rounded-full shadow-sm">
+            Exchangeable
+          </span>
         )}
       </div>
 
-      {/* Book Image */}
-      
-        <img
-          src={book?.image_Url?.[0]?.url || "https://via.placeholder.com/150"}
-          alt={book?.name || "Book"}
-          className="w-full h-48 object-contain"
-        />
-     
-
-      {/* Book Info */}
-      <div>
-        <h3 className="font-semibold text-lg mt-2">{book.name}</h3>
-        <p className="text-gray-500 text-sm">By {book.author}</p>
-
-        <div className="flex items-center mt-1 text-yellow-500">
-          <AiFillStar className="mr-1" />
-          <AiFillStar className="mr-1" />
-          <AiFillStar className="mr-1" />
-          <AiFillStar className="mr-1" />
-          <AiFillStar className="mr-1 text-gray-300" />
-        </div>
-
-        <div className="flex items-center justify-between mt-2">
-          <p className="text-green-600 font-bold text-lg">
-            Rs. {book.price}
-          </p>
-
-          {book.exchangeable && (
+      {/* Action Icons Strip - sits between image and info, no absolute positioning */}
+      <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-100">
+        {/* Wishlist */}
+        <div>
+          {isWishlisted ? (
             <button
-              type="button"
-              className="px-2 font-semibold
-               bg-blue-100 text-blue-700 rounded-full
-               hover:bg-blue-200 transition duration-300"
-              onClick={() => {
-                // your action here (optional)
-                console.log("Exchange policy clicked");
-              }}
+              className="p-2 rounded-full bg-red-50 hover:bg-red-100 transition-colors duration-200"
+              onClick={removeFromWishlistHandler}
+              title="Remove from Wishlist"
             >
-              Exchangeable
+              <AiFillHeart size={18} className="text-red-500" />
+            </button>
+          ) : (
+            <button
+              className="p-2 rounded-full hover:bg-red-50 transition-colors duration-200"
+              onClick={addToWishlistHandler}
+              title="Add to Wishlist"
+            >
+              <AiOutlineHeart size={18} className="text-gray-400 hover:text-red-500" />
             </button>
           )}
         </div>
 
+        {/* Quick View & Cart */}
+        <div className="flex items-center gap-2">
+          <button
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+            onClick={() => setOpen(!open)}
+            title="Quick View"
+          >
+            <AiOutlineEye size={18} className="text-gray-400 hover:text-gray-700" />
+          </button>
+          <button
+            className={`p-2 rounded-full transition-colors duration-200 ${isInCart ? "bg-green-50 hover:bg-green-100" : "hover:bg-gray-100"}`}
+            onClick={addToCartHandler}
+            title="Add to cart"
+          >
+            <AiOutlineShoppingCart size={18} className={isInCart ? "text-green-600" : "text-gray-400 hover:text-gray-700"} />
+          </button>
+        </div>
       </div>
 
-      {/* Bottom Add to Cart Button */}
-      <Link to={`/product/${book.id}`}>
-      <div className="mt-4">
-        <button
-          className="flex items-center justify-center w-full py-2 rounded bg-[#D98C00] hover:bg-[#A86500] text-white transition"
-        >
-         Buy Now
-        </button>
+      {open && (
+        <ProductDetailsCard setOpen={setOpen} book={book} />
+      )}
+
+      {/* Book Info Section */}
+      <div className="p-4 flex flex-col flex-1">
+        {/* Author */}
+        <p className="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">
+          {book.author}
+        </p>
+
+        {/* Title */}
+        <Link to={`/product/${book.id}`}>
+          <h3 className="font-bold text-base text-gray-800 leading-snug hover:text-[#D98C00] transition-colors duration-200 line-clamp-2 mb-2">
+            {book.name}
+          </h3>
+        </Link>
+
+        {/* Rating */}
+        <div className="flex items-center gap-0.5 mb-3">
+          <AiFillStar className="text-amber-400" size={14} />
+          <AiFillStar className="text-amber-400" size={14} />
+          <AiFillStar className="text-amber-400" size={14} />
+          <AiFillStar className="text-amber-400" size={14} />
+          <AiFillStar className="text-gray-200" size={14} />
+          <span className="text-xs text-gray-400 ml-1">(4.0)</span>
         </div>
-      </Link>
-    
+
+        {/* Spacer */}
+        <div className="flex-1"></div>
+
+        {/* Price & Buy Button Row */}
+        <div className="flex items-center justify-between mt-2 pt-3 border-t border-gray-100">
+          <p className="text-[#D98C00] font-extrabold text-xl">
+            Rs. {book.price}
+          </p>
+          <Link to={`/product/${book.id}`}>
+            <button className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-full hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
+              Buy Now
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
