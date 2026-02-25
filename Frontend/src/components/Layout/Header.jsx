@@ -104,7 +104,7 @@ const Header = ({ activeHeading }) => {
           </div>
 
           {/* Become Seller Button */}
-          <div className={`${styles.button}  rounded-full bg-[#D98C00] ml-4`}>
+          <div className={`${styles.button}  rounded-md bg-[#D98C00] ml-4`}>
             <Link to="/login">
               <h1 className="text-[#fff] flex items-center">
                 Become Seller

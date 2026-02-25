@@ -39,7 +39,7 @@ const CartPage = () => {
                                     className="
         text-white font-medium
         px-4
-        rounded-full
+        rounded-md
         transition-all duration-300 ease-in-out
         hover:bg-white
         hover:text-black
@@ -57,7 +57,7 @@ const CartPage = () => {
                                 className="
       bg-white text-black
       px-6 py-3
-      rounded-full
+      rounded-md
       border-2 border-[#D98C00]
       shadow-md
       font-bold text-lg tracking-wide

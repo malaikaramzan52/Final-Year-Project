@@ -72,19 +72,19 @@ const Signup = () => {
           <nav className="hidden md:flex items-center gap-6">
             <Link 
               to="/" 
-              className="px-4 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
+              className="px-4 rounded-md text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
             >
               Home
             </Link>
             <Link 
               to="/browse" 
-              className="px-4 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
+              className="px-4 rounded-md text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
             >
               Browse Books
             </Link>
             <Link 
               to="/about-us" 
-              className="px-4 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
+              className="px-4 rounded-md text-white font-medium hover:bg-white hover:text-black transition-all duration-200"
             >
               About Us
             </Link>
@@ -94,7 +94,7 @@ const Signup = () => {
           <div className="flex items-center gap-4">
             <Link 
               to="/login" 
-              className="px-4 py-2 text-white hover:bg-orange-50 hover:text-black rounded-full font-medium transition"
+              className="px-4 py-2 text-white hover:bg-orange-50 hover:text-black rounded-md font-medium transition"
             >
               Sign In
             </Link>

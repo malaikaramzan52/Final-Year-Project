@@ -12,7 +12,7 @@ const Navbar = ({ active }) => {
             to={i.url}
             className={`
               pb-[30px] 800px:pb-0 px-4 cursor-pointer font-[500]
-              rounded-full transition-all duration-300 ease-in-out
+             transition-all duration-300 ease-in-out rounded-md
               ${
                 active === index + 1
                   ? "bg-white text-black shadow-md"

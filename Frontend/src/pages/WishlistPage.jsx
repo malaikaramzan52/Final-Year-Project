@@ -33,7 +33,7 @@ const WishlistPage = () => {
                                     className="
         text-white font-medium
         px-4
-        rounded-full
+        rounded-md
         transition-all duration-300 ease-in-out
         hover:bg-white
         hover:text-black
@@ -47,11 +47,11 @@ const WishlistPage = () => {
 
                         {/* Placeholder for right side actions (optional) */}
                         <div className="flex-shrink-0">
-  <button
-    className="
+                            <button
+                                className="
       bg-white text-black
       px-6 py-3
-      rounded-full
+      rounded-md
       border-2 border-[#D98C00]
       shadow-md
       font-bold text-lg tracking-wide
@@ -61,10 +61,10 @@ const WishlistPage = () => {
       hover:shadow-xl
       active:scale-95
     "
-  >
-    My Wishlist
-  </button>
-</div>
+                            >
+                                My Wishlist
+                            </button>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -73,12 +73,6 @@ const WishlistPage = () => {
             <div className="min-h-screen bg-[#f5f7fa] py-10">
                 <div className="max-w-7xl mx-auto px-4">
 
-                    {/* Page Heading */}
-                    
-                        
-                        
-
-                        
                     {/* Empty Wishlist */}
                     {wishlist.length === 0 ? (
                         <div className="flex flex-col items-center justify-center mt-24 text-center">

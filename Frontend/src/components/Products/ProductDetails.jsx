@@ -38,10 +38,10 @@ const ProductDetails = ({ book }) => {
                   <div className="w-full">
                     {/* Title */}
                     <h1 className={`${styles.productTitle} mb-4`}>{book.name}</h1>
-                    
+
                     {/* Description */}
                     <p className="text-gray-600 text-sm mb-6 leading-relaxed">{book.description}</p>
-                    
+
                     {/* Price and Wishlist */}
                     <div className="flex items-center justify-between mb-8 pb-6 border-b-2 border-gray-200">
                       <h4 className={`${styles.price} text-3xl font-bold text-[#D98C00]`}>Rs.{book.price}</h4>
@@ -61,6 +61,42 @@ const ProductDetails = ({ book }) => {
 
                     {/* Action Buttons */}
                     <div className="space-y-4 mb-8">
+                      {/* Send Message and Exchangeable Row */}
+                      <div className="flex gap-8 items-center justify-between">
+                        {/* Send Message Button */}
+                        <button
+                          className="flex-1 flex items-center justify-center gap-2 
+             bg-white text-[#D98C00] 
+             py-3 px-2 
+             rounded-full 
+             text-sm font-semibold 
+             border-2 border-[#D98C00] 
+             shadow-md hover:shadow-lg 
+             transition duration-300 
+             transform hover:scale-105 active:scale-95"
+                          onClick={handleMessageSubmit}
+                        >
+                          <AiOutlineMessage size={20} />
+                          Send Message
+                        </button>
+
+                        {/* Exchangeable Badge Button */}
+                        {book.exchangeable && (
+                          <button
+                            type="button"
+                            className="px-4 py-2 font-semibold
+               bg-blue-100 text-blue-700 rounded-full
+               hover:bg-blue-200 transition duration-300"
+                            onClick={() => {
+                              // your action here (optional)
+                              console.log("Exchange policy clicked");
+                            }}
+                          >
+                            Exchangeable
+                          </button>
+                        )}
+                      </div>
+
                       {/* Add to Cart Button */}
                       <button
                         className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white py-4 rounded-full text-base font-bold shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95"
@@ -68,28 +104,6 @@ const ProductDetails = ({ book }) => {
                         <AiOutlineShoppingCart size={26} />
                         Add to Cart
                       </button>
-
-                      {/* Send Message Button */}
-                      <button
-                        className="w-full flex items-center justify-center gap-3 bg-white text-[#D98C00] py-4 rounded-full text-base font-bold border-3 border-[#D98C00] shadow-md hover:shadow-xl transition duration-300 transform hover:scale-105 active:scale-95"
-                        onClick={handleMessageSubmit}
-                      >
-                        <AiOutlineMessage size={24} />
-                        Send Message
-                      </button>
-
-                      {/* Exchangeable Badge Button */}
-                      {book.exchangeable && (
-                        <button
-                          type="button"
-                          className="w-full px-6 py-4 font-bold bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white rounded-full border-2 border-[#D98C00] hover:shadow-lg transition duration-300 transform hover:scale-105 active:scale-95 shadow-md"
-                          onClick={() => {
-                            console.log("Exchange policy clicked");
-                          }}
-                        >
-                          Exchangeable
-                        </button>
-                      )}
                     </div>
                   </div>
                 </div>
