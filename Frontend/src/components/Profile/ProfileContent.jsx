@@ -289,7 +289,7 @@ const ProfileContent = ({ active, user }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="px-8 py-2 bg-[#3ad132] text-white font-semibold rounded-lg hover:bg-[#2ebd28] transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="px-8 py-2 bg-[#D98C00] text-white font-semibold rounded-lg hover:bg-[#A86500] transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
               >
                 {loading ? "Updating…" : "Update Profile"}
               </button>

@@ -1,85 +1,153 @@
-import React from 'react'
-import {  AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
-import {  HiOutlineShoppingBag } from "react-icons/hi";
+import React, { useState } from 'react'
+import { AiOutlineLogin } from "react-icons/ai";
+import { HiOutlineShoppingBag } from "react-icons/hi";
 import { RxPerson } from 'react-icons/rx';
-import { Link, useNavigate } from "react-router-dom";
-import {
-    MdOutlineAdminPanelSettings,
-    MdOutlinePassword,
-    MdOutlineTrackChanges,
-} from "react-icons/md";
-import { TbAddressBook } from "react-icons/tb";
-const ProfileSideBar = ({ active, setActive }) => {
-     const navigate = useNavigate();
+import { MdOutlineSwapHoriz } from "react-icons/md";
+import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+
+const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
+    const navigate = useNavigate();
+    const [expandMyOrders, setExpandMyOrders] = useState(false);
+    const [expandExchange, setExpandExchange] = useState(false);
+
+    const menuItems = [
+        { id: 1, label: "My Profile", icon: RxPerson },
+        { id: 2, label: "My Books", icon: HiOutlineShoppingBag },
+    ];
+
+    const handleLogout = () => {
+        // Handle logout logic here
+        navigate("/");
+    };
+
     return (
-        <div className='w-full bg-white shadow-sm rounded-[10px] p-4 pt-8'>
-            {/* Profile */}
+        <div className='w-full bg-white shadow-sm rounded-lg p-6'>
+            
+            {/* User Points Display */}
+            <div className="mb-8 pb-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-gray-700">Points Balance</p>
+                    <span className="text-xl font-bold text-[#D98C00]">{userPoints}</span>
+                </div>
+            </div>
+
+            {/* My Profile */}
             <div
-                className="flex items-center cursor-pointer w-full mb-8"
+                className={`flex items-center cursor-pointer w-full mb-6 p-3 rounded-lg transition-all duration-200 ${
+                    active === 1 ? "bg-[#D98C00]/10 border-l-4 border-[#D98C00]" : "hover:bg-gray-50"
+                }`}
                 onClick={() => setActive(1)}
             >
-                <RxPerson size={20} color={active === 1 ? "red" : ""} />
-                 <span
-                    className={`pl-3 ${active === 1 ? "text-[red]" : ""
-                        } 800px:block hidden`}
-                >
-                    Profile
+                <RxPerson size={22} color={active === 1 ? "#D98C00" : "#666"} />
+                <span className={`pl-4 font-medium text-sm ${active === 1 ? "text-[#D98C00]" : "text-gray-700"}`}>
+                    My Profile
                 </span>
             </div>
 
-             {/* Orders */}
+            {/* My Books */}
             <div
-                className="flex items-center cursor-pointer w-full mb-8"
+                className={`flex items-center cursor-pointer w-full mb-6 p-3 rounded-lg transition-all duration-200 ${
+                    active === 2 ? "bg-[#D98C00]/10 border-l-4 border-[#D98C00]" : "hover:bg-gray-50"
+                }`}
                 onClick={() => setActive(2)}
             >
-                <HiOutlineShoppingBag size={20} color={active === 2 ? "red" : ""} />
-                <span
-                    className={`pl-3 ${active === 2 ? "text-[red]" : ""
-                        } 800px:block hidden`}
-                >
-                    Orders
+                <HiOutlineShoppingBag size={22} color={active === 2 ? "#D98C00" : "#666"} />
+                <span className={`pl-4 font-medium text-sm ${active === 2 ? "text-[#D98C00]" : "text-gray-700"}`}>
+                    My Books
                 </span>
             </div>
-            {/* Inbox */}
-             <div
-                className="flex items-center cursor-pointer w-full mb-8"
-                onClick={() => setActive(4) || navigate("/inbox")}
-            >
-                <AiOutlineMessage size={20} color={active === 4 ? "red" : ""} />
-                <span
-                    className={`pl-3 ${active === 4 ? "text-[red]" : ""
-                        } 800px:block hidden`}
+
+            {/* My Orders - Dropdown */}
+            <div className="mb-6">
+                <div
+                    className={`flex items-center justify-between cursor-pointer w-full p-3 rounded-lg transition-all duration-200 ${
+                        active === 3 ? "bg-[#D98C00]/10 border-l-4 border-[#D98C00]" : "hover:bg-gray-50"
+                    }`}
+                    onClick={() => setExpandMyOrders(!expandMyOrders)}
                 >
-                    inbox
-                </span>
+                    <div className="flex items-center">
+                        <HiOutlineShoppingBag size={22} color={active === 3 || active === 3.1 || active === 3.2 ? "#D98C00" : "#666"} />
+                        <span className={`pl-4 font-medium text-sm ${active === 3 || active === 3.1 || active === 3.2 ? "text-[#D98C00]" : "text-gray-700"}`}>
+                            My Orders
+                        </span>
+                    </div>
+                    {expandMyOrders ? <IoChevronUp size={18} /> : <IoChevronDown size={18} />}
+                </div>
+
+                {/* Dropdown Items */}
+                {expandMyOrders && (
+                    <div className="ml-4 mt-2 space-y-2">
+                        <div
+                            className={`flex items-center cursor-pointer p-2.5 rounded-md transition-all duration-200 text-sm ${
+                                active === 3.1 ? "bg-[#D98C00]/10 text-[#D98C00] font-semibold" : "text-gray-600 hover:text-[#D98C00]"
+                            }`}
+                            onClick={() => setActive(3.1)}
+                        >
+                            • Order Placed
+                        </div>
+                        <div
+                            className={`flex items-center cursor-pointer p-2.5 rounded-md transition-all duration-200 text-sm ${
+                                active === 3.2 ? "bg-[#D98C00]/10 text-[#D98C00] font-semibold" : "text-gray-600 hover:text-[#D98C00]"
+                            }`}
+                            onClick={() => setActive(3.2)}
+                        >
+                            • Order Received
+                        </div>
+                    </div>
+                )}
             </div>
-            {/* TrackOrders */}
-            <div
-                className="flex items-center cursor-pointer w-full mb-8"
-                onClick={() => setActive(5)}
-            >
-                <MdOutlineTrackChanges size={20} color={active === 5 ? "red" : ""} />
-                <span
-                    className={`pl-3 ${active === 5 ? "text-[red]" : ""
-                        } 800px:block hidden`}
+
+            {/* Exchange Request - Dropdown */}
+            <div className="mb-6">
+                <div
+                    className={`flex items-center justify-between cursor-pointer w-full p-3 rounded-lg transition-all duration-200 ${
+                        active === 4 ? "bg-[#D98C00]/10 border-l-4 border-[#D98C00]" : "hover:bg-gray-50"
+                    }`}
+                    onClick={() => setExpandExchange(!expandExchange)}
                 >
-                    Track Order
-                </span>
+                    <div className="flex items-center">
+                        <MdOutlineSwapHoriz size={22} color={active === 4 || active === 4.1 || active === 4.2 ? "#D98C00" : "#666"} />
+                        <span className={`pl-4 font-medium text-sm ${active === 4 || active === 4.1 || active === 4.2 ? "text-[#D98C00]" : "text-gray-700"}`}>
+                            Exchange Request
+                        </span>
+                    </div>
+                    {expandExchange ? <IoChevronUp size={18} /> : <IoChevronDown size={18} />}
+                </div>
+
+                {/* Dropdown Items */}
+                {expandExchange && (
+                    <div className="ml-4 mt-2 space-y-2">
+                        <div
+                            className={`flex items-center cursor-pointer p-2.5 rounded-md transition-all duration-200 text-sm ${
+                                active === 4.1 ? "bg-[#D98C00]/10 text-[#D98C00] font-semibold" : "text-gray-600 hover:text-[#D98C00]"
+                            }`}
+                            onClick={() => setActive(4.1)}
+                        >
+                            • Send Request
+                        </div>
+                        <div
+                            className={`flex items-center cursor-pointer p-2.5 rounded-md transition-all duration-200 text-sm ${
+                                active === 4.2 ? "bg-[#D98C00]/10 text-[#D98C00] font-semibold" : "text-gray-600 hover:text-[#D98C00]"
+                            }`}
+                            onClick={() => setActive(4.2)}
+                        >
+                            • Received Request
+                        </div>
+                    </div>
+                )}
             </div>
+
             {/* Logout */}
-             <div
-                className="flex items-center cursor-pointer w-full mb-8"
+            <div
+                className="flex items-center cursor-pointer w-full p-3 rounded-lg transition-all duration-200 hover:bg-red-50 group mt-8 pt-6 border-t border-gray-200"
+                onClick={handleLogout}
             >
-                <AiOutlineLogin size={20} color={active === 8 ? "red" : ""} />
-                <span
-                    className={`pl-3 ${active === 8 ? "text-[red]" : ""
-                        } 800px:block hidden`}
-                >
-                    loguot
+                <AiOutlineLogin size={22} className="text-red-500 group-hover:text-red-600" />
+                <span className="pl-4 font-medium text-sm text-red-500 group-hover:text-red-600">
+                    Logout
                 </span>
             </div>
-
-
         </div>
     )
 }

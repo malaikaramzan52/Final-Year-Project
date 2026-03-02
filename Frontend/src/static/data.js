@@ -256,7 +256,7 @@ export const productData = [
   image_Url: [
     {
       public_id: "mrchips1",
-      url:"https://readstore.pk/cdn/shop/products/03786.jpg?v=1669721739"
+      url:"https://pk-live-21.slatic.net/kf/S5ac8e6d123754410a00fd7177e901656g.jpg"
     }
   ],
   exchangeable: false,
@@ -283,8 +283,7 @@ export const productData = [
     image_Url: [
       {
         public_id: "time1",
-        url: "https://pictures.abebooks.com/isbn/9780321884053-us.jpg"
-
+        url:"https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1446830169i/27507575.jpg"
       }
     ],
     exchangeable: true,
@@ -313,7 +312,7 @@ export const productData = [
     image_Url: [
       {
         public_id: "habits1",
-        url:"https://sajhakitab.com/wp-content/uploads/2024/07/20240712_160007-rotated.jpg"
+        url:"https://media.springernature.com/full/springer-static/cover-hires/book/978-1-4842-7107-0"
       }
     ],
     exchangeable: false,
@@ -344,7 +343,7 @@ export const productData = [
     image_Url: [
       {
         public_id: "hp1",
-        url: "https://pictures.abebooks.com/isbn/9780968236406-us.jpg"
+        url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQMUkL0xDd6qFiX_SfH7_iwi1sjgFv-U0LXQ&s"
       }
     ],
     exchangeable: true,
@@ -457,8 +456,7 @@ export const productData = [
     image_Url: [
       {
         public_id: "sapiens1",
-        url: "https://progressivebooks.com.pk/wp-content/uploads/2022/06/140.jpg"
-      }
+url:"https://newbooksnbooks.pk/cdn/shop/files/Sharah_Kulyat-e-Iqbal_Urdu_1024x1024.jpg?v=1738649743"      }
     ],
     exchangeable: true,
     shop: {

@@ -1,7 +1,6 @@
 
 import { useCart } from "../context/CartContext";
-import { AiFillStar } from "react-icons/ai";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiFillStar, AiOutlineHeart, AiFillHeart, AiOutlineEye, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import RebookLogo from "../Assets/Logo/white.png";
 import { navItems } from "../static/data";
@@ -56,7 +55,7 @@ const CartPage = () => {
                             <button
                                 className="
       bg-white text-black
-      px-6 py-3
+      px-6 py-1
       rounded-md
       border-2 border-[#D98C00]
       shadow-md
@@ -95,57 +94,93 @@ const CartPage = () => {
                         {cart.map((item) => (
                             <div
                                 key={item.id}
-                                className="bg-white rounded-xl shadow-sm hover:shadow-lg transition p-4 flex flex-col"
+                                className="w-full bg-white rounded-2xl hover:shadow-xl transition-shadow duration-300 flex flex-col group border border-gray-100 will-change-auto"
                             >
-                                {/* Product Image */}
-                                <img
-                                    src={item?.image_Url?.[0]?.url}
-                                    alt={item.name}
-                                    className="h-44 w-full object-contain mb-3"
-                                />
+                                {/* Image Section */}
+                                <div className="relative bg-[#D98C00]/15 rounded-t-2xl p-4 pb-2 overflow-hidden">
+                                    {/* Book Image */}
+                                    <Link to={`/product/${item.id}`}>
+                                        <img
+                                            src={item?.image_Url?.[0]?.url}
+                                            alt={item.name}
+                                            className="w-full h-52 object-contain transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                                        />
+                                    </Link>
 
-                                {/* Product Info */}
-                                <div className="flex flex-col flex-1">
-                                    <h3 className="font-semibold text-lg mt-2">{item.name}</h3>
-                                    <p className="text-gray-500 text-sm">By {item.author}</p>
+                                    {/* Exchangeable Tag */}
+                                    {item.exchangeable && (
+                                        <span className="absolute bottom-3 left-3 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-green-500 text-white rounded-full shadow-sm">
+                                            Exchangeable
+                                        </span>
+                                    )}
+                                </div>
 
-                                    <div className="flex items-center mt-1 text-yellow-500">
-                                        <AiFillStar className="mr-1" />
-                                        <AiFillStar className="mr-1" />
-                                        <AiFillStar className="mr-1" />
-                                        <AiFillStar className="mr-1" />
-                                        <AiFillStar className="mr-1 text-gray-300" />
+                                {/* Action Icons Strip */}
+                                <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-100">
+                                    {/* Wishlist */}
+                                    <button
+                                        className="p-2 rounded-md hover:bg-red-50 transition-colors duration-200"
+                                        title="Add to Wishlist"
+                                    >
+                                        <AiOutlineHeart size={18} className="text-gray-400 hover:text-red-500" />
+                                    </button>
+
+                                    {/* Quick View & Cart */}
+                                    <div className="flex items-center gap-2">
+                                        <Link to={`/product/${item.id}`}>
+                                            <button
+                                                className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                                                title="Quick View"
+                                            >
+                                                <AiOutlineEye size={18} className="text-gray-400 hover:text-gray-700" />
+                                            </button>
+                                        </Link>
+                                        <button
+                                            className="p-2 rounded-full bg-green-50 hover:bg-green-100 transition-colors duration-200"
+                                            title="In cart"
+                                        >
+                                            <AiOutlineShoppingCart size={18} className="text-green-600" />
+                                        </button>
                                     </div>
+                                </div>
 
-                                    <div className="flex items-center justify-between mt-2">
-                                        <p className="text-green-600 font-bold text-lg">
-                                            Rs. {item.price}
-                                        </p>
+                                {/* Book Info Section */}
+                                <div className="p-4 flex flex-col flex-1">
+                                    {/* Author */}
+                                    <p className="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">
+                                        {item.author}
+                                    </p>
 
-                                        {item.exchangeable && (
-                                            <span className="relative -top-1 px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">
-                                                Exchangeable
-                                            </span>
-                                        )}
+                                    {/* Title */}
+                                    <Link to={`/product/${item.id}`}>
+                                        <h3 className="font-bold text-base text-gray-800 leading-snug hover:text-[#D98C00] transition-colors duration-200 line-clamp-2 mb-2">
+                                            {item.name}
+                                        </h3>
+                                    </Link>
+
+                                    {/* Rating */}
+                                    <div className="flex items-center gap-0.5 mb-3">
+                                        <AiFillStar className="text-amber-400" size={14} />
+                                        <AiFillStar className="text-amber-400" size={14} />
+                                        <AiFillStar className="text-amber-400" size={14} />
+                                        <AiFillStar className="text-amber-400" size={14} />
+                                        <AiFillStar className="text-gray-200" size={14} />
                                     </div>
 
                                     {/* Spacer */}
                                     <div className="flex-1"></div>
 
-                                    {/* Buttons */}
-                                    <div className="flex gap-2 mt-auto">
-                                        <button className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#D98C00] rounded-lg hover:bg-[#A86500] transition shadow-sm">
-                                            Buy Now
-                                        </button>
-
-                                        <button
-                                            onClick={() => removeFromCart(item.id)}
-                                            className="px-3 py-2 text-xs font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 transition shadow-sm"
-                                        >
-                                            Remove
-                                        </button>
+                                    {/* Price & Buy Button Row */}
+                                    <div className="flex items-center justify-between mt-2 pt-3 border-t border-gray-100">
+                                        <p className="text-[#D98C00] font-extrabold text-xl">
+                                            Rs. {item.price}
+                                        </p>
+                                        <Link to={`/product/${item.id}`}>
+                                            <button className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-md hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
+                                                Buy Now
+                                            </button>
+                                        </Link>
                                     </div>
-
                                 </div>
                             </div>
                         ))}

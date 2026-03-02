@@ -60,46 +60,44 @@ const ProductDetails = ({ book }) => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="space-y-4 mb-8">
-                      {/* Send Message and Exchangeable Row */}
-                      <div className="flex gap-8 items-center justify-between">
-                        {/* Send Message Button */}
+                    <div className="flex gap-4 items-center mb-8">
+                      {/* Exchangeable Badge Button */}
+                      {book.exchangeable && (
                         <button
-                          className="flex-1 flex items-center justify-center gap-2 
-             bg-white text-[#D98C00] 
-             py-3 px-2 
-             rounded-full 
-             text-sm font-semibold 
-             border-2 border-[#D98C00] 
-             shadow-md hover:shadow-lg 
-             transition duration-300 
-             transform hover:scale-105 active:scale-95"
-                          onClick={handleMessageSubmit}
+                          type="button"
+                          className="px-4 py-3 font-semibold
+             bg-blue-100 text-blue-700 rounded-md
+             hover:bg-blue-200 transition duration-300"
+                          onClick={() => {
+                            // your action here (optional)
+                            console.log("Exchange policy clicked");
+                          }}
                         >
-                          <AiOutlineMessage size={20} />
-                          Send Message
+                          Exchangeable
                         </button>
+                      )}
+                      {/* Send Message Button */}
+                      <button
+                        className="flex items-center justify-center gap-2 
+           bg-white text-[#D98C00] 
+           py-3 px-4 
+           rounded-md 
+           text-sm font-semibold 
+           border-2 border-[#D98C00] 
+           shadow-md hover:shadow-lg 
+           transition duration-300 
+           transform hover:scale-105 active:scale-95"
+                        onClick={handleMessageSubmit}
+                      >
+                        <AiOutlineMessage size={20} />
+                        Send Message
+                      </button>
 
-                        {/* Exchangeable Badge Button */}
-                        {book.exchangeable && (
-                          <button
-                            type="button"
-                            className="px-4 py-2 font-semibold
-               bg-blue-100 text-blue-700 rounded-full
-               hover:bg-blue-200 transition duration-300"
-                            onClick={() => {
-                              // your action here (optional)
-                              console.log("Exchange policy clicked");
-                            }}
-                          >
-                            Exchangeable
-                          </button>
-                        )}
-                      </div>
+                      
 
                       {/* Add to Cart Button */}
                       <button
-                        className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white py-4 rounded-full text-base font-bold shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95"
+                        className="flex items-center justify-center gap-3 bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white py-3 px-6 rounded-md text-base font-bold shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95"
                       >
                         <AiOutlineShoppingCart size={26} />
                         Add to Cart

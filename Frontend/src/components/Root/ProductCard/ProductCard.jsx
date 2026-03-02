@@ -69,7 +69,7 @@ const ProductCard = ({ book }) => {
         <div>
           {isWishlisted ? (
             <button
-              className="p-2 rounded-full bg-red-50 hover:bg-red-100 transition-colors duration-200"
+              className="p-2 rounded-md bg-red-50 hover:bg-red-100 transition-colors duration-200"
               onClick={removeFromWishlistHandler}
               title="Remove from Wishlist"
             >
@@ -77,7 +77,7 @@ const ProductCard = ({ book }) => {
             </button>
           ) : (
             <button
-              className="p-2 rounded-full hover:bg-red-50 transition-colors duration-200"
+              className="p-2 rounded-md hover:bg-red-50 transition-colors duration-200"
               onClick={addToWishlistHandler}
               title="Add to Wishlist"
             >
@@ -130,7 +130,6 @@ const ProductCard = ({ book }) => {
           <AiFillStar className="text-amber-400" size={14} />
           <AiFillStar className="text-amber-400" size={14} />
           <AiFillStar className="text-gray-200" size={14} />
-          <span className="text-xs text-gray-400 ml-1">(4.0)</span>
         </div>
 
         {/* Spacer */}
@@ -142,7 +141,7 @@ const ProductCard = ({ book }) => {
             Rs. {book.price}
           </p>
           <Link to={`/product/${book.id}`}>
-            <button className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-full hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
+            <button className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-md hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
               Buy Now
             </button>
           </Link>
