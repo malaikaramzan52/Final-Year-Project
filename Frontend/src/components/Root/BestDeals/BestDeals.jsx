@@ -3,7 +3,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import api from "../../../api/axios";
 import { normalizeBooks } from "../../../utils/normalizeBook";
 
-const BooksSection = () => {
+const BestDeals = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,4 +47,4 @@ const BooksSection = () => {
   );
 };
 
-export default BooksSection;
+export default BestDeals;

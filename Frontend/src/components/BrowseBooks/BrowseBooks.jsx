@@ -1,29 +1,48 @@
-// src/pages/BrowseBooks.jsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import ProductCard from "../Root/ProductCard/ProductCard";
-import { productData } from "../../static/data";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import { AiOutlineDown } from "react-icons/ai";
 import BgImage from "../../Assets/Logo/Background.jpg";
+import api from "../../api/axios";
+import { normalizeBooks } from "../../utils/normalizeBook";
 
 const BrowseBooks = () => {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("latest");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Sort books based on selected option
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const res = await api.get("/v2/book/all");
+        setBooks(normalizeBooks(res.data.books));
+      } catch (err) {
+        console.error("Failed to fetch books:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBooks();
+  }, []);
+
   const sortedBooks = useMemo(() => {
-    const booksCopy = [...productData];
-    
+    const booksCopy = [...books];
+
     switch (sortBy) {
       case "latest":
-        return booksCopy.sort((a, b) => b.id - a.id);
+        return booksCopy.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
       case "oldest":
-        return booksCopy.sort((a, b) => a.id - b.id);
+        return booksCopy.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
       default:
         return booksCopy;
     }
-  }, [sortBy]);
+  }, [sortBy, books]);
 
   const sortOptions = [
     { value: "latest", label: "New to Old" },
@@ -32,11 +51,10 @@ const BrowseBooks = () => {
 
   return (
     <div className="min-h-screen bg-[#f5f7fa] flex flex-col">
-      {/* Header */}
       <Header activeHeading={2} />
 
       {/* Hero Section */}
-      <div 
+      <div
         className="relative w-full h-[400px] bg-cover bg-center"
         style={{ backgroundImage: `url(${BgImage})` }}
       >
@@ -47,14 +65,14 @@ const BrowseBooks = () => {
           </h1>
           <p className="text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed drop-shadow-md">
             Buy books at affordable prices or exchange your old books with others on the platform.
-Our marketplace connects book lovers, promotes reuse, and makes quality books accessible to everyone.
+            Our marketplace connects book lovers, promotes reuse, and makes quality books accessible
+            to everyone.
           </p>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 container mx-auto px-4 py-12">
-        {/* Filter Section */}
         <div className="mb-10 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-800">
             All Books <span className="text-[#D98C00]">({sortedBooks.length})</span>
@@ -66,14 +84,16 @@ Our marketplace connects book lovers, promotes reuse, and makes quality books ac
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="flex items-center gap-3 px-6 py-3 bg-white border-2 border-[#D98C00] text-[#D98C00] rounded-lg font-semibold hover:bg-[#D98C00] hover:text-white transition duration-300 shadow-md hover:shadow-lg"
             >
-              <span>Sort by: {sortOptions.find(opt => opt.value === sortBy)?.label}</span>
-              <AiOutlineDown size={18} className={`transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+              <span>Sort by: {sortOptions.find((opt) => opt.value === sortBy)?.label}</span>
+              <AiOutlineDown
+                size={18}
+                className={`transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`}
+              />
             </button>
 
-            {/* Dropdown Menu */}
             {isDropdownOpen && (
               <div className="absolute right-0 top-full mt-2 w-56 bg-white border-2 border-[#D98C00] rounded-lg shadow-xl z-50">
-                {sortOptions.map((option) => (
+                {sortOptions.map((option, idx) => (
                   <button
                     key={option.value}
                     onClick={() => {
@@ -84,7 +104,9 @@ Our marketplace connects book lovers, promotes reuse, and makes quality books ac
                       sortBy === option.value
                         ? "bg-[#D98C00] text-white"
                         : "text-gray-700 hover:bg-[#D98C00]/10"
-                    } ${option === sortOptions[0] ? "rounded-t-lg" : ""} ${option === sortOptions[sortOptions.length - 1] ? "rounded-b-lg" : ""}`}
+                    } ${idx === 0 ? "rounded-t-lg" : ""} ${
+                      idx === sortOptions.length - 1 ? "rounded-b-lg" : ""
+                    }`}
                   >
                     {option.label}
                   </button>
@@ -94,15 +116,19 @@ Our marketplace connects book lovers, promotes reuse, and makes quality books ac
           </div>
         </div>
 
-        {/* Grid: responsive */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {sortedBooks.map((book) => (
-            <ProductCard key={book.id} book={book} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <div className="w-8 h-8 border-4 border-[#D98C00] border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {sortedBooks.map((book) => (
+              <ProductCard key={book.id} book={book} />
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
