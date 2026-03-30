@@ -23,8 +23,11 @@ const orderSchema = new mongoose.Schema(
       min: 0,
     },
     shippingAddress: {
-      type: String,
-      required: true,
+      fullName: { type: String, required: true },
+      phone: { type: String, required: true },
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      zip: { type: String },
     },
     paymentMethod: {
       type: String,
@@ -33,7 +36,7 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Pending", "Shipped", "Completed", "Cancelled"],
+      enum: ["Pending", "Confirmed", "Shipped", "Delivered", "Cancelled"],
       default: "Pending",
     },
   },
