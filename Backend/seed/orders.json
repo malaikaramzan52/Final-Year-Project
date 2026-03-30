@@ -1,0 +1,66 @@
+[
+  {
+    "_id": "665d4c4c4c4c4c4c4c4c4c01",
+    "book": "665c3b3b3b3b3b3b3b3b3b12",
+    "buyer": "665b2a2a2a2a2a2a2a2a2a01",
+    "seller": "665b2a2a2a2a2a2a2a2a2a04",
+    "price": 520,
+    "shippingAddress": {
+      "fullName": "Ahmed Khan",
+      "phone": "03001234567",
+      "address": "House 12, Street 5, G-10/2",
+      "city": "Islamabad",
+      "zip": "44000"
+    },
+    "paymentMethod": "COD",
+    "status": "Delivered"
+  },
+  {
+    "_id": "665d4c4c4c4c4c4c4c4c4c02",
+    "book": "665c3b3b3b3b3b3b3b3b3b04",
+    "buyer": "665b2a2a2a2a2a2a2a2a2a02",
+    "seller": "665b2a2a2a2a2a2a2a2a2a03",
+    "price": 200,
+    "shippingAddress": {
+      "fullName": "Sara Ali",
+      "phone": "03119876543",
+      "address": "Flat 3B, Al-Noor Apartments, Gulshan-e-Iqbal",
+      "city": "Karachi",
+      "zip": "75300"
+    },
+    "paymentMethod": "COD",
+    "status": "Shipped"
+  },
+  {
+    "_id": "665d4c4c4c4c4c4c4c4c4c03",
+    "book": "665c3b3b3b3b3b3b3b3b3b02",
+    "buyer": "665b2a2a2a2a2a2a2a2a2a04",
+    "seller": "665b2a2a2a2a2a2a2a2a2a02",
+    "price": 270,
+    "shippingAddress": {
+      "fullName": "Fatima Noor",
+      "phone": "03331112233",
+      "address": "House 45, Satellite Town",
+      "city": "Rawalpindi",
+      "zip": "46000"
+    },
+    "paymentMethod": "COD",
+    "status": "Pending"
+  },
+  {
+    "_id": "665d4c4c4c4c4c4c4c4c4c04",
+    "book": "665c3b3b3b3b3b3b3b3b3b06",
+    "buyer": "665b2a2a2a2a2a2a2a2a2a01",
+    "seller": "665b2a2a2a2a2a2a2a2a2a02",
+    "price": 550,
+    "shippingAddress": {
+      "fullName": "Ahmed Khan",
+      "phone": "03001234567",
+      "address": "House 12, Street 5, G-10/2",
+      "city": "Islamabad",
+      "zip": "44000"
+    },
+    "paymentMethod": "COD",
+    "status": "Confirmed"
+  }
+]

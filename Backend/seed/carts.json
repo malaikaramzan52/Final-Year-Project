@@ -1,0 +1,27 @@
+[
+  {
+    "_id": "665e5d5d5d5d5d5d5d5d5d01",
+    "user": "665b2a2a2a2a2a2a2a2a2a01",
+    "book": "665c3b3b3b3b3b3b3b3b3b04"
+  },
+  {
+    "_id": "665e5d5d5d5d5d5d5d5d5d02",
+    "user": "665b2a2a2a2a2a2a2a2a2a01",
+    "book": "665c3b3b3b3b3b3b3b3b3b07"
+  },
+  {
+    "_id": "665e5d5d5d5d5d5d5d5d5d03",
+    "user": "665b2a2a2a2a2a2a2a2a2a02",
+    "book": "665c3b3b3b3b3b3b3b3b3b09"
+  },
+  {
+    "_id": "665e5d5d5d5d5d5d5d5d5d04",
+    "user": "665b2a2a2a2a2a2a2a2a2a03",
+    "book": "665c3b3b3b3b3b3b3b3b3b01"
+  },
+  {
+    "_id": "665e5d5d5d5d5d5d5d5d5d05",
+    "user": "665b2a2a2a2a2a2a2a2a2a03",
+    "book": "665c3b3b3b3b3b3b3b3b3b05"
+  }
+]

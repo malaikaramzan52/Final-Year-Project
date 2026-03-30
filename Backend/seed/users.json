@@ -1,0 +1,98 @@
+[
+  {
+    "_id": "665b2a2a2a2a2a2a2a2a2a01",
+    "name": "Ahmed Khan",
+    "email": "ahmed@example.com",
+    "password": "password123",
+    "isEmailVerified": true,
+    "phoneNumber": 3001234567,
+    "role": "user",
+    "avatar": "",
+    "address": "House 12, Street 5, G-10/2, Islamabad",
+    "addresses": [
+      {
+        "country": "Pakistan",
+        "city": "Islamabad",
+        "address1": "House 12, Street 5, G-10/2",
+        "address2": "",
+        "zipCode": 44000,
+        "addressType": "Home"
+      }
+    ]
+  },
+  {
+    "_id": "665b2a2a2a2a2a2a2a2a2a02",
+    "name": "Sara Ali",
+    "email": "sara@example.com",
+    "password": "password123",
+    "isEmailVerified": true,
+    "phoneNumber": 3119876543,
+    "role": "user",
+    "avatar": "",
+    "address": "Flat 3B, Al-Noor Apartments, Gulshan-e-Iqbal, Karachi",
+    "addresses": [
+      {
+        "country": "Pakistan",
+        "city": "Karachi",
+        "address1": "Flat 3B, Al-Noor Apartments, Gulshan-e-Iqbal",
+        "address2": "",
+        "zipCode": 75300,
+        "addressType": "Home"
+      }
+    ]
+  },
+  {
+    "_id": "665b2a2a2a2a2a2a2a2a2a03",
+    "name": "Usman Tariq",
+    "email": "usman@example.com",
+    "password": "password123",
+    "isEmailVerified": true,
+    "phoneNumber": 3215551234,
+    "role": "user",
+    "avatar": "",
+    "address": "7-C, Model Town, Lahore",
+    "addresses": [
+      {
+        "country": "Pakistan",
+        "city": "Lahore",
+        "address1": "7-C, Model Town",
+        "address2": "",
+        "zipCode": 54700,
+        "addressType": "Home"
+      }
+    ]
+  },
+  {
+    "_id": "665b2a2a2a2a2a2a2a2a2a04",
+    "name": "Fatima Noor",
+    "email": "fatima@example.com",
+    "password": "password123",
+    "isEmailVerified": true,
+    "phoneNumber": 3331112233,
+    "role": "user",
+    "avatar": "",
+    "address": "House 45, Satellite Town, Rawalpindi",
+    "addresses": [
+      {
+        "country": "Pakistan",
+        "city": "Rawalpindi",
+        "address1": "House 45, Satellite Town",
+        "address2": "",
+        "zipCode": 46000,
+        "addressType": "Home"
+      }
+    ]
+  },
+  {
+    "_id": "665b2a2a2a2a2a2a2a2a2a05",
+    "name": "Admin User",
+    "email": "admin@rebook.com",
+    "password": "admin1234",
+    "isEmailVerified": true,
+    "phoneNumber": 3000000000,
+    "role": "admin",
+    "avatar": "",
+    "address": "ReBook HQ, Blue Area, Islamabad",
+    "addresses": []
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "_id": "665f6e6e6e6e6e6e6e6e6e01",
+    "user": "665b2a2a2a2a2a2a2a2a2a01",
+    "book": "665c3b3b3b3b3b3b3b3b3b10"
+  },
+  {
+    "_id": "665f6e6e6e6e6e6e6e6e6e02",
+    "user": "665b2a2a2a2a2a2a2a2a2a01",
+    "book": "665c3b3b3b3b3b3b3b3b3b11"
+  },
+  {
+    "_id": "665f6e6e6e6e6e6e6e6e6e03",
+    "user": "665b2a2a2a2a2a2a2a2a2a02",
+    "book": "665c3b3b3b3b3b3b3b3b3b01"
+  },
+  {
+    "_id": "665f6e6e6e6e6e6e6e6e6e04",
+    "user": "665b2a2a2a2a2a2a2a2a2a02",
+    "book": "665c3b3b3b3b3b3b3b3b3b05"
+  },
+  {
+    "_id": "665f6e6e6e6e6e6e6e6e6e05",
+    "user": "665b2a2a2a2a2a2a2a2a2a03",
+    "book": "665c3b3b3b3b3b3b3b3b3b08"
+  },
+  {
+    "_id": "665f6e6e6e6e6e6e6e6e6e06",
+    "user": "665b2a2a2a2a2a2a2a2a2a04",
+    "book": "665c3b3b3b3b3b3b3b3b3b09"
+  },
+  {
+    "_id": "665f6e6e6e6e6e6e6e6e6e07",
+    "user": "665b2a2a2a2a2a2a2a2a2a04",
+    "book": "665c3b3b3b3b3b3b3b3b3b03"
+  }
+]

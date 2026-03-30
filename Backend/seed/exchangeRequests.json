@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "665a7f7f7f7f7f7f7f7f7f01",
+    "requestedBook": "665c3b3b3b3b3b3b3b3b3b02",
+    "offeredBook": "665c3b3b3b3b3b3b3b3b3b03",
+    "requester": "665b2a2a2a2a2a2a2a2a2a01",
+    "owner": "665b2a2a2a2a2a2a2a2a2a02",
+    "status": "Pending"
+  },
+  {
+    "_id": "665a7f7f7f7f7f7f7f7f7f02",
+    "requestedBook": "665c3b3b3b3b3b3b3b3b3b07",
+    "offeredBook": "665c3b3b3b3b3b3b3b3b3b10",
+    "requester": "665b2a2a2a2a2a2a2a2a2a03",
+    "owner": "665b2a2a2a2a2a2a2a2a2a03",
+    "status": "Accepted"
+  },
+  {
+    "_id": "665a7f7f7f7f7f7f7f7f7f03",
+    "requestedBook": "665c3b3b3b3b3b3b3b3b3b11",
+    "offeredBook": "665c3b3b3b3b3b3b3b3b3b08",
+    "requester": "665b2a2a2a2a2a2a2a2a2a04",
+    "owner": "665b2a2a2a2a2a2a2a2a2a02",
+    "status": "Rejected"
+  }
+]

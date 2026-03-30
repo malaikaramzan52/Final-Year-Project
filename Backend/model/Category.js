@@ -8,6 +8,15 @@ const categorySchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    subTitle: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    image: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: { createdAt: true, updatedAt: false } }
 );
