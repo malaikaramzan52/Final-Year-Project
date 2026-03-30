@@ -6,25 +6,21 @@ import {
   AiFillStar,
   AiOutlineEye
 } from "react-icons/ai";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styles from "../../../styles/styles.js";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx";
 import { useWishlist } from "../../../context/WishlistContext";
 import { useCart } from "../../../context/CartContext.jsx";
 
-
 const ProductCard = ({ book }) => {
   const [open, setOpen] = useState(false);
-  const [addedToCart, setAddedToCart] = useState(false);
+  const navigate = useNavigate();
 
-  // Wishlist context
   const { addToWishlist, removeFromWishlist, wishlist = [] } = useWishlist();
   const { addToCart, cart = [] } = useCart();
 
-  // Check if book already wishlisted
   const isWishlisted = wishlist.some((item) => item.id === book.id);
-
-  // Check if book already in cart
   const isInCart = cart.some((item) => item.id === book.id);
 
   const addToWishlistHandler = () => {
@@ -36,8 +32,29 @@ const ProductCard = ({ book }) => {
   };
 
   const addToCartHandler = () => {
-    addToCart(book); // Context function increases quantity automatically
-    setAddedToCart(true); // For UI feedback
+    if (isInCart) {
+      toast.info("Already in cart");
+      return;
+    }
+    addToCart(book);
+    toast.success("Added to cart!");
+  };
+
+  const handleBuyNow = () => {
+    navigate("/checkout", {
+      state: {
+        buyNowItem: {
+          id: book.id || book._id,
+          name: book.name || book.title,
+          title: book.title || book.name,
+          author: book.author,
+          price: book.price,
+          image: book?.image_Url?.[0]?.url || book?.image,
+          image_Url: book.image_Url,
+          quantity: 1,
+        },
+      },
+    });
   };
 
   return (
@@ -45,8 +62,6 @@ const ProductCard = ({ book }) => {
 
       {/* Image Section */}
       <div className="relative bg-[#D98C00]/15 rounded-t-2xl p-4 pb-2 overflow-hidden">
-
-        {/* Book Image */}
         <Link to={`/product/${book.id}`}>
           <img
             src={book?.image_Url?.[0]?.url || "https://via.placeholder.com/150"}
@@ -55,7 +70,6 @@ const ProductCard = ({ book }) => {
           />
         </Link>
 
-        {/* Exchangeable Tag */}
         {book.exchangeable && (
           <span className="absolute bottom-3 left-3 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-green-500 text-white rounded-full shadow-sm">
             Exchangeable
@@ -63,9 +77,8 @@ const ProductCard = ({ book }) => {
         )}
       </div>
 
-      {/* Action Icons Strip - sits between image and info, no absolute positioning */}
+      {/* Action Icons Strip */}
       <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-100">
-        {/* Wishlist */}
         <div>
           {isWishlisted ? (
             <button
@@ -86,7 +99,6 @@ const ProductCard = ({ book }) => {
           )}
         </div>
 
-        {/* Quick View & Cart */}
         <div className="flex items-center gap-2">
           <button
             className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
@@ -98,7 +110,7 @@ const ProductCard = ({ book }) => {
           <button
             className={`p-2 rounded-full transition-colors duration-200 ${isInCart ? "bg-green-50 hover:bg-green-100" : "hover:bg-gray-100"}`}
             onClick={addToCartHandler}
-            title="Add to cart"
+            title={isInCart ? "Already in cart" : "Add to cart"}
           >
             <AiOutlineShoppingCart size={18} className={isInCart ? "text-green-600" : "text-gray-400 hover:text-gray-700"} />
           </button>
@@ -111,19 +123,16 @@ const ProductCard = ({ book }) => {
 
       {/* Book Info Section */}
       <div className="p-4 flex flex-col flex-1">
-        {/* Author */}
         <p className="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">
           {book.author}
         </p>
 
-        {/* Title */}
         <Link to={`/product/${book.id}`}>
           <h3 className="font-bold text-base text-gray-800 leading-snug hover:text-[#D98C00] transition-colors duration-200 line-clamp-2 mb-2">
             {book.name}
           </h3>
         </Link>
 
-        {/* Rating */}
         <div className="flex items-center gap-0.5 mb-3">
           <AiFillStar className="text-amber-400" size={14} />
           <AiFillStar className="text-amber-400" size={14} />
@@ -132,7 +141,6 @@ const ProductCard = ({ book }) => {
           <AiFillStar className="text-gray-200" size={14} />
         </div>
 
-        {/* Spacer */}
         <div className="flex-1"></div>
 
         {/* Price & Buy Button Row */}
@@ -140,11 +148,12 @@ const ProductCard = ({ book }) => {
           <p className="text-[#D98C00] font-extrabold text-xl">
             Rs. {book.price}
           </p>
-          <Link to={`/product/${book.id}`}>
-            <button className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-md hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95">
-              Buy Now
-            </button>
-          </Link>
+          <button
+            onClick={handleBuyNow}
+            className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-md hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
+          >
+            Buy Now
+          </button>
         </div>
       </div>
     </div>

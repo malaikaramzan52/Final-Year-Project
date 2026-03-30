@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
@@ -8,7 +7,6 @@ export const CartProvider = ({ children }) => {
 
   const getBookId = (book) => book?._id || book?.id;
 
-  // Add to Cart
   const addToCart = (book) => {
     const bookId = getBookId(book);
     if (!bookId) return;
@@ -29,15 +27,32 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Remove from Cart
   const removeFromCart = (id) => {
     const targetId = typeof id === "object" ? getBookId(id) : id;
     setCart(cart.filter((item) => item.id !== targetId));
   };
 
+  const increaseQuantity = (id) => {
+    setCart(
+      cart.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
 
+  const decreaseQuantity = (id) => {
+    setCart(
+      cart.map((item) =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
 
-
+  const clearCart = () => {
+    setCart([]);
+  };
 
   return (
     <CartContext.Provider
@@ -45,6 +60,9 @@ export const CartProvider = ({ children }) => {
         cart,
         addToCart,
         removeFromCart,
+        increaseQuantity,
+        decreaseQuantity,
+        clearCart,
       }}
     >
       {children}
