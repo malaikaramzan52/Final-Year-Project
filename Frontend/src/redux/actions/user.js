@@ -1,15 +1,11 @@
-import axios from "axios";
-import { server } from "../server"; // adjust path if needed
+import api from "../api/axios";
 
 // load user
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: "LoadUserRequest" });
 
-    const { data } = await axios.get(
-      `${server}/api/v2/user/getuser`,
-      { withCredentials: true }
-    );
+    const { data } = await api.get("/v2/user/getuser");
 
     dispatch({
       type: "LoadUserSuccess",

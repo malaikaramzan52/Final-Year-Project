@@ -1,13 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { server } from "../../server";
+import api from "../../api/axios";
 
 // ✅ Thunk to load logged-in user
 export const loadUser = createAsyncThunk(
   "user/loadUser",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${server}/api/v2/user/getuser`, { withCredentials: true });
+      const { data } = await api.get("/v2/user/getuser");
       return data.user;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);

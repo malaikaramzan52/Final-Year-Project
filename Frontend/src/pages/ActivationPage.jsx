@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { server } from "../server";
-import axios from 'axios';
+import api from "../api/axios";
 
 
 
 const ActivationPage = () => {
-    const { activation_token } = useParams();
+    const { activationToken } = useParams();
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        if (activation_token) {
+        if (activationToken) {
             const activationEmail = async () => {
                 try {
-                    const res = await axios
-                        .post(`${server}/user/activation`, {
-                            activation_token
+                    const res = await api.post(`/auth/activation`, {
+                            activationToken
                         })
                     console.log(res.data.message);
                 } catch (err) {

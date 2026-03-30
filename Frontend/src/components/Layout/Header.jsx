@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { server } from "../../server";
 import styles from "../../styles/styles.js";
 import { productData, categoriesData } from "../../static/data";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
@@ -17,7 +18,7 @@ import {
 import { CgProfile } from "react-icons/cg";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
-import { server } from "../../server";
+// Removed duplicate import of server
 
 const Header = ({ activeHeading }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -179,9 +180,14 @@ const Header = ({ activeHeading }) => {
               <Link to={isAuthenticated ? "/profile" : "/login"}>
                 {isAuthenticated && user?.avatar ? (
                   <img
-                    src={`http://localhost:8000${user.avatar}`}
+                    src={`${(server || "http://localhost:5000").replace(/\/$/, "")}${
+                      user.avatar.startsWith("/") ? user.avatar : `/${user.avatar}`
+                    }`}
                     alt="Profile"
                     className="w-[45px] h-[45px] rounded-full border-[3px] border-[#0eae88] object-cover"
+                    onError={(e) => {
+                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=0eae88&color=fff&size=128`;
+                    }}
                   />
                 ) : (
                   <CgProfile size={30} color="rgb(255 255 255 / 83%)" />

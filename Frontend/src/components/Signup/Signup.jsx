@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { server } from "../../server";
+import api from "../../api/axios";
 import { toast } from "react-toastify";
 import RebookLogo from "../../Assets/Logo/white.png";
 
@@ -31,27 +30,31 @@ const Signup = () => {
     }
 
     const formData = new FormData();
-    formData.append("avatar", avatar); // MUST MATCH multer
+    formData.append("avatar", avatar); // MUST MATCH backend field
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
 
     try {
-      const res = await axios.post(
-        `${server}/api/v2/user/create-user`,
-        formData
-      );
+      // Use the backend sign-up route (/api/v2/user/create-user)
+      const res = await api.post("/v2/user/create-user", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-   if(res.data.success === true){
-    toast.success(res.data.message);
-    setName("");
-    setEmail("");
-    setPassword("");
-    setAvatar();
+      if (res.data?.token) {
+        localStorage.setItem("token", res.data.token);
+      }
 
-   }
+      if (res.data.success === true) {
+        toast.success(res.data.message || "Account created");
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar(null);
+        navigate("/");
+      }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Signup failed");
     
     }
   };

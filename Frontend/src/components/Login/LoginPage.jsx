@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { server } from "../../server";
+import api from "../../api/axios";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import RebookLogo from "../../Assets/Logo/white.png";
@@ -19,23 +18,16 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      console.log('Attempting login to:', `${server}/api/v2/user/login-user`);
-
-      const res = await axios.post(
-        `${server}/api/v2/user/login-user`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      // Hit backend login route
+      const res = await api.post("/v2/user/login-user", { email, password });
 
       console.log('Login response:', res.data);
+      if (res.data?.token) {
+        localStorage.setItem("token", res.data.token);
+      }
       toast.success(res.data.message || "Login successful");
       await dispatch(loadUser());
-      navigate("/");
+      navigate(res.data?.user?.role === "admin" ? "/admin" : "/");
     } catch (err) {
       console.error('Login error:', err);
 

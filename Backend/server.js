@@ -1,4 +1,7 @@
-require("dotenv").config({ path: "./config/.env" });
+const path = require("path");
+
+// Load environment variables using an absolute path so it works no matter where the app is started
+require("dotenv").config({ path: path.join(__dirname, "config/.env") });
 
 const app = require("./app"); // IMPORT app.js
 const mongoose = require("mongoose");

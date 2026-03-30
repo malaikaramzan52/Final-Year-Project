@@ -141,9 +141,14 @@ const ProfileContent = ({ active, user }) => {
     }
   };
 
+  const backendOrigin = server.replace(/\/$/, "");
+
   const getAvatarSrc = () => {
     if (avatarPreview) return avatarPreview;
-    if (user?.avatar) return `http://localhost:8000${user.avatar}`;
+    if (user?.avatar) {
+      const path = user.avatar.startsWith("/") ? user.avatar : `/${user.avatar}`;
+      return `${backendOrigin}${path}`;
+    }
     return null;
   };
 
