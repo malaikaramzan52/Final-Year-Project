@@ -94,5 +94,17 @@
     "avatar": "",
     "address": "ReBook HQ, Blue Area, Islamabad",
     "addresses": []
+  },
+  {
+    "_id": "665b2a2a2a2a2a2a2a2a2a06",
+    "name": "Super Admin",
+    "email": "superadmin@rebook.com",
+    "password": "superadmin123",
+    "isEmailVerified": true,
+    "phoneNumber": 3000000001,
+    "role": "admin",
+    "avatar": "",
+    "address": "ReBook HQ, Blue Area, Islamabad",
+    "addresses": []
   }
 ]

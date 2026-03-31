@@ -17,8 +17,14 @@ import CartPage from "../pages/CartPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage.jsx";
 import ProfilePage from "../pages/ProfilePage";
 import CheckoutPage from "../pages/CheckoutPage.jsx";
-
-const AdminPlaceholder = () => <div>Admin Panel</div>;
+import AdminLayout from "../pages/admin/AdminLayout";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminUsers from "../pages/admin/AdminUsers";
+import AdminBooks from "../pages/admin/AdminBooks";
+import AdminCategories from "../pages/admin/AdminCategories";
+import AdminExchange from "../pages/admin/AdminExchange";
+import AdminOrders from "../pages/admin/AdminOrders";
+import AdminReports from "../pages/admin/AdminReports";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -42,7 +48,15 @@ const AppRoutes = () => (
       </Route>
 
       <Route element={<AdminRoute />}>
-        <Route path="/admin" element={<AdminPlaceholder />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="books" element={<AdminBooks />} />
+          <Route path="categories" element={<AdminCategories />} />
+          <Route path="exchange-requests" element={<AdminExchange />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="reports" element={<AdminReports />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<HomePage />} />

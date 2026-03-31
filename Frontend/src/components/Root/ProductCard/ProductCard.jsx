@@ -40,6 +40,11 @@ const ProductCard = ({ book }) => {
     toast.success("Added to cart!");
   };
 
+  const handleExchangeNav = (e) => {
+    e.stopPropagation();
+    navigate("/profile", { state: { activeTab: 4.1 } });
+  };
+
   const handleBuyNow = () => {
     navigate("/checkout", {
       state: {
@@ -71,9 +76,13 @@ const ProductCard = ({ book }) => {
         </Link>
 
         {book.exchangeable && (
-          <span className="absolute bottom-3 left-3 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-green-500 text-white rounded-full shadow-sm">
+          <button
+            type="button"
+            onClick={handleExchangeNav}
+            className="absolute bottom-3 left-3 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-green-500 text-white rounded-full shadow-sm hover:bg-green-600 transition"
+          >
             Exchangeable
-          </span>
+          </button>
         )}
       </div>
 

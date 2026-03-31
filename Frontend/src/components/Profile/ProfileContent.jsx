@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { server } from "../../server";
 import { updateUser } from "../../redux/reducers/user";
 import api from "../../api/axios";
+import ExchangeRequests from "./ExchangeRequests";
 
 const backendOrigin = (server || "http://localhost:5000").replace(/\/$/, "");
 
@@ -252,6 +253,12 @@ const ProfileContent = ({ active, user }) => {
 
       {/* Orders Received (seller) */}
       {active === 3.2 && <SellerOrders />}
+
+      {/* Exchange Requests - Sent */}
+      {active === 4.1 && <ExchangeRequests viewType="sent" />}
+
+      {/* Exchange Requests - Received */}
+      {active === 4.2 && <ExchangeRequests viewType="received" />}
     </div>
   );
 };

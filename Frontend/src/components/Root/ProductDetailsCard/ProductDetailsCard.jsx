@@ -56,6 +56,11 @@ const ProductDetailsCard = ({ setOpen, book }) => {
     }
   };
 
+  const handleExchangeNav = () => {
+    setOpen(false);
+    navigate("/profile", { state: { activeTab: 4.1 } });
+  };
+
   return (
     <div className="fixed inset-0 bg-[#00000030] z-40 flex items-center justify-center">
       <div className="w-[90%] 800px:w-[60%] max-h-[80vh] bg-white rounded-lg shadow-lg relative overflow-hidden">
@@ -98,9 +103,13 @@ const ProductDetailsCard = ({ setOpen, book }) => {
 
               {book?.exchangeable && (
                 <div className="mb-6">
-                  <span className="px-4 py-2 text-sm font-semibold bg-blue-100 text-blue-700 rounded-full inline-block">
+                  <button
+                    type="button"
+                    onClick={handleExchangeNav}
+                    className="px-4 py-2 text-sm font-semibold bg-blue-100 text-blue-700 rounded-full inline-flex items-center gap-2 hover:bg-blue-200 transition"
+                  >
                     Exchangeable
-                  </span>
+                  </button>
                 </div>
               )}
 

@@ -23,6 +23,10 @@ const ProductDetails = ({ book }) => {
     navigate("/messages");
   };
 
+  const handleOpenExchange = () => {
+    navigate("/profile", { state: { activeTab: 4.1 } });
+  };
+
   const handleAddToCart = () => {
     if (isInCart) {
       toast.info("Already in cart");
@@ -90,6 +94,7 @@ const ProductDetails = ({ book }) => {
                     {book.exchangeable && (
                       <button
                         type="button"
+                        onClick={handleOpenExchange}
                         className="px-4 py-3 font-semibold bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition duration-300"
                       >
                         Exchangeable

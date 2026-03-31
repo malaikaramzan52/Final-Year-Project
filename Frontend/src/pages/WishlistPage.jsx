@@ -26,6 +26,11 @@ const WishlistPage = () => {
     toast.success("Added to cart!");
   };
 
+  const handleOpenExchange = (e) => {
+    e.stopPropagation();
+    navigate("/profile", { state: { activeTab: 4.1 } });
+  };
+
   const handleBuyNow = (item) => {
     navigate("/checkout", {
       state: {
@@ -87,9 +92,13 @@ const WishlistPage = () => {
                     </Link>
 
                     {item.exchangeable && (
-                      <span className="absolute bottom-3 left-3 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-green-500 text-white rounded-full shadow-sm">
+                      <button
+                        type="button"
+                        onClick={handleOpenExchange}
+                        className="absolute bottom-3 left-3 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-green-500 text-white rounded-full shadow-sm hover:bg-green-600 transition"
+                      >
                         Exchangeable
-                      </span>
+                      </button>
                     )}
                   </div>
 
