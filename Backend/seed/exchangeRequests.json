@@ -5,7 +5,9 @@
     "offeredBook": "665c3b3b3b3b3b3b3b3b3b03",
     "requester": "665b2a2a2a2a2a2a2a2a2a01",
     "owner": "665b2a2a2a2a2a2a2a2a2a02",
-    "status": "Pending"
+    "status": "Pending",
+    "createdAt": "2026-02-01T09:00:00.000Z",
+    "updatedAt": "2026-02-10T09:00:00.000Z"
   },
   {
     "_id": "665a7f7f7f7f7f7f7f7f7f02",
@@ -13,7 +15,9 @@
     "offeredBook": "665c3b3b3b3b3b3b3b3b3b10",
     "requester": "665b2a2a2a2a2a2a2a2a2a03",
     "owner": "665b2a2a2a2a2a2a2a2a2a03",
-    "status": "Accepted"
+    "status": "Accepted",
+    "createdAt": "2026-02-05T09:00:00.000Z",
+    "updatedAt": "2026-02-15T09:00:00.000Z"
   },
   {
     "_id": "665a7f7f7f7f7f7f7f7f7f03",
@@ -21,6 +25,8 @@
     "offeredBook": "665c3b3b3b3b3b3b3b3b3b08",
     "requester": "665b2a2a2a2a2a2a2a2a2a04",
     "owner": "665b2a2a2a2a2a2a2a2a2a02",
-    "status": "Rejected"
+    "status": "Rejected",
+    "createdAt": "2026-02-08T09:00:00.000Z",
+    "updatedAt": "2026-02-18T09:00:00.000Z"
   }
 ]

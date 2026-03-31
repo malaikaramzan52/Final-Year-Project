@@ -27,7 +27,7 @@ const hero = () => {
         <p className="pt-5 text-[16px] font-[Poppins] font-[400] text-[#000000ba]">
           Buy, sell, or exchange old books with ease. Connect with fellow book lovers, 
           <br></br>give your books a second life, and explore a world of stories waiting to be discovered all in one trusted marketplace.{" "}
-          <br /> Save money, reduce waste, and keep your bookshelf ever-growing with treasures from the past."
+          <br /> Save money, reduce waste, and keep your bookshelf ever-growing with treasures from the past.
         </p>
         <Link to="/become-seller" className="inline-block">
           <div className={`${styles.button}  bg-[#D98C00] mt-5`}>

@@ -13,7 +13,9 @@
       "zip": "44000"
     },
     "paymentMethod": "COD",
-    "status": "Delivered"
+    "status": "Delivered",
+    "createdAt": "2026-02-05T09:00:00.000Z",
+    "updatedAt": "2026-03-01T09:00:00.000Z"
   },
   {
     "_id": "665d4c4c4c4c4c4c4c4c4c02",
@@ -29,7 +31,9 @@
       "zip": "75300"
     },
     "paymentMethod": "COD",
-    "status": "Shipped"
+    "status": "Shipped",
+    "createdAt": "2026-02-08T09:00:00.000Z",
+    "updatedAt": "2026-03-02T09:00:00.000Z"
   },
   {
     "_id": "665d4c4c4c4c4c4c4c4c4c03",
@@ -45,7 +49,9 @@
       "zip": "46000"
     },
     "paymentMethod": "COD",
-    "status": "Pending"
+    "status": "Pending",
+    "createdAt": "2026-02-12T09:00:00.000Z",
+    "updatedAt": "2026-03-05T09:00:00.000Z"
   },
   {
     "_id": "665d4c4c4c4c4c4c4c4c4c04",
@@ -61,6 +67,8 @@
       "zip": "44000"
     },
     "paymentMethod": "COD",
-    "status": "Confirmed"
+    "status": "Confirmed",
+    "createdAt": "2026-02-15T09:00:00.000Z",
+    "updatedAt": "2026-03-07T09:00:00.000Z"
   }
 ]

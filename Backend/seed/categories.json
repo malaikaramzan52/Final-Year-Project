@@ -3,60 +3,80 @@
     "_id": "665a1b1c1c1c1c1c1c1c1c01",
     "name": "Fiction",
     "subTitle": "Novels, Stories & Literature",
-    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-03T09:00:00.000Z",
+    "updatedAt": "2026-02-05T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c02",
     "name": "Non-Fiction",
     "subTitle": "Biographies, Memoirs & Essays",
-    "image": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-06T09:00:00.000Z",
+    "updatedAt": "2026-02-08T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c03",
     "name": "Academic & Textbooks",
     "subTitle": "School, College & University Books",
-    "image": "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-09T09:00:00.000Z",
+    "updatedAt": "2026-02-12T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c04",
     "name": "Novels",
     "subTitle": "Manga, Superheroes & Illustrated Stories",
-    "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-12T09:00:00.000Z",
+    "updatedAt": "2026-02-15T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c05",
     "name": "Science & Technology",
     "subTitle": "Popular Science, Engineering & Computers",
-    "image": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-15T09:00:00.000Z",
+    "updatedAt": "2026-02-18T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c06",
     "name": "History & Politics",
     "subTitle": "World History, Biographies & Political Books",
-    "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-18T09:00:00.000Z",
+    "updatedAt": "2026-02-21T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c07",
     "name": "Arts & Photography",
     "subTitle": "Art Books, Photography & Design",
-    "image": "https://images.unsplash.com/photo-1473186578172-c141e6798cf4?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1473186578172-c141e6798cf4?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-21T09:00:00.000Z",
+    "updatedAt": "2026-02-24T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c08",
     "name": "Law",
     "subTitle": "Legal Studies, Jurisprudence & Case Law",
-    "image": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-24T09:00:00.000Z",
+    "updatedAt": "2026-02-26T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c09",
     "name": "Self-Help",
     "subTitle": "Personal Growth, Mindfulness & Motivation",
-    "image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-26T09:00:00.000Z",
+    "updatedAt": "2026-03-05T09:00:00.000Z"
   },
   {
     "_id": "665a1b1c1c1c1c1c1c1c1c10",
     "name": "Business & Economics",
     "subTitle": "Finance, Management & Entrepreneurship",
-    "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=500&q=60"
+    "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=500&q=60",
+    "createdAt": "2026-01-28T09:00:00.000Z",
+    "updatedAt": "2026-03-08T09:00:00.000Z"
   }
 ]
