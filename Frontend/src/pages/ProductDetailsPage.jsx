@@ -31,8 +31,8 @@ const ProductDetailsPage = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen flex flex-col bg-white">
-        <div className="flex-1">
+      <div className="bg-white">
+        <div className="pb-12">
           {loading ? (
             <div className="flex justify-center py-24">
               <div className="w-8 h-8 border-4 border-[#D98C00] border-t-transparent rounded-full animate-spin" />

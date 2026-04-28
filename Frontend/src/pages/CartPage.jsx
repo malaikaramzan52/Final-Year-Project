@@ -1,17 +1,17 @@
 import { useMemo } from "react";
 import { useCart } from "../context/CartContext";
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 
 const CartPage = () => {
-  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
+  const { cart, removeFromCart } = useCart();
   const navigate = useNavigate();
 
   const totals = useMemo(() => {
     const subtotal = cart.reduce((sum, item) => {
-      return sum + (Number(item.price) || 0) * (item.quantity || 1);
+      return sum + (Number(item.price) || 0);
     }, 0);
     const delivery = subtotal > 0 ? 150 : 0;
     return { subtotal, delivery, total: subtotal + delivery };
@@ -51,9 +51,13 @@ const CartPage = () => {
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {cart.map((item) => {
-                const qty = item.quantity || 1;
-                const price = Number(item.price) || 0;
-                const lineTotal = qty * price;
+                const statusColors = {
+                  Available:    "bg-green-100 text-green-700 border-green-300",
+                  Sold:         "bg-blue-100 text-blue-700 border-blue-300",
+                  Reserved:     "bg-purple-100 text-purple-700 border-purple-300",
+                  Exchanged:    "bg-indigo-100 text-indigo-700 border-indigo-300",
+                  Under_Review: "bg-yellow-100 text-yellow-700 border-yellow-300",
+                };
 
                 return (
                   <div
@@ -76,42 +80,58 @@ const CartPage = () => {
                     {/* Details */}
                     <div className="flex-1 min-w-0 flex flex-col justify-between">
                       <div>
+                        {/* Author */}
                         {item.author && (
-                          <p className="text-xs text-gray-400 uppercase tracking-wider">
+                          <p className="text-xs text-gray-400 uppercase tracking-wider mb-0.5">
                             {item.author}
                           </p>
                         )}
+
+                        {/* Title */}
                         <Link to={`/product/${item.id}`}>
-                          <h3 className="font-bold text-gray-800 hover:text-[#D98C00] transition line-clamp-2">
+                          <h3 className="font-bold text-gray-800 hover:text-[#D98C00] transition line-clamp-2 mb-2">
                             {item.title || item.name}
                           </h3>
                         </Link>
-                      </div>
 
-                      <div className="flex items-center justify-between mt-3">
-                        {/* Quantity Controls */}
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => decreaseQuantity(item.id)}
-                            className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-100 transition disabled:opacity-40"
-                            disabled={qty <= 1}
-                          >
-                            <AiOutlineMinus size={14} />
-                          </button>
-                          <span className="w-8 text-center font-semibold text-gray-800">
-                            {qty}
-                          </span>
-                          <button
-                            onClick={() => increaseQuantity(item.id)}
-                            className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-100 transition"
-                          >
-                            <AiOutlinePlus size={14} />
-                          </button>
+                        {/* Badges Row: Status + Exchangeable */}
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {item.status && (
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider ${statusColors[item.status] || "bg-gray-100 text-gray-600 border-gray-300"}`}>
+                              {item.status.replace("_", " ")}
+                            </span>
+                          )}
+                          {item.exchangeable && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider bg-green-50 text-green-700 border-green-300">
+                              Exchangeable
+                            </span>
+                          )}
                         </div>
 
-                        {/* Price */}
+                        {/* Extra Info Row: Condition + Category + Edition */}
+                        <div className="flex flex-wrap gap-3 text-xs text-gray-500">
+                          {item.condition && (
+                            <span>
+                              <span className="font-semibold text-gray-600">Condition:</span> {item.condition}
+                            </span>
+                          )}
+                          {item.category && (
+                            <span>
+                              <span className="font-semibold text-gray-600">Category:</span> {item.category}
+                            </span>
+                          )}
+                          {item.edition && (
+                            <span>
+                              <span className="font-semibold text-gray-600">Edition:</span> {item.edition}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Price */}
+                      <div className="flex items-center justify-end mt-3">
                         <p className="text-lg font-bold text-[#D98C00]">
-                          Rs. {lineTotal}
+                          Rs. {Number(item.price) || 0}
                         </p>
                       </div>
                     </div>

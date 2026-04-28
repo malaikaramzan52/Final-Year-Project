@@ -4,6 +4,10 @@ import ActivationPage from "./pages/ActivationPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ProductDetailsPage from "./pages/ProductDetailsPage.jsx";
 import ProfilePage from "../src/pages/ProfilePage.jsx"; 
+import ProductsPage from "./pages/ProductsPage.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
+import ExchangePage from "./pages/ExchangePage.jsx";
+
 
 export{
     LoginPage,
@@ -11,5 +15,9 @@ export{
     ActivationPage,
     HomePage,
     ProductDetailsPage,
-    ProfilePage
+    ProfilePage,
+    ProductsPage,
+    AboutPage,
+    ExchangePage
+
 };

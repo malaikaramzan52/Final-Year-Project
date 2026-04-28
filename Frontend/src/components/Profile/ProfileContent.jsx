@@ -275,7 +275,7 @@ const bookStatusColors = {
   Exchanged: "bg-indigo-100 text-indigo-800",
 };
 
-const conditionOptions = ["Like New", "Good", "Fair", "Acceptable"];
+const conditionOptions = ["Like New", "Fair", "Acceptable"];
 
 const MyBooks = () => {
   const [books, setBooks] = useState([]);
@@ -311,6 +311,20 @@ const MyBooks = () => {
       toast.success("Book deleted");
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to delete book");
+    }
+  };
+
+  const handleStatusChange = async (bookId, newStatus) => {
+    try {
+      const formData = new FormData();
+      formData.append("status", newStatus);
+      await api.put(`/v2/book/${bookId}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setBooks((prev) => prev.map((b) => (b._id === bookId ? { ...b, status: newStatus } : b)));
+      toast.success("Book status updated");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to update status");
     }
   };
 
@@ -406,13 +420,24 @@ const MyBooks = () => {
                     <h3 className="font-bold text-gray-800 line-clamp-1">{book.title}</h3>
                     <p className="text-xs text-gray-400">by {book.author}</p>
                   </div>
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
-                      bookStatusColors[book.status] || "bg-gray-100 text-gray-600"
-                    }`}
-                  >
-                    {book.status?.replace("_", " ")}
-                  </span>
+                  <div className="relative">
+                    <select
+                      value={book.status}
+                      onChange={(e) => handleStatusChange(book._id, e.target.value)}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold cursor-pointer appearance-none outline-none border border-transparent hover:border-gray-300 pr-6 ${
+                        bookStatusColors[book.status] || "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {["Available", "Reserved", "Sold", "Exchanged", "Under_Review"].map((s) => (
+                        <option key={s} value={s} className="bg-white text-gray-800">
+                          {s.replace("_", " ")}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+                      <svg className="w-3 h-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
@@ -490,7 +515,7 @@ const BookForm = ({ book, categories, onDone, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !author || !description || !price || !category || !condition) {
+    if (!title || !description || !price || !category || !condition) {
       toast.error("Please fill all required fields");
       return;
     }
@@ -571,7 +596,7 @@ const BookForm = ({ book, categories, onDone, onCancel }) => {
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Author *
+              Author <span className="text-gray-400 font-normal text-xs">(optional)</span>
             </label>
             <input
               type="text"
@@ -579,7 +604,6 @@ const BookForm = ({ book, categories, onDone, onCancel }) => {
               onChange={(e) => setAuthor(e.target.value)}
               className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#D98C00] focus:border-[#D98C00] outline-none"
               placeholder="Enter author name"
-              required
             />
           </div>
         </div>

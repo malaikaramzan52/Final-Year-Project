@@ -42,7 +42,7 @@ router.post(
       return next(new ErrorHandler("Avatar is required", 400));
     }
 
-    const avatarUrl = `/uploads/${req.file.filename}`;
+    const avatarUrl = `/uploads/avatars/${req.file.filename}`;
 
     // Create user
     const user = await User.create({
@@ -50,24 +50,11 @@ router.post(
       email,
       password,
       avatar: avatarUrl,
+      isEmailVerified: true, // Mark as verified immediately
     });
 
-    // Create activation token
-    const activationToken = createActivationToken(user);
-
-    const activationUrl = `http://localhost:3000/activation/${activationToken}`;
-
-    // Send activation email
-    await sendMail({
-      email: user.email,
-      subject: "Activate your account",
-      message: `Hello ${user.name}, please click on the link to activate your account:\n\n${activationUrl}`,
-    });
-
-    res.status(201).json({
-      success: true,
-      message: `Please check your email (${user.email}) to activate your account`,
-    });
+    // Send JWT token immediately
+    sendToken(user, 201, res);
   })
 );
 
@@ -147,7 +134,7 @@ router.put("/update-avatar", isAuthenticated, upload.single("avatar"), async (re
     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
   }
 
-  user.avatar = `/uploads/${req.file.filename}`;
+  user.avatar = `/uploads/avatars/${req.file.filename}`;
   await user.save();
 
   res.status(200).json({ success: true, user });

@@ -23,10 +23,14 @@ const user = require("./controller/user");
 const order = require("./controller/order");
 const book = require("./controller/book");
 const category = require("./controller/category");
+const exchange = require("./controller/exchange");
+
 app.use("/api/v2/user", user);
 app.use("/api/v2/order", order);
 app.use("/api/v2/book", book);
 app.use("/api/v2/category", category);
+app.use("/api/v2/exchange", exchange);
+
 
 // ❗ correct error middleware
 const errorMiddleware = require("./middleware/error");

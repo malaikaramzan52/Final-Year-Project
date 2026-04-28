@@ -10,6 +10,8 @@ import HomePage from "../pages/HomePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "../pages/ResetPasswordPage.jsx";
 import BestDeals from "../components/Root/BestDeals/BestDeals.jsx";
+import ProductsPage from "../pages/ProductsPage.jsx";
+import AboutPage from "../pages/AboutPage.jsx";
 import BecomeSeller from "../components/BecomeSeller/BecomeSeller";
 import BrowseBooks from "../components/BrowseBooks/BrowseBooks";
 import WishlistPage from "../pages/WishlistPage";
@@ -17,6 +19,7 @@ import CartPage from "../pages/CartPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage.jsx";
 import ProfilePage from "../pages/ProfilePage";
 import CheckoutPage from "../pages/CheckoutPage.jsx";
+import ExchangePage from "../pages/ExchangePage.jsx";
 import AdminLayout from "../pages/admin/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminUsers from "../pages/admin/AdminUsers";
@@ -35,7 +38,8 @@ const AppRoutes = () => (
       <Route path="/activation/:activationToken" element={<ActivationPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password/:userId/:token" element={<ResetPasswordPage />} />
-      <Route path="/products" element={<BestDeals />} />
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/about" element={<AboutPage />} />
       <Route path="/become-seller" element={<BecomeSeller />} />
       <Route path="/browse" element={<BrowseBooks />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
@@ -45,6 +49,7 @@ const AppRoutes = () => (
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/exchange/:id" element={<ExchangePage />} />
       </Route>
 
       <Route element={<AdminRoute />}>

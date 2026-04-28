@@ -1,20 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
-import ProductCard from "../ProductCard/ProductCard";
 import api from "../../../api/axios";
 import { normalizeBooks } from "../../../utils/normalizeBook";
-import { useSearchParams, Link } from "react-router-dom";
+import ProductCard from "../ProductCard/ProductCard";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
-/* ──────────────────────────────────────────────
-   Home Page Carousel — shows 4 cards at a time,
-   auto-scrolls, pauses on hover.
-────────────────────────────────────────────── */
-const HomeCarousel = ({ books }) => {
+/* ── Small Carousel reused from BestDeals pattern ── */
+const Carousel = ({ books }) => {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
 
-  // responsive: how many cards visible
   const [visible, setVisible] = useState(4);
   useEffect(() => {
     const update = () => {
@@ -27,11 +23,9 @@ const HomeCarousel = ({ books }) => {
   }, []);
 
   const max = Math.max(0, books.length - visible);
-
   const next = () => setCurrent((c) => (c >= max ? 0 : c + 1));
   const prev = () => setCurrent((c) => (c <= 0 ? max : c - 1));
 
-  // Auto-advance
   useEffect(() => {
     if (paused || books.length <= visible) return;
     timerRef.current = setInterval(next, 2800);
@@ -47,7 +41,6 @@ const HomeCarousel = ({ books }) => {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* Track */}
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${current * cardWidthPct}%)` }}
@@ -63,15 +56,12 @@ const HomeCarousel = ({ books }) => {
           ))}
         </div>
 
-        {/* Left Arrow */}
         <button
           onClick={prev}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-[#D98C00] hover:text-white text-gray-700 shadow-md rounded-full w-9 h-9 flex items-center justify-center transition duration-300"
         >
           <IoIosArrowBack size={20} />
         </button>
-
-        {/* Right Arrow */}
         <button
           onClick={next}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-[#D98C00] hover:text-white text-gray-700 shadow-md rounded-full w-9 h-9 flex items-center justify-center transition duration-300"
@@ -80,63 +70,82 @@ const HomeCarousel = ({ books }) => {
         </button>
       </div>
 
-      {/* Dot indicators */}
-      <div className="flex justify-center gap-2 mt-5">
-        {Array.from({ length: max + 1 }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              i === current ? "bg-[#D98C00] w-5" : "bg-gray-300"
-            }`}
-          />
-        ))}
-      </div>
+      {/* Dots */}
+      {max > 0 && (
+        <div className="flex justify-center gap-2 mt-5">
+          {Array.from({ length: max + 1 }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === current ? "bg-[#D98C00] w-5" : "bg-gray-300 w-2"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-/* ──────────────────────────────────────────────
-   Main BooksSection component
-────────────────────────────────────────────── */
-const BooksSection = ({ isPage = false }) => {
+/* ── Main Section Component ── */
+const ExchangeableBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchParams] = useSearchParams();
-  const categoryId = searchParams.get("category") || "";
-  const categoryName = searchParams.get("categoryName") || "";
+  const sectionRef = useRef(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      setLoading(true);
-      try {
-        const query = new URLSearchParams({ sort: "latest" });
-        if (categoryId) {
-          query.set("category", categoryId);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
         }
-        const res = await api.get(`/v2/book/all?${query.toString()}`);
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await api.get("/v2/book/all?exchangeable=true&sort=latest");
         setBooks(normalizeBooks(res.data.books));
       } catch (err) {
-        console.error("Failed to fetch books:", err);
+        console.error("Failed to fetch exchangeable books:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchBooks();
-  }, [categoryId]);
+    fetch();
+  }, []);
 
-  // ── HOME PAGE view (carousel)
-  if (!isPage) {
-    return (
-      <div className="max-w-7xl mx-auto px-6 py-14">
-        {/* Section Heading */}
-        <div className="mb-10 flex items-end justify-between">
+  if (!loading && books.length === 0) return null;
+
+  return (
+    <section
+      ref={sectionRef}
+      className="w-full bg-white py-16 px-6"
+    >
+      <div
+        className={`max-w-7xl mx-auto transition-all duration-1000 ease-out ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        {/* Header */}
+        <div className="flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-3xl font-extrabold text-gray-900 tracking-wide">
-              Browse Books
+            <span className="inline-block mb-2 px-4 py-1 bg-green-50 text-green-700 text-xs font-bold uppercase tracking-widest rounded-full border border-green-200">
+              🔄 Exchange Available
+            </span>
+            <h2 className="text-3xl font-extrabold text-gray-900">
+              Books Up for Exchange
             </h2>
             <p className="text-gray-500 mt-1 text-base">
-              Explore our collection of old, rare &amp; exchangeable books
+              These books are listed by sellers who are open to swapping — for free!
             </p>
           </div>
           <Link
@@ -147,35 +156,17 @@ const BooksSection = ({ isPage = false }) => {
           </Link>
         </div>
 
+        {/* Carousel / Loader */}
         {loading ? (
           <div className="flex justify-center py-16">
             <div className="w-8 h-8 border-4 border-[#D98C00] border-t-transparent rounded-full animate-spin" />
           </div>
-        ) : books.length === 0 ? (
-          <p className="text-center text-gray-500 py-12">No books available yet.</p>
         ) : (
-          <HomeCarousel books={books} />
+          <Carousel books={books} />
         )}
       </div>
-    );
-  }
-
-  // ── PRODUCTS PAGE view (full grid)
-  return (
-    <div className="max-w-7xl mx-auto px-6 py-14">
-      {loading ? (
-        <div className="flex justify-center py-16">
-          <div className="w-8 h-8 border-4 border-[#D98C00] border-t-transparent rounded-full animate-spin" />
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {books.map((book) => (
-            <ProductCard key={book.id} book={book} />
-          ))}
-        </div>
-      )}
-    </div>
+    </section>
   );
 };
 
-export default BooksSection;
+export default ExchangeableBooks;

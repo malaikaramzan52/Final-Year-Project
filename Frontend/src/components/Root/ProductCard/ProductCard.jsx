@@ -42,7 +42,7 @@ const ProductCard = ({ book }) => {
 
   const handleExchangeNav = (e) => {
     e.stopPropagation();
-    navigate("/profile", { state: { activeTab: 4.1 } });
+    navigate(`/exchange/${book.id || book._id}`);
   };
 
   const handleBuyNow = () => {
@@ -74,6 +74,21 @@ const ProductCard = ({ book }) => {
             className="w-full h-52 object-contain transition-transform duration-300 group-hover:scale-105 cursor-pointer"
           />
         </Link>
+
+        {/* Status Badge - top right */}
+        {book.status && (
+          <span className={`absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm
+            ${book.status === "Available"    ? "bg-green-100 text-green-700 border border-green-300" :
+              book.status === "Sold"         ? "bg-blue-100 text-blue-700 border border-blue-300" :
+              book.status === "Reserved"     ? "bg-purple-100 text-purple-700 border border-purple-300" :
+              book.status === "Exchanged"    ? "bg-indigo-100 text-indigo-700 border border-indigo-300" :
+              book.status === "Under_Review" ? "bg-yellow-100 text-yellow-700 border border-yellow-300" :
+              "bg-gray-100 text-gray-600 border border-gray-300"
+            }`}
+          >
+            {book.status.replace("_", " ")}
+          </span>
+        )}
 
         {book.exchangeable && (
           <button
@@ -137,18 +152,18 @@ const ProductCard = ({ book }) => {
         </p>
 
         <Link to={`/product/${book.id}`}>
-          <h3 className="font-bold text-base text-gray-800 leading-snug hover:text-[#D98C00] transition-colors duration-200 line-clamp-2 mb-2">
+          <h3 className="font-bold text-base text-gray-800 leading-snug hover:text-[#D98C00] transition-colors duration-200 line-clamp-2 mb-1">
             {book.name}
           </h3>
         </Link>
 
-        <div className="flex items-center gap-0.5 mb-3">
-          <AiFillStar className="text-amber-400" size={14} />
-          <AiFillStar className="text-amber-400" size={14} />
-          <AiFillStar className="text-amber-400" size={14} />
-          <AiFillStar className="text-amber-400" size={14} />
-          <AiFillStar className="text-gray-200" size={14} />
-        </div>
+        {book.condition && (
+          <div className="mb-2">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200">
+              Condition: {book.condition}
+            </span>
+          </div>
+        )}
 
         <div className="flex-1"></div>
 

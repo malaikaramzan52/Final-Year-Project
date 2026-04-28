@@ -3,6 +3,9 @@ import Header from "../components/Layout/Header"
 import Hero from "../components/Root/Hero/hero"
 import Categories from "../components/Root/Categories/categories";
 import BestDeals from "../components/Root/BestDeals/BestDeals";
+import ExchangeSection from "../components/Root/ExchangeSection/ExchangeSection";
+import ExchangeableBooks from "../components/Root/ExchangeSection/ExchangeableBooks";
+import PlatformBenefits from "../components/Root/PlatformBenefits/PlatformBenefits";
 import Footer from "../components/Layout/Footer";
 
 const HomePage = () => {
@@ -12,6 +15,9 @@ const HomePage = () => {
     <Hero/>
     <Categories/>
     <BestDeals/>
+    <ExchangeSection/>
+    <ExchangeableBooks/>
+    <PlatformBenefits/>
     <Footer />
     </div>
   )

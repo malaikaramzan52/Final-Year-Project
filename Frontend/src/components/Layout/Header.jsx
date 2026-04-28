@@ -42,6 +42,8 @@ const Header = ({ activeHeading }) => {
     fetchCategories();
   }, []);
 
+  const [open, setOpen] = useState(false);
+
   // Search books via API with debounce
   useEffect(() => {
     if (!searchTerm.trim()) {
@@ -72,16 +74,16 @@ const Header = ({ activeHeading }) => {
 
   return (
     <>
-      {/* Header Top */}
+      {/* ── DESKTOP HEADER ── */}
       <div className={`${styles.section} px-4 md:px-8`}>
-        <div className="hidden md:flex md:h-[50px] md:my-[20px] items-center justify-between">
+        <div className="hidden 800px:flex h-[90px] items-center justify-between">
           {/* Logo */}
-          <div className="mr-6">
+          <div className="flex items-center pt-8">
             <Link to="/">
               <img
                 src={RebookLogo}
                 alt="Rebook Logo"
-                className="w-[240px] h-auto"
+                className="w-[180px] h-auto object-contain"
               />
             </Link>
           </div>
@@ -130,11 +132,10 @@ const Header = ({ activeHeading }) => {
         </div>
       </div>
 
-      {/* Category Section */}
+      {/* ── DESKTOP STICKY NAVBAR ── */}
       <div
-        className={`${
-          active ? "shadow-sm fixed top-0 left-0 z-10" : ""
-        } transition hidden 800px:flex items-center justify-between w-full bg-[#D98C00] h-[70px] px-4 md:px-8`}
+        className={`${active ? "shadow-sm fixed top-0 left-0 z-10" : ""
+          } transition hidden 800px:flex items-center justify-between w-full bg-[#D98C00] h-[70px] px-4 md:px-8`}
       >
         <div
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
@@ -199,11 +200,10 @@ const Header = ({ activeHeading }) => {
                     src={`${(server || "http://localhost:5000").replace(
                       /\/$/,
                       ""
-                    )}${
-                      user.avatar.startsWith("/")
+                    )}${user.avatar.startsWith("/")
                         ? user.avatar
                         : `/${user.avatar}`
-                    }`}
+                      }`}
                     alt="Profile"
                     className="w-[45px] h-[45px] rounded-full border-[3px] border-[#0eae88] object-cover"
                     onError={(e) => {
@@ -220,6 +220,137 @@ const Header = ({ activeHeading }) => {
           </div>
         </div>
       </div>
+
+      {/* ── MOBILE HEADER ── */}
+      <div
+        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : ""
+          } w-full h-[80px] bg-[#fff] z-50 top-0 left-0 800px:hidden flex items-center justify-between px-4`}
+      >
+        <div className="flex-1">
+          <BiMenuAltLeft
+            size={40}
+            className="cursor-pointer"
+            onClick={() => setOpen(true)}
+          />
+        </div>
+        <div className="flex-1 flex justify-center items-center pt-6">
+          <Link to="/">
+            <img
+              src={RebookLogo}
+              alt="Logo"
+              className="cursor-pointer w-[120px] h-auto object-contain"
+            />
+          </Link>
+        </div>
+        <div className="flex-1 flex justify-end items-center">
+          <div className="relative mr-4">
+            <Link to="/cart">
+              <AiOutlineShoppingCart size={30} />
+              <span className="absolute right-[-10px] top-[-5px] rounded-full bg-[#D98C00] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
+                {cart?.length || 0}
+              </span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Sidebar */}
+      {open && (
+        <div className="fixed w-full bg-[#0000005f] z-20 h-full top-0 left-0">
+          <div className="fixed w-[70%] bg-[#fff] h-screen top-0 left-0 z-10 overflow-y-scroll">
+            <div className="w-full flex justify-between pr-3 pt-3">
+              <div>
+                <div className="relative mr-[15px]">
+                  <Link to="/wishlist">
+                    <AiOutlineHeart size={30} className="ml-4" />
+                    <span className="absolute right-[-10px] top-[-5px] rounded-full bg-[#D98C00] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
+                      {wishlist && wishlist.length}
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <AiOutlineSearch
+                size={30}
+                className="ml-4 mt-5 cursor-pointer"
+                onClick={() => setOpen(false)}
+              />
+            </div>
+
+            <div className="my-8 w-[92%] m-auto h-[40px] relative">
+              <input
+                type="search"
+                placeholder="Search Product..."
+                className="h-[40px] w-full px-2 border-[#D98C00] border-[2px] rounded-md"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchData && searchData.length !== 0 && (
+                <div className="absolute bg-[#fff] z-10 shadow w-full left-0 p-3">
+                  {searchData.map((i) => (
+                    <Link to={`/product/${i._id}`}>
+                      <div className="flex items-center py-2">
+                        <img
+                          src={i.image}
+                          alt=""
+                          className="w-[40px] mr-2"
+                        />
+                        <h5>{i.title}</h5>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Navbar active={activeHeading} />
+            <div className={`${styles.button} ml-4 !rounded-[4px] bg-[#D98C00]`}>
+              <Link to="/become-seller">
+                <h1 className="text-[#fff] flex items-center">
+                  Sell Books <IoIosArrowForward className="ml-1" />
+                </h1>
+              </Link>
+            </div>
+            <br />
+            <br />
+            <br />
+
+            <div className="flex w-full justify-center">
+              {isAuthenticated ? (
+                <div>
+                  <Link to="/profile">
+                    <img
+                      src={`${(server || "http://localhost:5000").replace(
+                        /\/$/,
+                        ""
+                      )}${user.avatar.startsWith("/")
+                          ? user.avatar
+                          : `/${user.avatar}`
+                        }`}
+                      alt=""
+                      className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]"
+                    />
+                  </Link>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-[18px] pr-[10px] text-[#000000b7]"
+                  >
+                    Login /
+                  </Link>
+                  <Link
+                    to="/sign-up"
+                    className="text-[18px] text-[#000000b7]"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

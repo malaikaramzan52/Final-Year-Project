@@ -8,17 +8,22 @@ const { isAuthenticated } = require("../middleware/auth");
 const { upload } = require("../multer");
 
 /* =========================================================
-   GET ALL BOOKS (available only)
+   GET ALL BOOKS (all except Rejected)
    GET /api/v2/book/all
    Query: ?category=id&sort=latest|oldest|price_asc|price_desc
 ========================================================= */
 router.get(
   "/all",
   catchAsyncErrors(async (req, res, next) => {
-    const filter = { status: "Available" };
+    // Show all books except Rejected — status badge shows current state
+    const filter = { status: { $ne: "Rejected" } };
 
     if (req.query.category) {
       filter.category = req.query.category;
+    }
+
+    if (req.query.exchangeable === "true") {
+      filter.exchangeable = true;
     }
 
     let sortOption = { createdAt: -1 };
@@ -62,7 +67,7 @@ router.get(
     const regex = new RegExp(q, "i");
 
     const books = await Book.find({
-      status: "Available",
+      status: { $ne: "Rejected" },
       $or: [{ title: regex }, { author: regex }],
     })
       .populate("category", "name")
@@ -154,13 +159,13 @@ router.post(
     const { title, author, description, price, category, condition, exchangeable, edition } =
       req.body;
 
-    if (!title || !author || !description || !price || !category || !condition) {
+    if (!title || !description || !price || !category || !condition) {
       return next(new ErrorHandler("Please fill all required fields", 400));
     }
 
     let imageUrl = "";
     if (req.file) {
-      imageUrl = `/uploads/${req.file.filename}`;
+      imageUrl = `/uploads/books/${req.file.filename}`;
     } else if (req.body.imageUrl) {
       imageUrl = req.body.imageUrl;
     } else {
@@ -225,12 +230,12 @@ router.put(
     if (exchangeable !== undefined) {
       book.exchangeable = exchangeable === "true" || exchangeable === true;
     }
-    if (status && ["Available", "Under_Review"].includes(status)) {
+    if (status && ["Available", "Under_Review", "Reserved", "Sold", "Exchanged"].includes(status)) {
       book.status = status;
     }
 
     if (req.file) {
-      book.image = `/uploads/${req.file.filename}`;
+      book.image = `/uploads/books/${req.file.filename}`;
     }
 
     await book.save();

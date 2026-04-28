@@ -46,7 +46,7 @@ const Signup = () => {
       }
 
       if (res.data.success === true) {
-        toast.success(res.data.message || "Account created");
+        toast.success("Account created and logged in successfully!");
         setName("");
         setEmail("");
         setPassword("");

@@ -6,9 +6,12 @@ const DropDown = ({ categoriesData, setDropDown }) => {
   const navigate = useNavigate();
 
   const submitHandle = (cat) => {
-    navigate(`/products?category=${cat.name || cat.title}`);
+    navigate(
+      `/products?category=${encodeURIComponent(
+        cat._id
+      )}&categoryName=${encodeURIComponent(cat.name || cat.title || "")}`
+    );
     setDropDown(false);
-    window.location.reload();
   };
 
   return (

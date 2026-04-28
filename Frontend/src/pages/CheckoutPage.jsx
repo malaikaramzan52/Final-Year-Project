@@ -33,8 +33,8 @@ const CheckoutPage = () => {
     const subtotal = items.reduce((sum, item) => {
       return sum + (Number(item.price) || 0) * (item.quantity || 1);
     }, 0);
-    const delivery = subtotal > 0 ? 150 : 0;
-    return { subtotal, delivery, total: subtotal + delivery };
+    const delivery = 0; // Removed delivery charges
+    return { subtotal, delivery, total: subtotal };
   }, [items]);
 
   const handleChange = (e) => {
@@ -160,13 +160,13 @@ const CheckoutPage = () => {
               </div>
               <div className="flex justify-between text-sm font-semibold text-gray-700">
                 <span>Delivery Fee</span>
-                <span>Rs. 150</span>
+                <span>Free</span>
               </div>
               <div className="flex justify-between text-base font-bold text-gray-900 pt-2 border-t border-gray-200">
                 <span>Total</span>
                 <span>
                   Rs.{" "}
-                  {placedOrders.reduce((sum, o) => sum + o.price, 0) + 150}
+                  {placedOrders.reduce((sum, o) => sum + o.price, 0)}
                 </span>
               </div>
             </div>
@@ -335,7 +335,7 @@ const CheckoutPage = () => {
                 </div>
                 <div className="flex justify-between">
                   <span>Delivery Fee</span>
-                  <span className="font-semibold">Rs. {totals.delivery}</span>
+                  <span className="font-semibold text-green-600">Free</span>
                 </div>
                 <div className="flex justify-between text-base font-bold text-gray-900 pt-3 border-t border-gray-100">
                   <span>Total</span>

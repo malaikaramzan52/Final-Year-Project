@@ -32,8 +32,16 @@ router.post(
       return next(new ErrorHandler("Book not found", 404));
     }
 
+    if (book.status === "Sold") {
+      return next(new ErrorHandler("This book is already sold", 400));
+    }
+
+    if (book.status === "Reserved") {
+      return next(new ErrorHandler("This book is currently reserved", 400));
+    }
+
     if (book.status !== "Available") {
-      return next(new ErrorHandler("This book is no longer available", 400));
+      return next(new ErrorHandler("This book is not available for purchase", 400));
     }
 
     if (book.user.toString() === req.user._id.toString()) {

@@ -19,9 +19,6 @@ const ProductDetails = ({ book }) => {
 
   const isInCart = book && cart.some((item) => item.id === book.id || item.id === book._id);
 
-  const handleMessageSubmit = () => {
-    navigate("/messages");
-  };
 
   const handleOpenExchange = () => {
     navigate("/profile", { state: { activeTab: 4.1 } });
@@ -101,13 +98,6 @@ const ProductDetails = ({ book }) => {
                       </button>
                     )}
 
-                    <button
-                      className="flex items-center justify-center gap-2 bg-white text-[#D98C00] py-3 px-4 rounded-md text-sm font-semibold border-2 border-[#D98C00] shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 active:scale-95"
-                      onClick={handleMessageSubmit}
-                    >
-                      <AiOutlineMessage size={20} />
-                      Send Message
-                    </button>
 
                     <button
                       className={`flex items-center justify-center gap-2 py-3 px-5 rounded-md text-sm font-semibold border-2 shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 active:scale-95 ${
@@ -141,9 +131,13 @@ const ProductDetails = ({ book }) => {
 
 const ProductDetailsInfo = ({ book }) => {
   const [active, setActive] = useState(1);
+
+  const seller = book?.shop;
+
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
-      <div className="w-full flex justify-between border-b pt-10 pb-2">
+      {/* Tabs */}
+      <div className="w-full flex gap-8 border-b pt-10 pb-2">
         <div className="relative">
           <h5
             className="text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
@@ -158,72 +152,64 @@ const ProductDetailsInfo = ({ book }) => {
             className="text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
             onClick={() => setActive(2)}
           >
-            Book Reviews
+            Seller Information
           </h5>
           {active === 2 ? <div className={`${styles.active_indicator}`} /> : null}
         </div>
-        <div className="relative">
-          <h5
-            className="text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
-            onClick={() => setActive(3)}
-          >
-            Seller Information
-          </h5>
-          {active === 3 ? <div className={`${styles.active_indicator}`} /> : null}
-        </div>
       </div>
-      {active === 1 ? (
-        <p className="py-2 text-[18px] leading-8 pb-10 whitespace-pre-line">
+
+      {/* Book Details Tab */}
+      {active === 1 && (
+        <p className="py-2 text-[18px] leading-8 pb-4 whitespace-pre-line">
           {book.description}
         </p>
-      ) : null}
-      {active === 2 ? (
-        <div className="w-full justify-center min-h-[40vh] items-center py-3">
-          <p>No Review Yet!</p>
-        </div>
-      ) : null}
-      {active === 3 && (
-        <div className="w-full flex items-center justify-between p-5">
-          <div className="flex items-start gap-3">
-            <img
-              src={
-                book?.shop?.shop_avatar?.url
-                  ? book.shop.shop_avatar.url.startsWith("http")
-                    ? book.shop.shop_avatar.url
-                    : `${(server || "").replace(/\/$/, "")}${book.shop.shop_avatar.url}`
-                  : `https://ui-avatars.com/api/?name=${encodeURIComponent(book?.shop?.name || "Seller")}&background=D98C00&color=fff&size=80`
-              }
-              alt="Seller Avatar"
-              className="w-[80px] h-[80px] rounded-full object-cover mt-1 mb-1"
-              onError={(e) => {
-                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(book?.shop?.name || "Seller")}&background=D98C00&color=fff&size=80`;
-              }}
-            />
-            <div>
-              <h3 className={styles.shop_name}>{book?.shop?.name || "Seller"}</h3>
-              {book?.shop?.email && (
-                <p className="text-gray-500 text-sm">{book.shop.email}</p>
-              )}
+      )}
+
+      {/* Seller Information Tab */}
+      {active === 2 && (
+        <div className="w-full py-8 px-2">
+          <div className="flex flex-col 800px:flex-row items-start 800px:items-center justify-between gap-6">
+            {/* Avatar + Name + Email */}
+            <div className="flex items-center gap-5">
+              <img
+                src={
+                  seller?.shop_avatar?.url
+                    ? seller.shop_avatar.url.startsWith("http")
+                      ? seller.shop_avatar.url
+                      : `${(server || "").replace(/\/$/, "")}${seller.shop_avatar.url}`
+                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(seller?.name || "Seller")}&background=D98C00&color=fff&size=80`
+                }
+                alt="Uploader Avatar"
+                className="w-[80px] h-[80px] rounded-full object-cover border-[3px] border-[#D98C00] shadow-md"
+                onError={(e) => {
+                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(seller?.name || "Seller")}&background=D98C00&color=fff&size=80`;
+                }}
+              />
+              <div>
+                <h3 className="text-xl font-bold text-gray-800">
+                  {seller?.name || "Anonymous Seller"}
+                </h3>
+                {seller?.email && (
+                  <p className="text-gray-500 text-sm mt-1">{seller.email}</p>
+                )}
+                <span className="inline-block mt-2 px-3 py-0.5 bg-[#D98C00]/10 text-[#D98C00] text-xs font-semibold rounded-full border border-[#D98C00]/30">
+                  Book Seller
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="text-right">
-            {book?.shop?.createdAt && (
-              <h5 className="font-[600]">
-                Joined on:{" "}
-                <span className="font-[500]">
-                  {new Date(book.shop.createdAt).toLocaleDateString("en-US", {
+
+            {/* Joined Date */}
+            <div className="text-right">
+              {seller?.createdAt && (
+                <p className="text-sm text-gray-500">
+                  <span className="font-semibold text-gray-700">Member since: </span>
+                  {new Date(seller.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric",
                   })}
-                </span>
-              </h5>
-            )}
-            <Link to="/">
-              <div className={`${styles.button} rounded-[4px] h-[39.5px] mt-3 ml-14`}>
-                <h4 className="text-white">Visit Profile</h4>
-              </div>
-            </Link>
+                </p>
+              )}
+            </div>
           </div>
         </div>
       )}

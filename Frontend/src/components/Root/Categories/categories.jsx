@@ -62,12 +62,14 @@ const Categories = () => {
 
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide py-2"
+          className="flex gap-6 overflow-x-hidden scrollbar-hide py-2"
           style={{ scrollBehavior: "smooth" }}
         >
           {categories.map((cat) => (
             <Link
-              to={`/category/${cat.name}`}
+              to={`/products?category=${encodeURIComponent(
+                cat._id
+              )}&categoryName=${encodeURIComponent(cat.name || "")}`}
               key={cat._id}
               className="min-w-[260px] h-[120px] bg-white border shadow-sm hover:shadow-md rounded-xl p-4 flex flex-col justify-center cursor-pointer"
             >
