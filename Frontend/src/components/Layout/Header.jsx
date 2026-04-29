@@ -120,6 +120,18 @@ const Header = ({ activeHeading }) => {
             )}
           </div>
 
+          {/* Admin Dashboard Button (Only for Admin) */}
+          {isAuthenticated && user?.role === "admin" && (
+            <div className={`${styles.button} rounded-md bg-[#333] ml-4`}>
+              <Link to="/admin">
+                <h1 className="text-[#fff] flex items-center">
+                  Admin Panel
+                  <IoIosArrowForward className="ml-1" />
+                </h1>
+              </Link>
+            </div>
+          )}
+
           {/* Sell Books Button */}
           <div className={`${styles.button} rounded-md bg-[#D98C00] ml-4`}>
             <Link to={isAuthenticated ? "/profile" : "/login"} state={{ activeTab: 2 }}>
@@ -129,6 +141,7 @@ const Header = ({ activeHeading }) => {
               </h1>
             </Link>
           </div>
+
         </div>
       </div>
 
@@ -303,6 +316,17 @@ const Header = ({ activeHeading }) => {
             </div>
 
             <Navbar active={activeHeading} />
+            
+            {isAuthenticated && user?.role === "admin" && (
+              <div className={`${styles.button} ml-4 mb-4 !rounded-[4px] bg-[#333]`}>
+                <Link to="/admin">
+                  <h1 className="text-[#fff] flex items-center">
+                    Admin Panel <IoIosArrowForward className="ml-1" />
+                  </h1>
+                </Link>
+              </div>
+            )}
+
             <div className={`${styles.button} ml-4 !rounded-[4px] bg-[#D98C00]`}>
               <Link to="/become-seller">
                 <h1 className="text-[#fff] flex items-center">
@@ -310,6 +334,7 @@ const Header = ({ activeHeading }) => {
                 </h1>
               </Link>
             </div>
+
             <br />
             <br />
             <br />

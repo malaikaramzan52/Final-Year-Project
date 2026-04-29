@@ -6,15 +6,18 @@ import { AiOutlineDown } from "react-icons/ai";
 import BgImage from "../../Assets/Logo/Background.jpg";
 import api from "../../api/axios";
 import { normalizeBooks } from "../../utils/normalizeBook";
+import { useLocation } from "react-router-dom";
 
 const BrowseBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("latest");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchBooks = async () => {
+      setLoading(true);
       try {
         const res = await api.get("/v2/book/all");
         setBooks(normalizeBooks(res.data.books));
@@ -25,7 +28,7 @@ const BrowseBooks = () => {
       }
     };
     fetchBooks();
-  }, []);
+  }, [location.key]); // refetch every time user navigates to this page
 
   const sortedBooks = useMemo(() => {
     const booksCopy = [...books];

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import RebookLogo from "../../Assets/Logo/white.png";
 
 const Signup = () => {
+  const { isAuthenticated, user, loading } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +17,9 @@ const Signup = () => {
   const navigate = useNavigate();
 
   // Handle file input
+
+
+
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     setAvatar(file);
@@ -42,7 +47,7 @@ const Signup = () => {
       });
 
       if (res.data?.token) {
-        localStorage.setItem("token", res.data.token);
+        sessionStorage.setItem("token", res.data.token);
       }
 
       if (res.data.success === true) {

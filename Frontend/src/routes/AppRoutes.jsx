@@ -28,13 +28,20 @@ import AdminCategories from "../pages/admin/AdminCategories";
 import AdminExchange from "../pages/admin/AdminExchange";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminReports from "../pages/admin/AdminReports";
+import AdminComplaints from "../pages/admin/AdminComplaints";
+import AdminProfile from "../pages/admin/AdminProfile";
+
+
 
 const AppRoutes = () => (
+
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/admin/login" element={<LoginPage />} />
       <Route path="/sign-up" element={<SignupPage />} />
+
       <Route path="/activation/:activationToken" element={<ActivationPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password/:userId/:token" element={<ResetPasswordPage />} />
@@ -60,7 +67,10 @@ const AppRoutes = () => (
           <Route path="categories" element={<AdminCategories />} />
           <Route path="exchange-requests" element={<AdminExchange />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="complaints" element={<AdminComplaints />} />
+          <Route path="profile" element={<AdminProfile />} />
           <Route path="reports" element={<AdminReports />} />
+
         </Route>
       </Route>
 

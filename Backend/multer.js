@@ -10,6 +10,8 @@ const storage = multer.diskStorage({
       folder = "../uploads/books";
     } else if (req.originalUrl.includes("/user")) {
       folder = "../uploads/avatars";
+    } else if (req.originalUrl.includes("/complaint")) {
+      folder = "../uploads/complaints";
     }
     const fullPath = path.normalize(path.join(__dirname, folder));
     console.log("Multer Resolved Path:", fullPath);

@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/reducers/user";
+import api from "../../api/axios";
+import { toast } from "react-toastify";
+
 import { AiOutlineLogin } from "react-icons/ai";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { RxPerson } from 'react-icons/rx';
-import { MdOutlineSwapHoriz } from "react-icons/md";
+import { MdOutlineSwapHoriz, MdOutlineMessage } from "react-icons/md";
+
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { User } from "lucide-react";
@@ -10,6 +16,7 @@ import { User } from "lucide-react";
 
 const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [expandMyOrders, setExpandMyOrders] = useState(false);
     const [expandExchange, setExpandExchange] = useState(false);
 
@@ -30,10 +37,20 @@ const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
         { id: 2, label: "My Books", icon: HiOutlineShoppingBag },
     ];
 
-    const handleLogout = () => {
-        // Handle logout logic here
-        navigate("/");
+    const handleLogout = async () => {
+        try {
+            await api.get("/v2/user/logout");
+            dispatch(logout());
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("role");
+            navigate("/");
+            toast.success("Logged out successfully!");
+            window.location.reload(); // Refresh to clear all states
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Logout failed");
+        }
     };
+
 
     return (
         <div className='w-full bg-white shadow-sm rounded-lg p-6'>
@@ -143,6 +160,18 @@ const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
                         </div>
                     </div>
                 )}
+            </div>
+
+            {/* Complaints */}
+            <div
+                className={`flex items-center cursor-pointer w-full mb-6 p-3 rounded-lg transition-all duration-200 ${active === 5 ? "bg-[#D98C00]/10 border-l-4 border-[#D98C00]" : "hover:bg-gray-50"
+                    }`}
+                onClick={() => setActive(5)}
+            >
+                <MdOutlineMessage size={22} color={active === 5 ? "#D98C00" : "#666"} />
+                <span className={`pl-4 font-medium text-sm ${active === 5 ? "text-[#D98C00]" : "text-gray-700"}`}>
+                    Complaints
+                </span>
             </div>
 
             {/* Logout */}

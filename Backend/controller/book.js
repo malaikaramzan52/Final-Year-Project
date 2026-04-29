@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
+const path = require("path");
 
 const Book = require("../model/Book");
 const ErrorHandler = require("../utils/ErrorHandler");
@@ -124,11 +126,36 @@ router.get(
   })
 );
 
+// Admin: Get all books
+router.get(
+  "/admin-all-books",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      if (req.user.role !== "admin") {
+        return next(new ErrorHandler("Access denied", 403));
+      }
+      const books = await Book.find()
+        .populate("category", "name")
+        .populate("user", "name email")
+        .sort({ createdAt: -1 });
+
+      res.status(200).json({
+        success: true,
+        books,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 /* =========================================================
    GET SINGLE BOOK (with seller info)
    GET /api/v2/book/:id
    NOTE: This wildcard route must be LAST among GET routes
 ========================================================= */
+
 router.get(
   "/:id",
   catchAsyncErrors(async (req, res, next) => {
@@ -270,6 +297,10 @@ router.delete(
       return next(new ErrorHandler("You can only delete your own books", 403));
     }
 
+    if (book.status === "Sold" || book.status === "Exchanged") {
+      return next(new ErrorHandler("Cannot delete a book that has been sold or exchanged", 400));
+    }
+
     await book.deleteOne();
 
     res.status(200).json({
@@ -279,4 +310,38 @@ router.delete(
   })
 );
 
+
+// Admin: Delete book
+router.delete(
+  "/admin-delete-book/:id",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      if (req.user.role !== "admin") {
+        return next(new ErrorHandler("Access denied", 403));
+      }
+      const book = await Book.findById(req.params.id);
+      if (!book) {
+        return next(new ErrorHandler("Book not found", 404));
+      }
+
+      // Optionally delete book image
+      if (book.image && book.image.startsWith("/uploads/")) {
+        const oldPath = path.join(__dirname, "..", book.image);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+
+      await Book.findByIdAndDelete(req.params.id);
+
+      res.status(200).json({
+        success: true,
+        message: "Book deleted successfully",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;
+

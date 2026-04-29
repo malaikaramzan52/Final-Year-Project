@@ -19,7 +19,7 @@ const userSlice = createSlice({
   initialState: {
     user: null,
     isAuthenticated: false,
-    loading: false,
+    loading: true,
     error: null,
   },
   reducers: {
@@ -28,6 +28,10 @@ const userSlice = createSlice({
     },
     updateUser: (state, action) => {
       state.user = { ...state.user, ...action.payload };
+    },
+    logout: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
     },
   },
   extraReducers: (builder) => {
@@ -39,15 +43,29 @@ const userSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = true;
         state.user = action.payload;
+        // Store role for faster redirection on refresh
+        if (action.payload?.role) {
+          sessionStorage.setItem("role", action.payload.role);
+        }
       })
       .addCase(loadUser.rejected, (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
         state.error = action.payload;
+        sessionStorage.removeItem("role");
+        sessionStorage.removeItem("token");
       });
   },
 });
 
-export const { clearErrors, updateUser } = userSlice.actions;
+export const { clearErrors, updateUser, logout: logoutAction } = userSlice.actions;
+
+// Enhanced logout that clears storage
+export const logout = () => (dispatch) => {
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("role");
+  dispatch(logoutAction());
+};
+
 export const userReducer = userSlice.reducer;

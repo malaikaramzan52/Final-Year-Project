@@ -13,6 +13,8 @@ import { server } from "../../server";
 import { updateUser } from "../../redux/reducers/user";
 import api from "../../api/axios";
 import ExchangeRequests from "./ExchangeRequests";
+import Complaints from "./Complaints";
+
 
 const backendOrigin = (server || "http://localhost:5000").replace(/\/$/, "");
 
@@ -219,23 +221,24 @@ const ProfileContent = ({ active, user }) => {
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">Full Name</label>
-                <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Enter your full name" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#3ad132] transition" />
+                <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Enter your full name" autoComplete="off" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#3ad132] transition" />
               </div>
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">Email Address</label>
-                <input type="email" name="email" value={formData.email} readOnly placeholder="Email cannot be changed" className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed text-gray-500" />
+                <input type="email" name="email" value={formData.email} readOnly placeholder="Email cannot be changed" autoComplete="off" className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed text-gray-500" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">Phone Number</label>
-                <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="Enter your phone number" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#3ad132] transition" />
+                <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="Enter your phone number" autoComplete="off" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#3ad132] transition" />
               </div>
             </div>
             <div className="mb-6">
               <label className="block text-gray-700 font-semibold mb-2">Address</label>
-              <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Enter your address" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#3ad132] transition" />
+              <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Enter your address" autoComplete="off" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#3ad132] transition" />
             </div>
+
             <div>
               <button type="submit" disabled={loading} className="px-8 py-2 bg-[#D98C00] text-white font-semibold rounded-lg hover:bg-[#A86500] transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap">
                 {loading ? "Updating..." : "Update Profile"}
@@ -259,7 +262,11 @@ const ProfileContent = ({ active, user }) => {
 
       {/* Exchange Requests - Received */}
       {active === 4.2 && <ExchangeRequests viewType="received" />}
+
+      {/* Complaints */}
+      {active === 5 && <Complaints />}
     </div>
+
   );
 };
 
@@ -385,20 +392,7 @@ const MyBooks = () => {
         </button>
       </div>
 
-      {books.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 p-12 text-center shadow-sm">
-          <p className="text-lg text-gray-500 mb-2">You haven't uploaded any books yet.</p>
-          <p className="text-sm text-gray-400 mb-6">
-            Start selling by uploading your first book.
-          </p>
-          <button
-            onClick={handleCreate}
-            className="px-6 py-3 bg-[#D98C00] text-white font-semibold rounded-lg hover:bg-[#A86500] transition"
-          >
-            Upload Your First Book
-          </button>
-        </div>
-      ) : (
+      {books.length > 0 && (
         <div className="space-y-4">
           {books.map((book) => (
             <div

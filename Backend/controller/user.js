@@ -53,6 +53,13 @@ router.post(
       isEmailVerified: true, // Mark as verified immediately
     });
 
+    // Clear old token cookie before setting new one
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+
     // Send JWT token immediately
     sendToken(user, 201, res);
   })
@@ -97,12 +104,37 @@ router.post(
       return next(new ErrorHandler("Please Enter correct Details", 400));
     }
 
+    // Clear old token cookie before setting new one
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+
     // Send JWT token
     sendToken(user, 200, res);
   })
 );
 
-//Load User
+// log out user
+router.get(
+  "/logout",
+  catchAsyncErrors(async (req, res, next) => {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Log out successful!",
+    });
+  })
+);
+
+
+// Load User
 router.get("/getuser", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
@@ -118,6 +150,27 @@ router.get("/getuser", isAuthenticated, catchAsyncErrors(async (req, res, next) 
     return next(new ErrorHandler(error.message, 500));
   }
 }));
+
+// Admin: Get all users
+router.get(
+  "/admin-all-users",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      if (req.user.role !== "admin") {
+        return next(new ErrorHandler("Access denied", 403));
+      }
+      const users = await User.find().sort({ createdAt: -1 });
+      res.status(200).json({
+        success: true,
+        users,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 
 /* =========================================================
    UPDATE AVATAR (local disk)
@@ -175,5 +228,33 @@ router.put("/update-profile", isAuthenticated, async (req, res) => {
 
   res.status(200).json({ success: true, user });
 });
+
+// Admin: Delete user
+router.delete("/admin-delete-user/:id", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+  try {
+    if (req.user.role !== "admin") {
+      return next(new ErrorHandler("Access denied", 403));
+    }
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+    
+    // Optionally delete user avatar
+    if (user.avatar && user.avatar.startsWith("/uploads/")) {
+      const oldPath = path.join(__dirname, "../", user.avatar);
+      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}));
 
 module.exports = router;

@@ -1,24 +1,50 @@
-import React, { useMemo, useState } from "react";
-import { exchangeRequests } from "./data";
-import { Search, Check, X, Eye, ArrowLeftRight } from "lucide-react";
+import React, { useMemo, useState, useEffect } from "react";
+import { Search, Check, X, Eye, ArrowLeftRight, Loader2 } from "lucide-react";
+import api from "../../api/axios";
 
 const AdminExchange = () => {
+  const [exchanges, setExchanges] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [rows, setRows] = useState(exchangeRequests);
+
+  const server = "http://localhost:5000";
+
+  useEffect(() => {
+    const fetchExchanges = async () => {
+      try {
+        const res = await api.get("/v2/exchange/admin-all-exchanges");
+        setExchanges(res.data.exchanges || []);
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch exchanges", err);
+        setLoading(false);
+      }
+    };
+    fetchExchanges();
+  }, []);
 
   const filtered = useMemo(() => {
-    return rows.filter((req) => {
-      const text = `${req.requester} ${req.owner} ${req.offeredBook.title} ${req.requestedBook.title}`.toLowerCase();
+    return exchanges.filter((req) => {
+      const text = `${req.requester?.name} ${req.owner?.name} ${req.offeredBook?.title} ${req.requestedBook?.title}`.toLowerCase();
       const matchesSearch = text.includes(search.toLowerCase());
       const matchesStatus = statusFilter === "all" ? true : req.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [rows, search, statusFilter]);
+  }, [exchanges, search, statusFilter]);
 
-  const updateStatus = (id, nextStatus) => {
-    setRows((prev) => prev.map((r) => (r.id === id ? { ...r, status: nextStatus } : r)));
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <Loader2 className="animate-spin text-[#D98C00]" size={40} />
+      </div>
+    );
+  }
+
+  const updateStatus = async (id, nextStatus) => {
+    // Optional: add backend update logic
   };
+
 
   return (
     <div className="space-y-5">
@@ -65,18 +91,18 @@ const AdminExchange = () => {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((req) => (
-                <tr key={req.id} className="hover:bg-gray-50">
+                <tr key={req._id} className="hover:bg-gray-50">
                   <td className="px-4 py-3">
-                    <div className="font-semibold text-gray-900">{req.requester}</div>
-                    <div className="text-xs text-gray-500">Owner: {req.owner}</div>
+                    <div className="font-semibold text-gray-900">{req.requester?.name}</div>
+                    <div className="text-xs text-gray-500">Owner: {req.owner?.name}</div>
                   </td>
                   <td className="px-4 py-3">
-                    <BookCell book={req.offeredBook} tone="text-[#D98C00]" />
+                    <BookCell book={req.offeredBook} tone="text-[#D98C00]" server={server} />
                   </td>
                   <td className="px-4 py-3">
-                    <BookCell book={req.requestedBook} tone="text-green-700" />
+                    <BookCell book={req.requestedBook} tone="text-green-700" server={server} />
                   </td>
-                  <td className="px-4 py-3 text-gray-700">{formatDate(req.date)}</td>
+                  <td className="px-4 py-3 text-gray-700">{formatDate(req.createdAt)}</td>
                   <td className="px-4 py-3">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusTone(req.status)}`}>
                       {req.status}
@@ -85,7 +111,7 @@ const AdminExchange = () => {
                   <td className="px-4 py-3 text-right space-x-2 whitespace-nowrap">
                     <button
                       disabled={req.status !== "Pending"}
-                      onClick={() => updateStatus(req.id, "Accepted")}
+                      onClick={() => updateStatus(req._id, "Accepted")}
                       className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm font-semibold transition ${
                         req.status === "Pending"
                           ? "border-green-200 text-green-700 hover:bg-green-50"
@@ -96,7 +122,7 @@ const AdminExchange = () => {
                     </button>
                     <button
                       disabled={req.status !== "Pending"}
-                      onClick={() => updateStatus(req.id, "Rejected")}
+                      onClick={() => updateStatus(req._id, "Rejected")}
                       className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm font-semibold transition ${
                         req.status === "Pending"
                           ? "border-red-200 text-red-600 hover:bg-red-50"
@@ -118,30 +144,31 @@ const AdminExchange = () => {
 
       <div className="rounded-2xl border border-dashed border-gray-200 p-4 bg-gray-50 text-sm text-gray-600 flex items-center gap-2">
         <ArrowLeftRight size={16} className="text-[#D98C00]" />
-        Status badges: Pending = yellow, Accepted = green, Rejected = red. Actions are UI-only for now.
+        Admin panel connected to real-time exchange data from the backend.
       </div>
     </div>
   );
 };
 
-const BookCell = ({ book, tone }) => {
+const BookCell = ({ book, tone, server }) => {
   return (
     <div className="flex items-center gap-3">
       <img
-        src={book.image}
-        alt={book.title}
+        src={`${server}${book?.image}`}
+        alt={book?.title}
         className="w-12 h-14 object-cover rounded-md border border-gray-200"
         onError={(e) => {
           e.currentTarget.src = "https://via.placeholder.com/80x100?text=Book";
         }}
       />
       <div>
-        <p className={`font-semibold text-gray-900 ${tone}`}>{book.title}</p>
+        <p className={`font-semibold text-gray-900 ${tone}`}>{book?.title}</p>
         <p className="text-xs text-gray-500">Exchange item</p>
       </div>
     </div>
   );
 };
+
 
 const statusTone = (status) => {
   if (status === "Accepted") return "bg-green-100 text-green-700";

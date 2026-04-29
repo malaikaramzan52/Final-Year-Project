@@ -1,24 +1,48 @@
-import React, { useMemo, useState } from "react";
-import { orders } from "./data";
-import { Search, Eye, XCircle } from "lucide-react";
+import React, { useMemo, useState, useEffect } from "react";
+import { Search, Eye, XCircle, Loader2 } from "lucide-react";
+import api from "../../api/axios";
 
 const AdminOrders = () => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [rows, setRows] = useState(orders);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await api.get("/v2/order/admin-all-orders");
+        setOrders(res.data.orders || []);
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch orders", err);
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
 
   const filtered = useMemo(() => {
-    return rows.filter((order) => {
-      const text = `${order.buyer} ${order.bookTitle}`.toLowerCase();
+    return orders.filter((order) => {
+      const text = `${order.buyer?.name} ${order.book?.title}`.toLowerCase();
       const matchesSearch = text.includes(search.toLowerCase());
       const matchesStatus = statusFilter === "all" ? true : order.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [rows, search, statusFilter]);
+  }, [orders, search, statusFilter]);
 
-  const cancelOrder = (id) => {
-    setRows((prev) => prev.map((o) => (o.id === id ? { ...o, status: "Cancelled" } : o)));
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <Loader2 className="animate-spin text-[#D98C00]" size={40} />
+      </div>
+    );
+  }
+
+  const cancelOrder = async (id) => {
+    // Optional: add backend cancel logic here if needed
   };
+
 
   return (
     <div className="space-y-5">
@@ -66,11 +90,12 @@ const AdminOrders = () => {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-semibold text-gray-900">{order.buyer}</td>
-                  <td className="px-4 py-3 text-gray-700">{order.bookTitle}</td>
+                <tr key={order._id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3 font-semibold text-gray-900">{order.buyer?.name}</td>
+                  <td className="px-4 py-3 text-gray-700">{order.book?.title}</td>
                   <td className="px-4 py-3 text-gray-900 font-semibold">Rs. {order.price}</td>
-                  <td className="px-4 py-3 text-gray-700">{formatDate(order.date)}</td>
+                  <td className="px-4 py-3 text-gray-700">{formatDate(order.createdAt)}</td>
+
                   <td className="px-4 py-3">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusTone(order.status)}`}>
                       {order.status}

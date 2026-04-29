@@ -1,20 +1,60 @@
-import React, { useMemo, useState } from "react";
-import { books } from "./data";
-import { Search, Eye, Trash2, Tag } from "lucide-react";
+import React, { useMemo, useState, useEffect } from "react";
+import { Search, Eye, Trash2, Tag, Loader2 } from "lucide-react";
+import api from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const AdminBooks = () => {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
+  const navigate = useNavigate();
 
-  const categories = useMemo(() => ["all", ...new Set(books.map((b) => b.category))], []);
+  const server = "http://localhost:5000";
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const res = await api.get("/v2/book/admin-all-books");
+        setBooks(res.data.books || []);
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch books", err);
+        setLoading(false);
+      }
+    };
+    fetchBooks();
+  }, []);
+
+  const handleDeleteBook = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this book?")) return;
+    try {
+      await api.delete(`/v2/book/admin-delete-book/${id}`);
+      setBooks((prev) => prev.filter((b) => b._id !== id));
+      import("react-toastify").then(({ toast }) => toast.success("Book deleted successfully"));
+    } catch (err) {
+      import("react-toastify").then(({ toast }) => toast.error(err.response?.data?.message || "Failed to delete book"));
+    }
+  };
+
+  const categories = useMemo(() => ["all", ...new Set(books.map((b) => b.category?.name || b.category))], [books]);
 
   const filtered = useMemo(() => {
     return books.filter((book) => {
-      const matchesSearch = `${book.title} ${book.owner}`.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = category === "all" ? true : book.category === category;
+      const matchesSearch = `${book.title} ${book.user?.name}`.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = category === "all" ? true : (book.category?.name || book.category) === category;
       return matchesSearch && matchesCategory;
     });
-  }, [search, category]);
+  }, [search, category, books]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <Loader2 className="animate-spin text-[#D98C00]" size={40} />
+      </div>
+    );
+  }
+
 
   return (
     <div className="space-y-5">
@@ -62,11 +102,11 @@ const AdminBooks = () => {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((book) => (
-                <tr key={book.id} className="hover:bg-gray-50">
+                <tr key={book._id} className="hover:bg-gray-50">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <img
-                        src={book.image}
+                        src={`${server}${book.image}`}
                         alt={book.title}
                         className="w-12 h-14 object-cover rounded-md border border-gray-200"
                         onError={(e) => {
@@ -75,23 +115,30 @@ const AdminBooks = () => {
                       />
                       <div>
                         <p className="font-semibold text-gray-900">{book.title}</p>
-                        <p className="text-xs text-gray-500">ID: {book.id}</p>
+                        <p className="text-xs text-gray-500">ID: {book._id}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-gray-700">{book.owner}</td>
-                  <td className="px-4 py-3 text-gray-700">{book.category}</td>
+                  <td className="px-4 py-3 text-gray-700">{book.user?.name}</td>
+                  <td className="px-4 py-3 text-gray-700">{book.category?.name || book.category}</td>
                   <td className="px-4 py-3 text-gray-700">{book.condition}</td>
                   <td className="px-4 py-3">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusTone(book.status)}`}>
                       {book.status}
                     </span>
                   </td>
+
                   <td className="px-4 py-3 text-right space-x-2 whitespace-nowrap">
-                    <button className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:border-[#D98C00] hover:text-[#D98C00] transition">
+                    <button 
+                      onClick={() => navigate(`/product/${book._id}`)}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:border-[#D98C00] hover:text-[#D98C00] transition"
+                    >
                       <Eye size={16} /> View
                     </button>
-                    <button className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition">
+                    <button 
+                      onClick={() => handleDeleteBook(book._id)}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition"
+                    >
                       <Trash2 size={16} /> Delete
                     </button>
                   </td>

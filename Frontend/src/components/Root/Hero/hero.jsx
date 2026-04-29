@@ -25,7 +25,7 @@ const hero = () => {
           Buy, sell, or exchange old books with ease. Connect with fellow book lovers, 
           give your books a second life, and explore a world of stories waiting to be discovered all in one trusted marketplace.
         </p>
-        <Link to="/all-books" className="inline-block">
+        <Link to="/browse" className="inline-block">
           <div className={`${styles.button} bg-[#D98C00] mt-5 !w-[180px]`}>
             <span className="text-[#fff] font-[Poppins] text-[18px]">
               Browse Books

@@ -2,7 +2,7 @@
  * Database Seeder
  *
  * Usage:
- *   node seed/seeder.js          # Seed all collections (drops existing data first)
+ *           # Seed all collections (drops existing data first)
  *   node seed/seeder.js --clear  # Only clear all seeded collections
  *
  * Reads .env from the Backend root for MONGO_URI.

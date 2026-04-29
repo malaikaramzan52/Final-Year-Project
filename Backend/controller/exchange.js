@@ -153,4 +153,31 @@ router.put(
   })
 );
 
+// Admin: Get all exchange requests
+router.get(
+  "/admin-all-exchanges",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      if (req.user.role !== "admin") {
+        return next(new ErrorHandler("Access denied", 403));
+      }
+      const exchanges = await ExchangeRequest.find()
+        .populate("requestedBook", "title author image")
+        .populate("offeredBook", "title author image")
+        .populate("requester", "name email")
+        .populate("owner", "name email")
+        .sort({ createdAt: -1 });
+
+      res.status(200).json({
+        success: true,
+        exchanges,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;
+

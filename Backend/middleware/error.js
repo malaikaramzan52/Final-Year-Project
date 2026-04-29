@@ -1,9 +1,14 @@
 const ErrorHandler = require("../utils/ErrorHandler");
 
 module.exports = (err, req, res, next) => {
-    console.log("FULL ERROR LOG:", err); // Added for debugging
     err.statusCode = err.statusCode || 500;
     err.message = err.message || "Internal server Error";
+
+    // Only log critical 500 errors to avoid terminal clutter
+    if (err.statusCode === 500) {
+        console.error("Critical Error:", err);
+    }
+
 
     // wrong mongodb id error
     if (err.name === "CastError") {
@@ -19,15 +24,16 @@ module.exports = (err, req, res, next) => {
 
     // wrong jwt error
     if (err.name === "JsonWebTokenError") {
-        const message = `Your url is invalid please try again letter`;
-        err = new ErrorHandler(message, 400);
+        const message = `Invalid token. Please login again.`;
+        err = new ErrorHandler(message, 401);
     }
 
     // jwt expired
     if (err.name === "TokenExpiredError") {
-        const message = `Your Url is expired please try again letter!`;
-        err = new ErrorHandler(message, 400);
+        const message = `Session expired. Please login again.`;
+        err = new ErrorHandler(message, 401);
     }
+
 
     res.status(err.statusCode).json({
         success: false,

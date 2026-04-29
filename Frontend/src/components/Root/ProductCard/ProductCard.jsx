@@ -90,7 +90,7 @@ const ProductCard = ({ book }) => {
           </span>
         )}
 
-        {book.exchangeable && (
+        {book.exchangeable && book.status === "Available" && (
           <button
             type="button"
             onClick={handleExchangeNav}
@@ -131,13 +131,15 @@ const ProductCard = ({ book }) => {
           >
             <AiOutlineEye size={18} className="text-gray-400 hover:text-gray-700" />
           </button>
-          <button
-            className={`p-2 rounded-full transition-colors duration-200 ${isInCart ? "bg-green-50 hover:bg-green-100" : "hover:bg-gray-100"}`}
-            onClick={addToCartHandler}
-            title={isInCart ? "Already in cart" : "Add to cart"}
-          >
-            <AiOutlineShoppingCart size={18} className={isInCart ? "text-green-600" : "text-gray-400 hover:text-gray-700"} />
-          </button>
+          {book.status === "Available" && (
+            <button
+              className={`p-2 rounded-full transition-colors duration-200 ${isInCart ? "bg-green-50 hover:bg-green-100" : "hover:bg-gray-100"}`}
+              onClick={addToCartHandler}
+              title={isInCart ? "Already in cart" : "Add to cart"}
+            >
+              <AiOutlineShoppingCart size={18} className={isInCart ? "text-green-600" : "text-gray-400 hover:text-gray-700"} />
+            </button>
+          )}
         </div>
       </div>
 
@@ -172,12 +174,18 @@ const ProductCard = ({ book }) => {
           <p className="text-[#D98C00] font-extrabold text-xl">
             Rs. {book.price}
           </p>
-          <button
-            onClick={handleBuyNow}
-            className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-md hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
-          >
-            Buy Now
-          </button>
+          {book.status === "Available" ? (
+            <button
+              onClick={handleBuyNow}
+              className="px-5 py-2 text-sm font-bold text-white bg-[#D98C00] rounded-md hover:bg-[#A86500] transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
+            >
+              Buy Now
+            </button>
+          ) : (
+            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              Unavailable
+            </span>
+          )}
         </div>
       </div>
     </div>

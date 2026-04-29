@@ -10,14 +10,25 @@ import {
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext.jsx";
+import { useWishlist } from "../../context/WishlistContext.jsx";
 import { server } from "../../server";
 
 const ProductDetails = ({ book }) => {
   const [click, setClick] = useState(false);
   const navigate = useNavigate();
   const { addToCart, cart = [] } = useCart();
+  const { addToWishlist, removeFromWishlist, wishlist = [] } = useWishlist();
 
   const isInCart = book && cart.some((item) => item.id === book.id || item.id === book._id);
+  const isWishlisted = book && wishlist.some((item) => item.id === book.id || item.id === book._id);
+
+  const toggleWishlist = () => {
+    if (isWishlisted) {
+      removeFromWishlist(book.id || book._id);
+    } else {
+      addToWishlist(book);
+    }
+  };
 
 
   const handleOpenExchange = () => {
@@ -75,10 +86,10 @@ const ProductDetails = ({ book }) => {
                     <h4 className={`${styles.price} text-3xl font-bold text-[#D98C00]`}>Rs.{book.price}</h4>
                     <button
                       className="p-3 rounded-full border-2 border-[#D98C00] hover:bg-red-50 transition duration-300 transform hover:scale-110"
-                      onClick={() => setClick(!click)}
-                      title="Add to wishlist"
+                      onClick={toggleWishlist}
+                      title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
                     >
-                      {click ? (
+                      {isWishlisted ? (
                         <AiFillHeart size={28} className="text-red-500" />
                       ) : (
                         <AiOutlineHeart size={28} className="text-gray-600 hover:text-red-500" />
@@ -88,35 +99,47 @@ const ProductDetails = ({ book }) => {
 
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-3 items-center mb-8">
-                    {book.exchangeable && (
-                      <button
-                        type="button"
-                        onClick={handleOpenExchange}
-                        className="px-4 py-3 font-semibold bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition duration-300"
-                      >
-                        Exchangeable
-                      </button>
+                    {book.status === "Available" ? (
+                      <>
+                        {book.exchangeable && (
+                          <button
+                            type="button"
+                            onClick={handleOpenExchange}
+                            className="px-4 py-3 font-semibold bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition duration-300"
+                          >
+                            Exchangeable
+                          </button>
+                        )}
+
+                        <button
+                          className={`flex items-center justify-center gap-2 py-3 px-5 rounded-md text-sm font-semibold border-2 shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 active:scale-95 ${
+                            isInCart
+                              ? "bg-green-50 text-green-700 border-green-400"
+                              : "bg-white text-gray-700 border-gray-300 hover:border-[#D98C00]"
+                          }`}
+                          onClick={handleAddToCart}
+                        >
+                          <AiOutlineShoppingCart size={20} />
+                          {isInCart ? "In Cart" : "Add to Cart"}
+                        </button>
+
+                        <button
+                          className="flex items-center justify-center gap-3 bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white py-3 px-6 rounded-md text-base font-bold shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95"
+                          onClick={handleBuyNow}
+                        >
+                          Buy Now
+                        </button>
+                      </>
+                    ) : (
+                      <div className="w-full bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
+                        <p className="text-gray-600 font-semibold text-lg">
+                          This book is currently <span className="text-[#D98C00]">{book.status.replace("_", " ")}</span>
+                        </p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          It is no longer available for purchase or exchange.
+                        </p>
+                      </div>
                     )}
-
-
-                    <button
-                      className={`flex items-center justify-center gap-2 py-3 px-5 rounded-md text-sm font-semibold border-2 shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 active:scale-95 ${
-                        isInCart
-                          ? "bg-green-50 text-green-700 border-green-400"
-                          : "bg-white text-gray-700 border-gray-300 hover:border-[#D98C00]"
-                      }`}
-                      onClick={handleAddToCart}
-                    >
-                      <AiOutlineShoppingCart size={20} />
-                      {isInCart ? "In Cart" : "Add to Cart"}
-                    </button>
-
-                    <button
-                      className="flex items-center justify-center gap-3 bg-gradient-to-r from-[#D98C00] to-[#f39c12] text-white py-3 px-6 rounded-md text-base font-bold shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95"
-                      onClick={handleBuyNow}
-                    >
-                      Buy Now
-                    </button>
                   </div>
                 </div>
               </div>

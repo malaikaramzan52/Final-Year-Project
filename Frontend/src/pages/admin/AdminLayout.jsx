@@ -13,7 +13,16 @@ import {
   Search,
   ShieldCheck,
   Tag,
+  MessageSquare,
+  ArrowRight,
 } from "lucide-react";
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logout } from "../../redux/reducers/user";
+import { toast } from "react-toastify";
+import api from "../../api/axios";
 
 const navItems = [
   { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
@@ -22,21 +31,57 @@ const navItems = [
   { label: "Manage Categories", path: "/admin/categories", icon: Tag },
   { label: "Exchange Requests", path: "/admin/exchange-requests", icon: Shuffle },
   { label: "Buy Orders", path: "/admin/orders", icon: ShoppingBag },
+  { label: "Complaints", path: "/admin/complaints", icon: MessageSquare },
+  { label: "My Profile", path: "/admin/profile", icon: ShieldCheck },
   { label: "Reports", path: "/admin/reports", icon: BarChart3 },
 ];
+
 
 const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [pendingComplaints, setPendingComplaints] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  useEffect(() => {
+    const fetchPendingComplaints = async () => {
+      try {
+        const res = await api.get("/v2/complaint/admin-all-complaints");
+        const pending = res.data.complaints.filter(c => c.status === "Pending");
+        setPendingComplaints(pending);
+      } catch (err) {
+        console.error("Failed to fetch complaints count");
+      }
+    };
+    fetchPendingComplaints();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchPendingComplaints, 30 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+
 
   const activePath = useMemo(() => {
     const match = navItems.find((item) => location.pathname.startsWith(item.path));
     return match ? match.path : "/admin";
   }, [location.pathname]);
 
-  const handleLogout = () => {
-    navigate("/login", { replace: true });
+  const handleLogout = async () => {
+    try {
+      await api.get("/v2/user/logout");
+      dispatch(logout());
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("role");
+      navigate("/");
+      toast.success("Admin logged out!");
+      window.location.reload();
+    } catch (error) {
+      toast.error("Logout failed");
+    }
   };
 
   const goTo = (path) => {
@@ -111,14 +156,80 @@ const AdminLayout = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="p-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50">
-              <Bell size={18} />
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="p-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 relative"
+              >
+                <Bell size={18} />
+                {pendingComplaints.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] flex items-center justify-center rounded-full border-2 border-white">
+                    {pendingComplaints.length}
+                  </span>
+                )}
+              </button>
+
+              {showNotifications && (
+                <div className="absolute right-0 mt-2 w-80 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="px-4 py-3 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
+                    <h3 className="text-sm font-bold text-gray-800">Notifications</h3>
+                    <span className="text-[10px] font-bold px-2 py-0.5 bg-red-50 text-red-600 rounded-full uppercase">
+                      {pendingComplaints.length} New
+                    </span>
+                  </div>
+                  <div className="max-h-[350px] overflow-y-auto">
+                    {pendingComplaints.length > 0 ? (
+                      pendingComplaints.map((c) => (
+                        <div key={c._id} className="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors group">
+                          <div className="flex gap-3">
+                            <div className="mt-1 p-1.5 bg-amber-50 text-amber-600 rounded-lg">
+                              <MessageSquare size={14} />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold text-gray-900 line-clamp-1">{c.title}</p>
+                              <p className="text-xs text-gray-500 mt-0.5">Category: {c.category}</p>
+                              <button 
+                                onClick={() => {
+                                  navigate("/admin/complaints");
+                                  setShowNotifications(false);
+                                }}
+                                className="text-xs text-[#D98C00] font-bold mt-2 flex items-center gap-1 hover:underline"
+                              >
+                                View details <ArrowRight size={10} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="py-12 text-center">
+                        <div className="inline-flex p-3 bg-gray-50 text-gray-400 rounded-full mb-3">
+                          <Bell size={24} />
+                        </div>
+                        <p className="text-sm text-gray-500">No new notifications</p>
+                      </div>
+                    )}
+                  </div>
+                  {pendingComplaints.length > 0 && (
+                    <button 
+                      onClick={() => {
+                        navigate("/admin/complaints");
+                        setShowNotifications(false);
+                      }}
+                      className="w-full py-3 text-xs font-bold text-gray-500 bg-gray-50/50 hover:bg-gray-50 hover:text-[#D98C00] transition-colors border-t border-gray-50"
+                    >
+                      View All Complaints
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
             <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200">
               <ShieldCheck size={18} className="text-[#D98C00]" />
               <div>
                 <p className="text-xs text-gray-500">Logged in as</p>
-                <p className="text-sm font-semibold text-gray-800">Admin</p>
+                <p className="text-sm font-semibold text-gray-800">{user?.name || "Admin"}</p>
               </div>
             </div>
           </div>

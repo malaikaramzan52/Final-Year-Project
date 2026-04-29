@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Layout/Header'
 import styles from "../styles/styles";
 import ProfileSideBar from "../components/Profile/ProfileSidebar";
@@ -8,8 +8,17 @@ import ProfileContent from "../components/Profile/ProfileContent";
 
 const ProfilePage = () => {
   const [active, setActive] = useState(1);
-  const { user } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const location = useLocation();
+
+
+  useEffect(() => {
+    // If user is admin, redirect to admin dashboard
+    if (!loading && user?.role === "admin") {
+      navigate("/admin", { replace: true });
+    }
+  }, [user?.role, loading, navigate]);
 
   // Allow navigation state to set the active tab (e.g. from checkout confirmation)
   useEffect(() => {
@@ -17,6 +26,7 @@ const ProfilePage = () => {
       setActive(location.state.activeTab);
     }
   }, [location.state]);
+
 
   return (
     <div>

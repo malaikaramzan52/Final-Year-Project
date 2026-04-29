@@ -1,33 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
 import api from "../../api/axios";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RebookLogo from "../../Assets/Logo/white.png";
 import { loadUser } from "../../redux/reducers/user.js";
 
 
 const Login = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname === "/admin/login";
+  
+  const { isAuthenticated, user, loading } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
+
+
+
+
     e.preventDefault();
 
     try {
+      // Clear old auth data before login
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("role");
+
       // Hit backend login route
       const res = await api.post("/v2/user/login-user", { email, password });
 
       console.log('Login response:', res.data);
       if (res.data?.token) {
-        localStorage.setItem("token", res.data.token);
+        sessionStorage.setItem("token", res.data.token);
+      }
+      if (res.data?.user?.role) {
+        sessionStorage.setItem("role", res.data.user.role);
       }
       toast.success(res.data.message || "Login successful");
       await dispatch(loadUser());
       navigate(res.data?.user?.role === "admin" ? "/admin" : "/");
+
     } catch (err) {
       console.error('Login error:', err);
 
@@ -104,9 +122,12 @@ const Login = () => {
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 sm:p-10">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome Back
+            {isAdminRoute ? "Admin Portal" : "Welcome Back"}
           </h2>
-          <p className="text-[#D98C00] mb-8">Sign in to your account</p>
+          <p className="text-[#D98C00] mb-8">
+            {isAdminRoute ? "Login as administrator" : "Sign in to your account"}
+          </p>
+
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Email */}

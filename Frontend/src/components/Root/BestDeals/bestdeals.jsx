@@ -123,7 +123,7 @@ const BooksSection = ({ isPage = false }) => {
       }
     };
     fetchBooks();
-  }, [categoryId]);
+  }, [categoryId]); // categoryId change on filter, page navigates → fresh fetch
 
   // ── HOME PAGE view (carousel)
   if (!isPage) {

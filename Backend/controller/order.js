@@ -167,4 +167,30 @@ router.put(
   })
 );
 
+// Admin: Get all orders
+router.get(
+  "/admin-all-orders",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      if (req.user.role !== "admin") {
+        return next(new ErrorHandler("Access denied", 403));
+      }
+      const orders = await Order.find()
+        .populate("book", "title author image price")
+        .populate("buyer", "name email")
+        .populate("seller", "name email")
+        .sort({ createdAt: -1 });
+
+      res.status(200).json({
+        success: true,
+        orders,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;
+
