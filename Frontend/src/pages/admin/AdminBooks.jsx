@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Search, Eye, Trash2, Tag, Loader2 } from "lucide-react";
 import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { server } from "../../server";
 
 const AdminBooks = () => {
   const [books, setBooks] = useState([]);
@@ -10,7 +11,7 @@ const AdminBooks = () => {
   const [category, setCategory] = useState("all");
   const navigate = useNavigate();
 
-  const server = "http://localhost:5000";
+  const apiBase = (server || "http://localhost:5000").replace(/\/$/, "");
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -47,6 +48,12 @@ const AdminBooks = () => {
     });
   }, [search, category, books]);
 
+  const resolveImage = (path) => {
+    if (!path) return "https://via.placeholder.com/80x100?text=Book";
+    if (path.startsWith("http")) return path;
+    return `${apiBase}${path.startsWith("/") ? path : `/${path}`}`;
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
@@ -57,7 +64,7 @@ const AdminBooks = () => {
 
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 scrollbar-hide">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-500">Inventory</p>
@@ -88,7 +95,7 @@ const AdminBooks = () => {
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto scrollbar-hide">
           <table className="min-w-full text-sm">
             <thead className="bg-gray-50 text-gray-600">
               <tr>
@@ -102,20 +109,20 @@ const AdminBooks = () => {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((book) => (
-                <tr key={book._id} className="hover:bg-gray-50">
+                <tr key={book._id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <img
-                        src={`${server}${book.image}`}
+                        src={resolveImage(book.image)}
                         alt={book.title}
-                        className="w-12 h-14 object-cover rounded-md border border-gray-200"
+                        className="w-12 h-14 object-cover rounded-md border border-gray-200 shadow-sm"
                         onError={(e) => {
                           e.currentTarget.src = "https://via.placeholder.com/80x100?text=Book";
                         }}
                       />
-                      <div>
-                        <p className="font-semibold text-gray-900">{book.title}</p>
-                        <p className="text-xs text-gray-500">ID: {book._id}</p>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-gray-900 truncate">{book.title}</p>
+                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">ID: {book._id.slice(-8)}</p>
                       </div>
                     </div>
                   </td>
@@ -123,7 +130,7 @@ const AdminBooks = () => {
                   <td className="px-4 py-3 text-gray-700">{book.category?.name || book.category}</td>
                   <td className="px-4 py-3 text-gray-700">{book.condition}</td>
                   <td className="px-4 py-3">
-                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusTone(book.status)}`}>
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${statusTone(book.status)}`}>
                       {book.status}
                     </span>
                   </td>
@@ -131,35 +138,36 @@ const AdminBooks = () => {
                   <td className="px-4 py-3 text-right space-x-2 whitespace-nowrap">
                     <button 
                       onClick={() => navigate(`/product/${book._id}`)}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:border-[#D98C00] hover:text-[#D98C00] transition"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:border-[#D98C00] hover:text-[#D98C00] transition font-bold text-xs"
                     >
-                      <Eye size={16} /> View
+                      <Eye size={14} /> View
                     </button>
                     <button 
                       onClick={() => handleDeleteBook(book._id)}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 transition font-bold text-xs"
                     >
-                      <Trash2 size={16} /> Delete
+                      <Trash2 size={14} /> Delete
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {filtered.length === 0 && (
+            <div className="py-16 text-center">
+               <Tag size={32} className="mx-auto text-gray-200 mb-2" />
+               <p className="text-gray-400 text-sm font-medium">No books found in inventory</p>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* <div className="rounded-2xl border border-dashed border-gray-200 p-4 bg-gray-50 text-sm text-gray-600 flex items-center gap-2">
-        <Tag size={16} className="text-[#D98C00]" />
-        Filters and actions are UI-only; wire them to real admin endpoints when available.
-      </div> */}
     </div>
   );
 };
 
 const statusTone = (status) => {
-  if (status === "Approved") return "bg-green-100 text-green-700";
-  if (status === "Under Review") return "bg-amber-100 text-amber-700";
+  if (status === "Approved" || status === "Available") return "bg-green-100 text-green-700";
+  if (status === "Under Review" || status === "Pending") return "bg-amber-100 text-amber-700";
   return "bg-red-100 text-red-700";
 };
 

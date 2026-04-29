@@ -13,12 +13,13 @@ const ProfilePage = () => {
   const location = useLocation();
 
 
+
+  // Redirect admins to admin profile if they land on /profile
   useEffect(() => {
-    // If user is admin, redirect to admin dashboard
     if (!loading && user?.role === "admin") {
-      navigate("/admin", { replace: true });
+      navigate("/admin/profile", { replace: true });
     }
-  }, [user?.role, loading, navigate]);
+  }, [user, loading, navigate]);
 
   // Allow navigation state to set the active tab (e.g. from checkout confirmation)
   useEffect(() => {
@@ -33,7 +34,7 @@ const ProfilePage = () => {
       <Header />
       <div className={`${styles.section} flex bg-[#f5f5f5] py-10`}>
         <div className="w-[50px] 800px:w-[335px] sticky 800px:mt-0 mt-[18%]">
-          <ProfileSideBar active={active} setActive={setActive} />
+          <ProfileSideBar active={active} setActive={setActive} user={user} />
         </div>
         <ProfileContent active={active} user={user} />
       </div>

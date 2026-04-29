@@ -153,7 +153,7 @@ const ProfileContent = ({ active, user }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pl-8 pr-4">
       {/* My Profile */}
       {active === 1 && (
         <div className="max-w-2xl mx-auto">

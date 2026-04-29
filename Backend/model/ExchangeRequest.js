@@ -31,4 +31,4 @@ const exchangeRequestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("ExchangeRequest", exchangeRequestSchema);
+module.exports = mongoose.models.ExchangeRequest || mongoose.model("ExchangeRequest", exchangeRequestSchema);

@@ -84,25 +84,41 @@ const seedAll = async () => {
 
 const run = async () => {
   try {
+    const isClear = process.argv.includes("--clear");
+    const isSeed = process.argv.includes("--seed");
+
+    if (!isClear && !isSeed) {
+      console.log("No action specified. Use:");
+      console.log("  node seed/seeder.js --seed   # To clear and seed data");
+      console.log("  node seed/seeder.js --clear  # To only clear data");
+      process.exit(0);
+    }
+
     console.log(`Connecting to ${MONGO_URI}...`);
     await mongoose.connect(MONGO_URI);
     console.log("Connected.\n");
 
-    await clearAll();
+    if (isClear || isSeed) {
+      await clearAll();
+    }
 
-    if (process.argv.includes("--clear")) {
-      console.log("\nDone (clear only).");
-    } else {
+    if (isSeed) {
       console.log("\nSeeding data...");
       await seedAll();
       console.log("\nDone. Database seeded successfully.");
+    } else if (isClear) {
+      console.log("\nDone (clear only).");
     }
   } catch (err) {
     console.error("Seeder error:", err);
   } finally {
-    await mongoose.connection.close();
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
+    }
     process.exit(0);
   }
 };
 
-run();
+if (require.main === module) {
+  run();
+}

@@ -6,11 +6,14 @@ const User = require("../model/user");
 
 // Check if user is authenticated or not
 exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
-  // Prefer Authorization header (Bearer token) over cookies
-  // This ensures the latest token from localStorage is used (updated by Axios interceptor)
-  let token = req.headers.authorization?.startsWith("Bearer ") 
-    ? req.headers.authorization.split(" ")[1]
-    : req.cookies.token;
+  let token;
+  const authHeader = req.headers.authorization;
+  
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    token = authHeader.split(" ")[1];
+  } else {
+    token = req.cookies.token;
+  }
 
   if (!token) {
     return next(new ErrorHandler("Please login to continue", 401));

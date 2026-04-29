@@ -116,16 +116,6 @@ const ExchangeSection = () => {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="mt-10">
-            <Link
-              to="/profile"
-              state={{ activeTab: 4.1 }}
-              className="inline-block px-8 py-3.5 bg-[#D98C00] text-white font-bold rounded-xl shadow-lg hover:bg-[#A86500] hover:shadow-2xl transition duration-300 transform hover:scale-105 active:scale-95"
-            >
-              Start Exchanging →
-            </Link>
-          </div>
         </div>
       </div>
     </section>

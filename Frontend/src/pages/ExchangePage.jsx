@@ -58,7 +58,7 @@ const ExchangePage = () => {
     }
     setSubmitting(true);
     try {
-      await api.post("/api/v2/exchange/create-request", {
+      await api.post("/v2/exchange/create-request", {
         requestedBookId: targetBook._id || targetBook.id,
         offeredBookId: selectedBookId,
       });

@@ -9,7 +9,7 @@ const api = axios.create({
 // Client side API wrapper with JWT handling and error interception
 // Attach JWT from sessionStorage if present (tab-isolated)
 api.interceptors.request.use((config) => {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -25,7 +25,7 @@ api.interceptors.response.use(
     const isLoadUserRequest = error.config.url.includes("/v2/user/getuser");
 
     if (status === 401 && !isLoginPage && !isLoadUserRequest) {
-      sessionStorage.removeItem("token");
+      localStorage.removeItem("token");
       window.location.href = "/login";
     }
     return Promise.reject(error);

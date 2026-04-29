@@ -1,114 +1,56 @@
-import React, { useMemo, useState } from "react";
-import { ArrowLeftRight, CalendarClock, Check, Eye, UserRound, X } from "lucide-react";
+import { ArrowLeftRight, Check, Eye, X, Loader2, BookOpen } from "lucide-react";
 import { toast } from "react-toastify";
+import api from "../../api/axios";
+import React, { useEffect, useMemo, useState } from "react";
+import { server } from "../../server";
 
 const statusStyles = {
-  Pending: "bg-amber-100 text-amber-800",
-  Accepted: "bg-green-100 text-green-800",
-  Rejected: "bg-red-100 text-red-700",
-  Cancelled: "bg-gray-100 text-gray-600",
-  Exchanged: "bg-indigo-100 text-indigo-800",
+  Pending: "bg-amber-50 text-amber-600 border-amber-100",
+  Accepted: "bg-green-50 text-green-600 border-green-100",
+  Rejected: "bg-red-50 text-red-600 border-red-100",
+  Cancelled: "bg-gray-50 text-gray-500 border-gray-100",
+  Exchanged: "bg-indigo-50 text-indigo-600 border-indigo-100",
 };
 
-const demoRequests = [
-  {
-    id: "REQ-1045",
-    type: "received",
-    requesterName: "Ayesha Khan",
-    ownerName: "You",
-    requestedBook: {
-      title: "Atomic Habits",
-      image:
-        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=320&q=80",
-    },
-    offeredBook: {
-      title: "Deep Work",
-      image:
-        "https://images.unsplash.com/photo-1544939571-1bb1317d2dc8?auto=format&fit=crop&w=320&q=80",
-    },
-    status: "Pending",
-    date: "2024-09-12T10:00:00Z",
-    note: "Happy to swap within Islamabad. Books are in great shape!",
-  },
-  {
-    id: "REQ-1039",
-    type: "received",
-    requesterName: "Bilal Ahmed",
-    ownerName: "You",
-    requestedBook: {
-      title: "The Psychology of Money",
-      image:
-        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=320&q=80",
-    },
-    offeredBook: {
-      title: "Rich Dad Poor Dad",
-      image:
-        "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=320&q=80",
-    },
-    status: "Accepted",
-    date: "2024-09-05T15:30:00Z",
-    note: "Can meet near G-11 Markaz over the weekend.",
-  },
-  {
-    id: "REQ-1022",
-    type: "sent",
-    requesterName: "You",
-    ownerName: "Hassan Raza",
-    requestedBook: {
-      title: "The Alchemist",
-      image:
-        "https://images.unsplash.com/photo-1455884981818-54cb785db6fc?auto=format&fit=crop&w=320&q=80",
-    },
-    offeredBook: {
-      title: "Ikigai",
-      image:
-        "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=320&q=80",
-    },
-    status: "Pending",
-    date: "2024-09-02T08:10:00Z",
-    note: "Would love to exchange this week if you are free.",
-  },
-  {
-    id: "REQ-1016",
-    type: "sent",
-    requesterName: "You",
-    ownerName: "Laiba Zafar",
-    requestedBook: {
-      title: "Sapiens",
-      image:
-        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=320&q=80",
-    },
-    offeredBook: {
-      title: "The Power of Habit",
-      image:
-        "https://images.unsplash.com/photo-1447958272669-9c562446304f?auto=format&fit=crop&w=320&q=80",
-    },
-    status: "Rejected",
-    date: "2024-08-28T11:45:00Z",
-    note: "Already swapped this title. Maybe next time!",
-  },
-];
+const resolveImage = (img) => {
+  if (!img) return "https://via.placeholder.com/80x100?text=Book";
+  if (img.startsWith("http")) return img;
+  const origin = (server || "http://localhost:5000").replace(/\/$/, "");
+  return `${origin}${img.startsWith("/") ? img : `/${img}`}`;
+};
 
 const formatDate = (value) => {
   const d = new Date(value);
   return d.toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
-    year: "numeric",
+    year: "numeric"
   });
 };
 
 const ExchangeRequests = ({ viewType = "sent" }) => {
-  const [requests, setRequests] = useState(demoRequests);
-  const [expandedId, setExpandedId] = useState(null);
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedRequest, setSelectedRequest] = useState(null);
 
-  const filteredRequests = useMemo(
-    () => requests.filter((req) => req.type === viewType),
-    [requests, viewType]
-  );
+  useEffect(() => {
+    const fetchRequests = async () => {
+      setLoading(true);
+      try {
+        const endpoint = viewType === "sent" ? "/v2/exchange/my-requests" : "/v2/exchange/received-requests";
+        const res = await api.get(endpoint);
+        setRequests(res.data.requests);
+      } catch (err) {
+        toast.error("Failed to load exchange requests");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRequests();
+  }, [viewType]);
 
   const summary = useMemo(() => {
-    return filteredRequests.reduce(
+    return requests.reduce(
       (acc, req) => {
         acc.total += 1;
         acc[req.status] = (acc[req.status] || 0) + 1;
@@ -116,190 +58,201 @@ const ExchangeRequests = ({ viewType = "sent" }) => {
       },
       { total: 0, Pending: 0, Accepted: 0, Rejected: 0 }
     );
-  }, [filteredRequests]);
+  }, [requests]);
 
-  const updateStatus = (requestId, nextStatus) => {
-    setRequests((prev) =>
-      prev.map((req) => (req.id === requestId ? { ...req, status: nextStatus } : req))
+  const updateStatus = async (requestId, nextStatus) => {
+    try {
+      await api.put(`/v2/exchange/${requestId}/status`, { status: nextStatus });
+      setRequests((prev) =>
+        prev.map((req) => (req._id === requestId ? { ...req, status: nextStatus } : req))
+      );
+      if (selectedRequest?._id === requestId) {
+        setSelectedRequest(prev => ({ ...prev, status: nextStatus }));
+      }
+      toast.success(`Request ${nextStatus}`);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Action failed");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-16">
+        <Loader2 className="animate-spin text-[#D98C00]" size={40} />
+      </div>
     );
-    toast.success(`Request ${nextStatus}`);
-  };
-
-  const handleToggleDetails = (requestId) => {
-    setExpandedId((prev) => (prev === requestId ? null : requestId));
-  };
+  }
 
   return (
-    <div className="w-full space-y-6">
-      <div className="rounded-2xl bg-gradient-to-r from-[#D98C00] to-[#f5b74d] text-white shadow-lg p-6">
-        <div className="flex flex-col gap-3 800px:flex-row 800px:items-center 800px:justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center">
-              <ArrowLeftRight size={20} />
+    <div className="w-full space-y-6 animate-in fade-in duration-500 pl-4">
+      {/* Simple Clean Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-100">
+         <div>
+            <h2 className="text-2xl font-bold text-gray-900">
+               {viewType === "sent" ? "Sent Requests" : "Received Requests"}
+            </h2>
+            <p className="text-sm text-gray-500 mt-1 font-medium">Review and manage your book exchange history.</p>
+         </div>
+         <div className="flex items-center gap-4">
+            <div className="text-right">
+               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Active</p>
+               <p className="text-lg font-bold text-gray-900">{summary.total}</p>
             </div>
-            <div>
-              <p className="text-sm opacity-80">Exchange Requests</p>
-              <h2 className="text-2xl font-bold">
-                {viewType === "sent" ? "Requests You Sent" : "Requests You Received"}
-              </h2>
+            <div className="w-[1px] h-8 bg-gray-100"></div>
+            <div className="text-right">
+               <p className="text-[10px] font-bold text-amber-500 uppercase tracking-widest">Pending</p>
+               <p className="text-lg font-bold text-gray-900">{summary.Pending}</p>
             </div>
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            <span className="px-3 py-1 text-sm font-semibold bg-white/15 rounded-full">
-              {summary.total} total
-            </span>
-            <span className="px-3 py-1 text-sm font-semibold bg-white/15 rounded-full">
-              {summary.Pending} pending
-            </span>
-            <span className="px-3 py-1 text-sm font-semibold bg-white/15 rounded-full">
-              {summary.Accepted} accepted
-            </span>
-            <span className="px-3 py-1 text-sm font-semibold bg-white/15 rounded-full">
-              {summary.Rejected} rejected
-            </span>
-          </div>
-        </div>
+         </div>
       </div>
 
-      {filteredRequests.length === 0 ? (
-        <div className="bg-white border border-dashed border-gray-200 rounded-xl p-10 text-center shadow-sm">
-          <p className="text-lg font-semibold text-gray-800 mb-2">No exchange requests yet</p>
-          <p className="text-sm text-gray-500">
-            Start an exchange by tapping the Exchangeable badge on any book card.
-          </p>
+      {requests.length === 0 ? (
+        <div className="py-20 text-center">
+          <ArrowLeftRight size={40} className="text-gray-200 mx-auto mb-4" />
+          <p className="text-gray-500 font-medium">No exchange requests found.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {filteredRequests.map((req) => {
-            const isPending = req.status === "Pending";
-            const canAct = viewType === "received" && isPending;
+        <div className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
+          <div className="overflow-x-auto scrollbar-hide">
+            <table className="w-full text-left">
+              <thead className="bg-gray-50/50">
+                <tr className="border-b border-gray-100">
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">User</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Exchange Pair</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Status</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {requests.map((req) => {
+                   const partner = viewType === "sent" ? req.owner : req.requester;
+                   return (
+                    <tr key={req._id} className="hover:bg-gray-50/50 transition-colors">
+                      <td className="px-6 py-5">
+                        <div className="flex items-center gap-3">
+                          <img 
+                            src={resolveImage(partner?.avatar)} 
+                            alt="" 
+                            className="w-10 h-10 rounded-full object-cover bg-gray-100"
+                            onError={(e) => { e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner?.name || "User")}&background=D98C00&color=fff`; }}
+                          />
+                          <div>
+                            <p className="text-sm font-semibold text-gray-900">{partner?.name}</p>
+                            <p className="text-[10px] text-gray-400 font-medium">#{req._id?.slice(-6)}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-5">
+                        <div className="flex items-center gap-3">
+                           <div className="flex -space-x-2">
+                              <img src={resolveImage(req.requestedBook?.image)} alt="" className="w-6 h-8 rounded shadow-sm object-cover border border-white" />
+                              <img src={resolveImage(req.offeredBook?.image)} alt="" className="w-6 h-8 rounded shadow-sm object-cover border border-white" />
+                           </div>
+                           <span className="text-xs font-medium text-gray-700 truncate max-w-[150px]">{req.requestedBook?.title}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-5 text-xs text-gray-500 font-medium">
+                        {formatDate(req.createdAt)}
+                      </td>
+                      <td className="px-6 py-5 text-center">
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold border ${statusStyles[req.status] || "bg-gray-100 text-gray-600"}`}>
+                          {req.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-5 text-right">
+                        <button 
+                          onClick={() => setSelectedRequest(req)}
+                          className="px-4 py-1.5 bg-gray-900 text-white rounded-lg text-xs font-bold hover:bg-[#D98C00] transition-colors"
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                   );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
-            return (
-              <div key={req.id} className="bg-white border border-gray-100 rounded-xl shadow-sm p-5 flex flex-col gap-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#D98C00]/10 flex items-center justify-center text-[#D98C00]">
-                      <UserRound size={18} />
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-gray-400">{req.id}</p>
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {viewType === "sent" ? req.ownerName : req.requesterName}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {viewType === "sent" ? "Book owner" : "Requester"}
-                      </p>
-                    </div>
+      {/* Clean Modal */}
+      {selectedRequest && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+               <h3 className="text-lg font-bold text-gray-900">Exchange Details</h3>
+               <button onClick={() => setSelectedRequest(null)} className="p-1 hover:bg-gray-100 rounded-full text-gray-400 transition-colors">
+                 <X size={20} />
+               </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto space-y-8 scrollbar-hide">
+               {/* Partner */}
+               <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                  <img 
+                    src={resolveImage((viewType === "sent" ? selectedRequest.owner : selectedRequest.requester)?.avatar)} 
+                    alt="" 
+                    className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-sm"
+                  />
+                  <div>
+                     <p className="text-[10px] font-bold text-[#D98C00] uppercase tracking-wider">{viewType === "sent" ? "Recipient" : "Sender"}</p>
+                     <h4 className="text-lg font-bold text-gray-900">{(viewType === "sent" ? selectedRequest.owner : selectedRequest.requester)?.name}</h4>
+                     <p className="text-sm text-gray-500">{(viewType === "sent" ? selectedRequest.owner : selectedRequest.requester)?.email}</p>
                   </div>
-                  <span
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
-                      statusStyles[req.status] || "bg-gray-100 text-gray-600"
-                    }`}
-                  >
-                    {req.status}
-                  </span>
-                </div>
+               </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <BookTile label="Requested Book" book={req.requestedBook} accent="text-[#D98C00]" />
-                  <BookTile label="Offered Book" book={req.offeredBook} accent="text-green-700" />
-                </div>
-
-                <div className="flex flex-wrap gap-3 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <CalendarClock size={16} className="text-gray-500" />
-                    <span className="font-medium text-gray-700">Request Date:</span>
-                    <span>{formatDate(req.date)}</span>
+               {/* Grid */}
+               <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Requested Item</p>
+                     <BookMiniCard book={selectedRequest.requestedBook} />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <ArrowLeftRight size={16} className="text-gray-500" />
-                    <span className="font-medium text-gray-700">Status:</span>
-                    <span>{req.status}</span>
+                  <div className="space-y-3">
+                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Offered Item</p>
+                     <BookMiniCard book={selectedRequest.offeredBook} />
                   </div>
-                </div>
+               </div>
 
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => canAct && updateStatus(req.id, "Accepted")}
-                    disabled={!canAct}
-                    className={`flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition border ${
-                      canAct
-                        ? "bg-[#D98C00] text-white border-transparent hover:bg-[#A86500]"
-                        : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                    }`}
-                  >
-                    <Check size={16} /> Accept
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => canAct && updateStatus(req.id, "Rejected")}
-                    disabled={!canAct}
-                    className={`flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition border ${
-                      canAct
-                        ? "bg-white text-red-600 border-red-200 hover:bg-red-50"
-                        : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                    }`}
-                  >
-                    <X size={16} /> Reject
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleToggleDetails(req.id)}
-                    className="min-w-[140px] inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg border border-gray-200 text-gray-700 hover:border-[#D98C00] hover:text-[#D98C00] transition"
-                  >
-                    <Eye size={16} /> View Details
-                  </button>
-                </div>
+               {/* Message */}
+               <div className="p-4 bg-amber-50/50 rounded-xl border border-amber-100">
+                  <p className="text-[10px] font-bold text-amber-600 uppercase mb-2">Note from Sender</p>
+                  <p className="text-sm text-gray-700 italic">"{selectedRequest.note || "No message provided."}"</p>
+               </div>
+            </div>
 
-                {expandedId === req.id && (
-                  <div className="rounded-lg border border-dashed border-gray-200 p-4 bg-gray-50">
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      {req.note || "No additional notes provided."}
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-500">
-                      <span className="px-2 py-1 rounded-full bg-white border border-gray-200 inline-flex items-center gap-2">
-                        <CircleDot />
-                        {viewType === "sent" ? "Awaiting owner response" : "Action required"}
-                      </span>
-                      <span className="px-2 py-1 rounded-full bg-white border border-gray-200">
-                        Ref: {req.id}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+               <p className="text-[10px] font-bold text-gray-400">ID: {selectedRequest._id}</p>
+               <div className="flex gap-2">
+                  {viewType === "received" && selectedRequest.status === "Pending" && (
+                    <>
+                       <button onClick={() => { updateStatus(selectedRequest._id, "Accepted"); setSelectedRequest(null); }} className="px-4 py-2 bg-green-600 text-white rounded-lg text-xs font-bold hover:bg-green-700 transition">Accept</button>
+                       <button onClick={() => { updateStatus(selectedRequest._id, "Rejected"); setSelectedRequest(null); }} className="px-4 py-2 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition">Reject</button>
+                    </>
+                  )}
+                  {viewType === "sent" && selectedRequest.status === "Pending" && (
+                     <button onClick={() => { updateStatus(selectedRequest._id, "Cancelled"); setSelectedRequest(null); }} className="px-4 py-2 bg-gray-800 text-white rounded-lg text-xs font-bold hover:bg-black transition">Cancel Request</button>
+                  )}
+                  <button onClick={() => setSelectedRequest(null)} className="px-4 py-2 bg-white border border-gray-200 text-gray-600 rounded-lg text-xs font-bold hover:bg-gray-50 transition">Close</button>
+               </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-const BookTile = ({ label, book, accent }) => {
-  return (
-    <div className="flex gap-3 items-center p-3 border border-gray-100 rounded-lg bg-gray-50">
-      <img
-        src={book?.image}
-        alt={book?.title}
-        className="w-16 h-20 object-cover rounded-md border border-gray-200 bg-white"
-        onError={(e) => {
-          e.currentTarget.src = "https://via.placeholder.com/80x100?text=Book";
-        }}
-      />
-      <div>
-        <p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p>
-        <p className={`text-sm font-semibold text-gray-900 ${accent}`}>{book?.title}</p>
-      </div>
+const BookMiniCard = ({ book }) => (
+  <div className="flex gap-3">
+    <img src={resolveImage(book?.image)} alt="" className="w-12 h-16 rounded object-cover shadow-sm bg-gray-100" />
+    <div className="min-w-0">
+      <p className="text-sm font-bold text-gray-900 truncate">{book?.title}</p>
+      <p className="text-xs text-gray-500 truncate">{book?.author}</p>
+      <p className="text-xs font-bold text-[#D98C00] mt-1">Rs. {book?.price || 0}</p>
     </div>
-  );
-};
-
-const CircleDot = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="#D98C00" aria-hidden>
-    <circle cx="12" cy="12" r="3" />
-  </svg>
+  </div>
 );
 
 export default ExchangeRequests;

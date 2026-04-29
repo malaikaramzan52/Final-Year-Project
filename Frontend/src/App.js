@@ -13,6 +13,19 @@ const App = () => {
   // ✅ load logged-in user on app start
   useEffect(() => {
     dispatch(loadUser());
+
+    // ✅ Sync login/logout across tabs
+    const handleStorageChange = (e) => {
+      if (e.key === "token") {
+        if (e.newValue) {
+          dispatch(loadUser());
+        } else {
+          window.location.reload(); // Refresh to clear state on logout
+        }
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, [dispatch]);
 
   return (

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import api from "../../api/axios";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import RebookLogo from "../../Assets/Logo/white.png";
 import { loadUser } from "../../redux/reducers/user.js";
 
@@ -13,7 +13,6 @@ const Login = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname === "/admin/login";
   
-  const { isAuthenticated, user, loading } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
@@ -21,26 +20,19 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
-
-
-
-
     e.preventDefault();
 
     try {
       // Clear old auth data before login
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("role");
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
 
       // Hit backend login route
       const res = await api.post("/v2/user/login-user", { email, password });
 
       console.log('Login response:', res.data);
       if (res.data?.token) {
-        sessionStorage.setItem("token", res.data.token);
-      }
-      if (res.data?.user?.role) {
-        sessionStorage.setItem("role", res.data.user.role);
+        localStorage.setItem("token", res.data.token);
       }
       toast.success(res.data.message || "Login successful");
       await dispatch(loadUser());

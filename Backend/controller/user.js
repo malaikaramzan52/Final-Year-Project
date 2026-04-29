@@ -123,8 +123,8 @@ router.get(
     res.cookie("token", null, {
       expires: new Date(Date.now()),
       httpOnly: true,
-      sameSite: "none",
-      secure: true,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
     });
     res.status(201).json({
       success: true,

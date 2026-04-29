@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Users, BookOpen, Shuffle, ShoppingBag, Clock3, ArrowRight, Loader2 } from "lucide-react";
 import api from "../../api/axios";
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     users: [],
     books: [],
@@ -94,7 +96,11 @@ const AdminDashboard = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
         {statCards.map(({ title, value, icon: Icon, color, accent }) => (
-          <div key={title} className={`rounded-2xl p-4 shadow-sm border border-gray-100 ${accent}`}>
+          <div 
+            key={title} 
+            onClick={() => title === "Total Users" ? navigate("/admin/users") : title === "Total Books" ? navigate("/admin/books") : title === "Exchange Requests" ? navigate("/admin/exchange-requests") : title === "Buy Orders" ? navigate("/admin/orders") : title === "Pending Complaints" ? navigate("/admin/complaints") : null}
+            className={`rounded-2xl p-4 shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-shadow ${accent}`}
+          >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
@@ -117,7 +123,10 @@ const AdminDashboard = () => {
               <p className="text-sm text-gray-500">Latest Exchange Requests</p>
               <h3 className="text-lg font-semibold text-gray-900">Recent activity</h3>
             </div>
-            <button className="text-sm text-[#D98C00] font-semibold hover:underline flex items-center gap-1">
+            <button 
+              onClick={() => navigate("/admin/exchange-requests")}
+              className="text-sm text-[#D98C00] font-semibold hover:underline flex items-center gap-1"
+            >
               View all <ArrowRight size={14} />
             </button>
           </div>
@@ -148,7 +157,10 @@ const AdminDashboard = () => {
               <p className="text-sm text-gray-500">Orders Snapshot</p>
               <h3 className="text-lg font-semibold text-gray-900">Recent buy orders</h3>
             </div>
-            <button className="text-sm text-[#D98C00] font-semibold hover:underline flex items-center gap-1">
+            <button 
+              onClick={() => navigate("/admin/orders")}
+              className="text-sm text-[#D98C00] font-semibold hover:underline flex items-center gap-1"
+            >
               View all <ArrowRight size={14} />
             </button>
           </div>

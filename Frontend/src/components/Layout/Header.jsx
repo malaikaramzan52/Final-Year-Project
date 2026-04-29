@@ -120,21 +120,10 @@ const Header = ({ activeHeading }) => {
             )}
           </div>
 
-          {/* Admin Dashboard Button (Only for Admin) */}
-          {isAuthenticated && user?.role === "admin" && (
-            <div className={`${styles.button} rounded-md bg-[#333] ml-4`}>
-              <Link to="/admin">
-                <h1 className="text-[#fff] flex items-center">
-                  Admin Panel
-                  <IoIosArrowForward className="ml-1" />
-                </h1>
-              </Link>
-            </div>
-          )}
 
           {/* Sell Books Button */}
           <div className={`${styles.button} rounded-md bg-[#D98C00] ml-4`}>
-            <Link to={isAuthenticated ? "/profile" : "/login"} state={{ activeTab: 2 }}>
+            <Link to={isAuthenticated ? (user?.role === "admin" ? "/admin/profile" : "/profile") : "/login"} state={{ activeTab: 2 }}>
               <h1 className="text-[#fff] flex items-center">
                 Sell Books
                 <IoIosArrowForward className="ml-1" />
@@ -207,7 +196,7 @@ const Header = ({ activeHeading }) => {
 
             {/* Profile */}
             <div className="relative">
-              <Link to={isAuthenticated ? "/profile" : "/login"}>
+              <Link to={isAuthenticated ? (user?.role === "admin" ? "/admin/profile" : "/profile") : "/login"}>
                 {isAuthenticated && user?.avatar ? (
                   <img
                     src={`${(server || "http://localhost:5000").replace(
@@ -255,13 +244,26 @@ const Header = ({ activeHeading }) => {
             />
           </Link>
         </div>
-        <div className="flex-1 flex justify-end items-center">
-          <div className="relative mr-4">
+        <div className="flex-1 flex justify-end items-center gap-4">
+          <div className="relative">
             <Link to="/cart">
               <AiOutlineShoppingCart size={30} />
               <span className="absolute right-[-10px] top-[-5px] rounded-full bg-[#D98C00] w-4 h-4 flex items-center justify-center text-white text-[10px] font-mono">
                 {cart?.length || 0}
               </span>
+            </Link>
+          </div>
+          <div className="relative">
+            <Link to={isAuthenticated ? (user?.role === "admin" ? "/admin/profile" : "/profile") : "/login"}>
+              {isAuthenticated && user?.avatar ? (
+                <img
+                  src={`${(server || "http://localhost:5000").replace(/\/$/, "")}${user.avatar.startsWith("/") ? user.avatar : `/${user.avatar}`}`}
+                  alt="Profile"
+                  className="w-[35px] h-[35px] rounded-full border-2 border-[#D98C00] object-cover"
+                />
+              ) : (
+                <CgProfile size={30} color="#333" />
+              )}
             </Link>
           </div>
         </div>
@@ -317,15 +319,6 @@ const Header = ({ activeHeading }) => {
 
             <Navbar active={activeHeading} />
             
-            {isAuthenticated && user?.role === "admin" && (
-              <div className={`${styles.button} ml-4 mb-4 !rounded-[4px] bg-[#333]`}>
-                <Link to="/admin">
-                  <h1 className="text-[#fff] flex items-center">
-                    Admin Panel <IoIosArrowForward className="ml-1" />
-                  </h1>
-                </Link>
-              </div>
-            )}
 
             <div className={`${styles.button} ml-4 !rounded-[4px] bg-[#D98C00]`}>
               <Link to="/become-seller">
@@ -342,7 +335,7 @@ const Header = ({ activeHeading }) => {
             <div className="flex w-full justify-center">
               {isAuthenticated ? (
                 <div>
-                  <Link to="/profile">
+                  <Link to={user?.role === "admin" ? "/admin/profile" : "/profile"}>
                     <img
                       src={`${(server || "http://localhost:5000").replace(
                         /\/$/,

@@ -11,10 +11,10 @@ import { MdOutlineSwapHoriz, MdOutlineMessage } from "react-icons/md";
 
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { User } from "lucide-react";
+import { User, ShieldAlert } from "lucide-react";
 
 
-const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
+const ProfileSideBar = ({ active, setActive, user, userPoints = 0 }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [expandMyOrders, setExpandMyOrders] = useState(false);
@@ -41,8 +41,8 @@ const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
         try {
             await api.get("/v2/user/logout");
             dispatch(logout());
-            sessionStorage.removeItem("token");
-            sessionStorage.removeItem("role");
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
             navigate("/");
             toast.success("Logged out successfully!");
             window.location.reload(); // Refresh to clear all states
@@ -55,10 +55,9 @@ const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
     return (
         <div className='w-full bg-white shadow-sm rounded-lg p-6'>
 
-            {/* User Points Display */}
             <div className="mb-8 pb-6 border-b border-gray-200">
                 <div className="flex items-center gap-2">
-                   <User className="text-lg text-[#D98C00]" />
+                    <User className="text-lg text-[#D98C00]" />
                     <h2 className="text-xl font-bold text-gray-800">
                         User Dashboard
                     </h2>
@@ -161,6 +160,7 @@ const ProfileSideBar = ({ active, setActive, userPoints = 0 }) => {
                     </div>
                 )}
             </div>
+
 
             {/* Complaints */}
             <div

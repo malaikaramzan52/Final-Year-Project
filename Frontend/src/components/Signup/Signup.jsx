@@ -47,7 +47,7 @@ const Signup = () => {
       });
 
       if (res.data?.token) {
-        sessionStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.data.token);
       }
 
       if (res.data.success === true) {
